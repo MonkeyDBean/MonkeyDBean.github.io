@@ -297,6 +297,359 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/06/utf8mb4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MonkeyBean">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="帅斌的冒险船">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/06/utf8mb4/" itemprop="url">简谈mysql中utf8mb4</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-06T17:20:18+08:00">
+                2017-08-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>最近开发遇到当Mysql存储微信昵称,而微信昵称有emoji表情符号时，数据库存储数据出现乱码。原因是mysql支持的utf8编码最大长度为3字节，如果遇4字节的宽字符(emoji表情符号、不常用的汉字、新增的Unicode字符等)就会插入异常。<br>Mysql在5.5.3之后增加utf8mb4（most bytes 4）编码,专门用于兼容四字节的unicode，一般情况。为了节省空间，使用utf8即可，但是建议使用utf8mb4。</p>
+<h2 id="Linux下更改mysql编码方式"><a href="#Linux下更改mysql编码方式" class="headerlink" title="Linux下更改mysql编码方式"></a>Linux下更改mysql编码方式</h2><p>使用Linux的发行版本为Centos</p>
+<h3 id="首先查看mysql版本，是否支持utf8mb4（5-5-3版本及以上）。"><a href="#首先查看mysql版本，是否支持utf8mb4（5-5-3版本及以上）。" class="headerlink" title="首先查看mysql版本，是否支持utf8mb4（5.5.3版本及以上）。"></a>首先查看mysql版本，是否支持utf8mb4（5.5.3版本及以上）。</h3><p>查看版本简易方法：<br>终端下：mysql -V<br>mysql下:status; 或 select version();</p>
+<h3 id="修改mysql配置文件"><a href="#修改mysql配置文件" class="headerlink" title="修改mysql配置文件"></a>修改mysql配置文件</h3><p>修改my.conf(windows下为my.ini)<br>修改前后的配置文件及系统编码分别如下：
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/08/06/utf8mb4/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/08/java_xml/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MonkeyBean">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="帅斌的冒险船">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/08/java_xml/" itemprop="url">java解析xml</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-08T15:40:20+08:00">
+                2017-07-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>如下xml为例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</div><div class="line">&lt;datasoruce&gt;</div><div class="line">    &lt;property name=&quot;driver&quot;&gt;com.mysql.jdbc.Driver&lt;/property&gt;</div><div class="line">    &lt;property name=&quot;url&quot;&gt;</div><div class="line">        jdbc:mysql://127.0.0.1:3306/poker?useUnicode=true&amp;amp;characterEncoding=utf8&amp;amp;useSSL=true</div><div class="line">    &lt;/property&gt;</div><div class="line">    &lt;property name=&quot;username&quot;&gt;root&lt;/property&gt;</div><div class="line">    &lt;property name=&quot;password&quot;&gt;root&lt;/property&gt;</div><div class="line">&lt;/datasoruce&gt;</div></pre></td></tr></table></figure></p>
+<p>解析引入dom4j,这里使用的为2.0.0版本，具体文档到社区查看，github已有最新2.0.1版本，dom4j更新很慢，也可以说比较稳定。<br>import org.dom4j.Document;<br>import org.dom4j.DocumentException;<br>import org.dom4j.Element;<br>import org.dom4j.io.SAXReader;<br>日志输出使用：<br>import org.slf4j.Logger;<br>import org.slf4j.LoggerFactory;<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/07/08/java_xml/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/06/js_xml/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MonkeyBean">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="帅斌的冒险船">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/06/js_xml/" itemprop="url">js解析xml</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-06T22:55:23+08:00">
+                2017-07-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="js解析xml字符串"><a href="#js解析xml字符串" class="headerlink" title="js解析xml字符串"></a>js解析xml字符串</h2><p>示例为DOMParser.parseFromString()的简单使用。<br>以下用到ES6的多行字符串，注意包含str值的两个点是Tab键上面、数字键1左边的按键，而不是单引号。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">function testXmlStr()&#123;</div><div class="line">	var str = `&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;&lt;root&gt;</div><div class="line">	&lt;province name=&quot;北京直辖市&quot;&gt;</div><div class="line">	&lt;city&gt;昌平区&lt;/city&gt;</div><div class="line">	&lt;city&gt;朝阳区&lt;/city&gt;</div><div class="line">	&lt;city&gt;崇文区&lt;/city&gt;</div><div class="line">	&lt;city&gt;大兴区&lt;/city&gt;</div><div class="line">	&lt;city&gt;东城区&lt;/city&gt;</div><div class="line">	&lt;city&gt;房山区&lt;/city&gt;</div><div class="line">	&lt;city&gt;丰台区&lt;/city&gt;</div><div class="line">	&lt;city&gt;海淀区&lt;/city&gt;</div><div class="line">	&lt;city&gt;怀柔区&lt;/city&gt;</div><div class="line">    &lt;city&gt;门头沟区&lt;/city&gt;</div><div class="line">    &lt;city&gt;密云区&lt;/city&gt;</div><div class="line">    &lt;city&gt;平谷区&lt;/city&gt;</div><div class="line">    &lt;city&gt;石景山区&lt;/city&gt;</div><div class="line">    &lt;city&gt;顺义区&lt;/city&gt;</div><div class="line">    &lt;city&gt;通州区&lt;/city&gt;</div><div class="line">    &lt;city&gt;西城区&lt;/city&gt;</div><div class="line">    &lt;city&gt;宣武区&lt;/city&gt;</div><div class="line">    &lt;city&gt;延庆区&lt;/city&gt;</div><div class="line">  &lt;/province&gt;&lt;/root&gt;`;  </div><div class="line">  </div><div class="line">	//创建文档对象  </div><div class="line">	var parser=new DOMParser();  </div><div class="line">	var xmlDoc=parser.parseFromString(str,&quot;text/xml&quot;);</div><div class="line">	//提取数据  </div><div class="line">	var countrys = xmlDoc.getElementsByTagName(&apos;city&apos;);  </div><div class="line">	var arr = [];</div><div class="line">	//输出数据</div><div class="line">	for (var i = 0; i &lt; countrys.length; i++) &#123;  </div><div class="line">		arr.push(countrys[i].textContent);  </div><div class="line">	&#125;;  </div><div class="line">	console.log(arr);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="js解析本地xml文件"><a href="#js解析本地xml文件" class="headerlink" title="js解析本地xml文件"></a>js解析本地xml文件</h2><p>要解析的xml文件部分数据如下：<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/07/06/js_xml/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/swagger2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1108,359 +1461,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/16/mysql/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MonkeyBean">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="帅斌的冒险船">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/05/16/mysql/" itemprop="url">MySQL免安装版配置</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-16T22:50:12+08:00">
-                2017-05-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>如果要使用Mysql，直接下载安装WAMP或者LAMP即可。若对免安装Mysql有兴趣，可参考本文。<br>最近重装系统后，整了一个免安装版的Mysql，配置步骤记录如下。Windows64下通用，配置不受Mysql版本号的影响。我是在Win7配置，版本号为5.7.18。<a href="https://pan.baidu.com/s/1eRLSzVs" target="_blank" rel="external">下载地址</a></p>
-<h2 id="解压MySQL压缩包"><a href="#解压MySQL压缩包" class="headerlink" title="解压MySQL压缩包"></a>解压MySQL压缩包</h2><p>将下载的MySQL压缩包解压到自定义目录下，我的解压目录是:</p>
-<pre><code>G:\mysql\mysql-5.7.18-winx64
-</code></pre><p>新建my.ini， 复制下面的配置信息到 my.ini 保存<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">[client]</div><div class="line">port=3306</div><div class="line">default-character-set=utf8</div><div class="line">[mysqld]</div><div class="line">port=3306</div><div class="line"></div><div class="line">character_set_server=utf8</div><div class="line"></div><div class="line">#解压目录</div><div class="line"></div><div class="line">basedir=G:\mysql\mysql-5.7.18-winx64</div><div class="line">#解压目录下data目录</div><div class="line">datadir=G:\mysql\mysql-5.7.18-winx64\data</div><div class="line"></div><div class="line">sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES</div><div class="line">[WinMySQLAdmin]</div><div class="line">G:\mysql\mysql-5.7.18-winx64\bin\mysqld.exe</div></pre></td></tr></table></figure></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/05/16/mysql/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/14/shuffle_introduce/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MonkeyBean">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="帅斌的冒险船">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/04/14/shuffle_introduce/" itemprop="url">高效洗牌算法介绍</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-14T23:10:20+08:00">
-                2017-04-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>最近写了一个梭哈牌戏Demo，简单介绍用到的洗牌算法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">public void shuffle()</div><div class="line">&#123;</div><div class="line">	// 随机位数索引</div><div class="line">	int tmpIndex;</div><div class="line">	// 临时存储数组当前值</div><div class="line">	Card tmpCard;</div><div class="line">	for (int i = 0; i &lt; CardDeck.DECK_SIZE; i++)</div><div class="line">	&#123;</div><div class="line">		tmpIndex = (int)(Math.random() * CardDeck.DECK_SIZE);</div><div class="line">		if (tmpIndex != i)</div><div class="line">		&#123;</div><div class="line">			tmpCard = cards[tmpIndex];</div><div class="line">			cards[tmpIndex] = cards[i];</div><div class="line">			cards[i] = tmpCard;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	return;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>思想：从数组第一位开始，随机random一个数字，第一位和随机出的那位交换；然后依次遍历这个过程到最后一张牌。时间复杂度O(n)，空间复杂度O(1)。<br>优点：与抽牌算法（随机抽牌放到新数组，直到抽完为止）相比，当前洗牌算法随机性更强，已随机的位数仍会与后面随机的数位交换；无需开辟新数组，空间复杂度降低。<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/04/14/shuffle_introduce/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/26/H5_record/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MonkeyBean">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="帅斌的冒险船">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/03/26/H5_record/" itemprop="url">游戏开发历程记录-H5</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-26T19:40:30+08:00">
-                2017-03-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>H5游戏前端开发有将近一年经验，大部分项目都是单兵作战。主要使用引擎和语言为Egret(TypeScipt)，Construct2(JavaScript)。<br>前端完全独立开发的上线游戏有三款：Survival（活下去），砰砰兔，IO游戏炸弹人。现在转向游戏服务端开发，开发语言目前以Java为主，项目包括App及H5，棋牌类为主。这里是对之前的H5开发项目进行阶段性的总结。</p>
-<h2 id="正式项目"><a href="#正式项目" class="headerlink" title="正式项目"></a>正式项目</h2><p>Survival：开发的第一款H5手游，负责后半段的前后端开发。Egret GUI项目,后端使用php和mysql，文字类游戏,<a href="https://pan.baidu.com/s/1sl0J9oT" target="_blank" rel="external">视频链接</a>。 <a href="http://monkeybean.applinzi.com/survivalDemo/" target="_blank" rel="external">个人服务器demo链接地址</a> ，demo太简陋，感兴趣直接到qq空间玩一下。<br><img src="/assets/survival1.png" alt="survival1">
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/03/26/H5_record/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1510,7 +1510,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-count">30</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

@@ -297,6 +297,416 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/02/sql_salt/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MonkeyBean">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="帅斌的冒险船">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/02/sql_salt/" itemprop="url">数据库字段加盐</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-02T11:20:15+08:00">
+                2017-12-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>为保证数据安全，数据库密码类字段设计成不可逆的定长密文，转为密文的过程需加盐。<br>写了个编码工具类，数据库字段的安全性可以保障。</p>
+<ul>
+<li>防撞库（密码碰撞攻击），大多数用户习惯问题，多个网站使用同一密码， 某个网站数据泄露后，其他网站密码若使用明文存储，就太尴尬了，用户账号安全性完全没有保障。</li>
+<li>防拖库后用户密码泄露，若数据库通过sql注入被拖库，攻击者即便拿到数据，密码为不可逆的密文，保证了用户密码不会被泄露。（不过话说回来，已经被拖库了，虽然密码不会暴露，但用户信息已经泄露了。。。）</li>
+<li>防彩虹表攻击。攻击者一般会事先建表或直接使用网上已有的各种库，单次哈希算法基本都已无效，虽然算法不可逆，但是查表可得密码。这种情况就需要算法不暴露，当然最关键的还是加盐。</li>
+</ul>
+<h2 id="Encode工具类"><a href="#Encode工具类" class="headerlink" title="Encode工具类"></a>Encode工具类</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div></pre></td><td class="code"><pre><div class="line">import org.apache.commons.codec.binary.Base64;</div><div class="line">import org.apache.commons.codec.digest.DigestUtils;</div><div class="line"></div><div class="line">import java.security.MessageDigest;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Created by Bean on 2017/12/1.</div><div class="line"> */</div><div class="line">public class EncodeUtil &#123;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 密码加盐,预防保障数据库泄露的用户信息安全,防密码碰撞攻击</div><div class="line">     */</div><div class="line">    private static final String PASSWORD_SALT = &quot;helloBeanSherry%salt&amp;ok=monkey_bean&quot;;</div><div class="line"></div><div class="line">    private static final int HASH_COUNT = 3;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 密码编码</div><div class="line">     */</div><div class="line">    public static String encodePassword(String password) &#123;</div><div class="line">        return encodeStrMd5(password, PASSWORD_SALT, HASH_COUNT);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 对密码做md5摘要+base64</div><div class="line">     * @param origin 原始字符串</div><div class="line">     * @param salt 盐</div><div class="line">     * @param count hash次数</div><div class="line">     */</div><div class="line">    public static String encodeStrMd5(String origin, String salt, int count) &#123;</div><div class="line">        String originAddSalt = twoStringXor(origin, salt);</div><div class="line">        String destMd5 = encodeMd5ByteDirectToBase64(originAddSalt);</div><div class="line">        if (count == 1) &#123;</div><div class="line">            return destMd5;</div><div class="line">        &#125; else &#123;</div><div class="line">            return encodeStrMd5(destMd5, salt, --count);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 两个字符串异或</div><div class="line">     */</div><div class="line">    private static String twoStringXor(String firstStr, String secondStr)&#123;</div><div class="line">        byte[] firstBytes = firstStr.getBytes();</div><div class="line">        byte[] secondBytes = secondStr.getBytes();</div><div class="line">        byte[] shortBytes, longBytes;</div><div class="line">        if(firstBytes.length &gt;= secondBytes.length)&#123;</div><div class="line">            shortBytes = secondBytes;</div><div class="line">            longBytes = firstBytes;</div><div class="line">        &#125;else&#123;</div><div class="line">            shortBytes = firstBytes;</div><div class="line">            longBytes = secondBytes;</div><div class="line">        &#125;</div><div class="line">        byte[] xorBytes = new byte[longBytes.length];</div><div class="line">        int i = 0;</div><div class="line">        for(; i&lt;shortBytes.length; i++)&#123;</div><div class="line">            xorBytes[i] = (byte)(shortBytes[i] ^ longBytes[i]);</div><div class="line">        &#125;</div><div class="line">        for(; i&lt;longBytes.length; i++)&#123;</div><div class="line">            xorBytes[i] = longBytes[i];</div><div class="line">        &#125;</div><div class="line">        return new String(xorBytes);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * encode</div><div class="line">     * MD5 bye[] direct to Base64</div><div class="line">     */</div><div class="line">    private static String encodeMd5ByteDirectToBase64(String origin)&#123;</div><div class="line"></div><div class="line">//        // 库MessageDigest</div><div class="line">//        String result = &quot;&quot;;</div><div class="line">//        try &#123;</div><div class="line">//            MessageDigest md;</div><div class="line">//            md = MessageDigest.getInstance(&quot;MD5&quot;);</div><div class="line">//            md.update(origin.getBytes());</div><div class="line">//            result = new String(Base64.encodeBase64(md.digest()));</div><div class="line">//        &#125; catch (Exception e) &#123;</div><div class="line">//            e.printStackTrace();</div><div class="line">//        &#125;</div><div class="line">//        return result;</div><div class="line"></div><div class="line">        // 库DigestUtils</div><div class="line">        return new String(Base64.encodeBase64(DigestUtils.md5(origin)));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * encode</div><div class="line">     * MD5 string, then to base64</div><div class="line">     */</div><div class="line">    private static String encodeMd5HexToBase64(String origin)&#123;</div><div class="line">        String Md5Hex = DigestUtils.md5Hex(origin);</div><div class="line">        return new String(Base64.encodeBase64(Md5Hex.getBytes()));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>思想：明文密码传入, 与盐做异或运算，得值，将值Md5，得到字节数据，直接进行base64运算。将以上步骤重复多次，得到结果即为存储值。</p>
+<h2 id="测试类"><a href="#测试类" class="headerlink" title="测试类"></a>测试类</h2><p>仅查看输出结果唯一。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">import junit.framework.TestCase;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Created by Bean on 2017/12/1.</div><div class="line"> */</div><div class="line">public class EncodeUtilTest extends TestCase &#123;</div><div class="line">    public void setUp() throws Exception &#123;</div><div class="line">        super.setUp();</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void tearDown() throws Exception &#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void testEncodePassword() throws Exception &#123;</div><div class="line">        String origin = &quot;a12345678&quot;;</div><div class="line">        String result = EncodeUtil.encodePassword(origin);</div><div class="line">        System.out.println(&quot;origin: &quot; + origin);</div><div class="line">        System.out.println(&quot;result: &quot; + result);</div><div class="line">        assertTrue(EncodeUtil.encodePassword(origin).equals(result));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="测试输出"><a href="#测试输出" class="headerlink" title="测试输出"></a>测试输出</h2><p>md5得到字节数组直接进行base64(第一种) 与 md5转为字符串再base64（第二种）不是一回事，结果完全不同。</p>
+<h4 id="第一种"><a href="#第一种" class="headerlink" title="第一种"></a>第一种</h4><p>encodeStrMd5调用encodeMd5ByteDirectToBase64<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">origin: a12345678</div><div class="line">result: 8yWH0mpMi2UxufmvlfPLqQ==</div></pre></td></tr></table></figure></p>
+<h4 id="第二种"><a href="#第二种" class="headerlink" title="第二种"></a>第二种</h4><p>encodeStrMd5调用encodeMd5HexToBase64<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">origin: a12345678</div><div class="line">result: YmI4YmZmNjY5OTAzYzU5NmJlM2FhODZhODYyOGI2NjQ=</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/02/transfer_safety/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MonkeyBean">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="帅斌的冒险船">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/02/transfer_safety/" itemprop="url">前后端安全策略初探</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-02T10:15:13+08:00">
+                2017-12-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>前后端的通信安全，若想完全保障，则要使用https，从tcp层保证传输安全，但https从证书申请、搭建、到使用，成本感人，目前国内只有主流大型网站使用。目前大多数网站还是使用的http。<br>用户的密码在传输时必须是密文，由于前端代码本就是暴露的，即便通过加密混淆也可以反解，所以前端的加密方法必须是不可逆的，若可逆则只能防小白。<br>所以通过算法的安全性保证传输安全。<br>以登录为例。</p>
+<h2 id="密码安全性"><a href="#密码安全性" class="headerlink" title="密码安全性"></a>密码安全性</h2><h3 id="方法一，N次Md5"><a href="#方法一，N次Md5" class="headerlink" title="方法一，N次Md5"></a>方法一，N次Md5</h3><p>1.数据库存储的密码字段为md5Hex + DES(AES)。<br>2.前端首先对密码进行单次Md5摘要CryptoJS.MD5(value).toString(CryptoJS.enc.Base64)，Date.now()获取当前时间stime,根据stime尾数（0-9）再进行n次Md5，尾数为6,也就是循环6遍Md5摘要，stime的随机性使每次Md5摘要值都不同，可简单防范。<br>3.后端对比密码是否正确时，首先从数据库读取密码存储的密文字段，再进行DES解密, 然后根据stime, 对dbPassword进行多次Md5运算，将运算结果与前端传的摘要密码对比即可。过程如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public static final String key = &quot;helloBean&quot;;</div><div class="line">public static boolean isRightPassword(String stime, String passwordMd5, String dbPassword)&#123;</div><div class="line">    dbPassword = DesUtil.decryptPsWithSlat(dbPassword, key);</div><div class="line">    int loop = Integer.parseInt(stime.substring(stime.length() - 1));</div><div class="line">    for (int i = 0; i &lt; loop; i++) &#123;</div><div class="line">        dbPassword = DigestUtils.md5Hex(dbPassword);</div><div class="line">    &#125;</div><div class="line">    return dbPassword.equals(passwordMd5);    </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>DesUtil工具类代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div></pre></td><td class="code"><pre><div class="line">import org.apache.commons.codec.binary.Hex;</div><div class="line"></div><div class="line">import javax.crypto.Cipher;</div><div class="line">import javax.crypto.SecretKey;</div><div class="line">import javax.crypto.SecretKeyFactory;</div><div class="line">import javax.crypto.spec.DESKeySpec;</div><div class="line">import java.security.SecureRandom;</div><div class="line"></div><div class="line">public class DesUtil &#123;</div><div class="line">    </div><div class="line">    /**</div><div class="line">     * 加密</div><div class="line">     *</div><div class="line">     * @param src byte[]</div><div class="line">     * @param key   String</div><div class="line">     * @return byte[]</div><div class="line">     */</div><div class="line">    public static byte[] encrypt(byte[] src, String key) &#123;</div><div class="line">        try &#123;</div><div class="line">            SecureRandom random = new SecureRandom();</div><div class="line">            DESKeySpec desKey = new DESKeySpec(key.getBytes());</div><div class="line">            //创建一个密匙工厂，然后用它把DESKeySpec转换成</div><div class="line">            SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(&quot;DES&quot;);</div><div class="line">            SecretKey securekey = keyFactory.generateSecret(desKey);</div><div class="line">            //Cipher对象实际完成加密操作</div><div class="line">            Cipher cipher = Cipher.getInstance(&quot;DES&quot;);</div><div class="line">            //用密匙初始化Cipher对象</div><div class="line">            cipher.init(Cipher.ENCRYPT_MODE, securekey, random);</div><div class="line">            //现在，获取数据并加密</div><div class="line">            //正式执行加密操作</div><div class="line">            return cipher.doFinal(src);</div><div class="line">        &#125; catch (Throwable e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        return null;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     *</div><div class="line">     * DES解密</div><div class="line">     *</div><div class="line">     * @param src      byte[]</div><div class="line">     * @param key String</div><div class="line">     * @return byte[]</div><div class="line">     */</div><div class="line">    public static byte[] decrypt(byte[] src, String key) throws Exception &#123;</div><div class="line">        // DES算法要求有一个可信任的随机数源</div><div class="line">        SecureRandom random = new SecureRandom();</div><div class="line">        // 创建一个DESKeySpec对象</div><div class="line">        DESKeySpec desKey = new DESKeySpec(key.getBytes());</div><div class="line">        // 创建一个密匙工厂</div><div class="line">        SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(&quot;DES&quot;);</div><div class="line">        // 将DESKeySpec对象转换成SecretKey对象</div><div class="line">        SecretKey securekey = keyFactory.generateSecret(desKey);</div><div class="line">        // Cipher对象实际完成解密操作</div><div class="line">        Cipher cipher = Cipher.getInstance(&quot;DES&quot;);</div><div class="line">        // 用密匙初始化Cipher对象</div><div class="line">        cipher.init(Cipher.DECRYPT_MODE, securekey, random);</div><div class="line">        // 真正开始解密操作</div><div class="line">        return cipher.doFinal(src);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">      /**</div><div class="line">     * 账户密码，DES算法盐作为密钥加密,</div><div class="line">     */</div><div class="line">    public static String encryptPassWithSlat(String passwdMd5, String key) &#123;</div><div class="line">        String desPassword = &quot;&quot;;</div><div class="line">        try &#123;</div><div class="line">            byte[] enc = encrypt(passwdMd5.getBytes(), key);</div><div class="line">            //加密结果需要转换成hex才能存入数据库</div><div class="line">            desPassword = Hex.encodeHexString(enc);</div><div class="line">        &#125; catch (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        return desPassword;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 账户密码，DES算法盐作为密钥解密,</div><div class="line">     */</div><div class="line">    public static String decryptPsWithSlat(String desPassword, String key) &#123;</div><div class="line">        String passwdMd5 = &quot;&quot;;</div><div class="line">        try &#123;</div><div class="line">            //desPassword是hex格式，应该先转换</div><div class="line">            byte[] hex = Hex.decodeHex(desPassword.toCharArray());</div><div class="line">            byte[] dec = decrypt(hex, key);</div><div class="line">            passwdMd5= new String(dec);</div><div class="line">        &#125; catch (Exception e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line">        return passwdMd5;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="方法二，前端加盐"><a href="#方法二，前端加盐" class="headerlink" title="方法二，前端加盐"></a>方法二，前端加盐</h3><p>1.数据库存储的密码字段为加盐后的摘要。<br>2.前端加盐后再单次摘要, 加盐建议重写异或而不是简单字符串拼接。然后根据stime做n次摘要，方法同上<br>3.后端从数据库取出字段，做n次摘要后，与前端传输的密码比对即可。</p>
+<h2 id="传输安全，身份认证，防简单攻击"><a href="#传输安全，身份认证，防简单攻击" class="headerlink" title="传输安全，身份认证，防简单攻击"></a>传输安全，身份认证，防简单攻击</h2><ul>
+<li>所有请求，均加摘要。前端获取当前时间ostime，与请求参数拼接后做一次摘要，即MD5(params + ostime)，同时将ostime传给后端，后端收到请求后，按相同方法算一次摘要，与前端传的摘要比对，相同则合法，否则返回401。防重放攻击，但攻击者通过分析前端代码可以模拟正常请求。</li>
+<li>后端对所有请求进行时间合法性判断，与服务器时间比对，30秒以内则认为合法。简单的防重放攻击。</li>
+<li>后端记录每个ip的每个路径的最近访问时间，本次访问时间-上次访问时间大于100ms，否则不可访问接口，返回401。</li>
+<li>用户身份信息存储在session中，对于登录后调用的接口，后端判断session中是否有身份信息，没有则返回403。攻击者可以进行cookie劫持和session获取进行攻击，开发者可通过使用session的同时引入token防御。</li>
+<li>能使用https一定不要使用http。</li>
+</ul>
+<h2 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h2><p>之前写了一个<a href="http://monkeybean.cn/2017/06/24/encryption_trans/" target="_blank" rel="external">客户端内嵌WebView与浏览器访问页面的安全机制</a>，在那个项目，用户身份认证使用的token策略，当时顾虑的是session机制可能不靠谱，但实际上网站类产品的身份认证都是使用的session。token身份认证一般是用于客户端和服务器通信（CS），客户端有数据库，可存储token；前后端（BS）的身份认证则是cookie-session，cookie是前端的概念，session是后端的，两者实际是一个。</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/30/md5_base64/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MonkeyBean">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="帅斌的冒险船">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/30/md5_base64/" itemprop="url">CryptoJS的使用引入</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-30T22:10:20+08:00">
+                2017-11-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>CryptoJS是原生javascript写的加密类库，提供了各种编码和加密算法，如MD5、SHA-1、SHA-256、AES、HMAC、PBKDF等。<br>以常见的Md5摘要及Base64编码为例，测试代码如下：</p>
+<h2 id="index-html"><a href="#index-html" class="headerlink" title="index.html"></a>index.html</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE html&gt;</div><div class="line">&lt;html&gt;</div><div class="line">&lt;head&gt;</div><div class="line">    &lt;meta charset=&quot;utf-8&quot; /&gt;</div><div class="line">    &lt;title&gt;测试加密&lt;/title&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line">    &lt;script src=&quot;js/jquery-3.2.1.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;</div><div class="line">    &lt;script src=&quot;js/core.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;</div><div class="line">    &lt;script src=&quot;js/md5.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;</div><div class="line">    &lt;script src=&quot;js/enc-base64.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;</div><div class="line">    &lt;script src=&quot;js/main.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;</div><div class="line">    &lt;script type=&quot;text/javascript&quot;&gt;</div><div class="line">        $(function()&#123;</div><div class="line">            console.log(&quot;-----start------&quot;);</div><div class="line">            var origin = &quot;a12345678&quot;;</div><div class="line">            console.log(&quot;origin string is :&quot; + origin);</div><div class="line">            console.log(&quot;md5 hex string is :&quot; + md5HexUtil(origin));</div><div class="line">            console.log(&quot;md5 byte direct to base64 method1 is :&quot; + md5ByteDirectToBase64UtilMethod1(origin));</div><div class="line">            console.log(&quot;md5 byte direct to base64 method2 is :&quot; + md5ByteDirectToBase64UtilMethod2(origin));</div><div class="line">            console.log(&quot;base4 encode finish :&quot; + base64Encode(origin));</div><div class="line">            console.log(&quot;base4 decode finish :&quot; + base64Decode(base64Encode(origin)));</div><div class="line">            console.log(&quot;md5 hex string, and then base4 is :&quot; + base64Encode(md5HexUtil(origin)));</div><div class="line">            console.log(&quot;-----end--------&quot;);</div><div class="line">        &#125;);  </div><div class="line">&lt;/script&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<h2 id="main-js"><a href="#main-js" class="headerlink" title="main.js"></a>main.js</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Md5摘要,转为16进制字符串(Md5字节数组转String默认即是十六进制)</div><div class="line"> */</div><div class="line">function md5HexUtil(value)&#123;</div><div class="line">    return CryptoJS.MD5(value).toString(CryptoJS.enc.HEX);</div><div class="line">&#125;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Md5摘要,直接将字节流转为Base64</div><div class="line"> * 方法一：</div><div class="line"> */</div><div class="line">function md5ByteDirectToBase64UtilMethod1(value)&#123;</div><div class="line">    return CryptoJS.MD5(value).toString(CryptoJS.enc.Base64);</div><div class="line">&#125;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Md5摘要,直接将字节流转为Base64</div><div class="line"> * 方法二：</div><div class="line"> */</div><div class="line">function md5ByteDirectToBase64UtilMethod2(value)&#123;</div><div class="line">    var base64 = CryptoJS.enc.Base64.stringify(CryptoJS.MD5(value));</div><div class="line">    return base64;</div><div class="line">&#125;</div><div class="line"></div><div class="line">/**</div><div class="line"> * base64编码</div><div class="line"> */</div><div class="line">function base64Encode(value)&#123;</div><div class="line">    var wordArray = CryptoJS.enc.Utf8.parse(value);</div><div class="line">    var base64 = CryptoJS.enc.Base64.stringify(wordArray);</div><div class="line">    return base64;</div><div class="line">&#125;</div><div class="line"></div><div class="line">/**</div><div class="line"> * base64解码</div><div class="line"> */</div><div class="line">function base64Decode(base64)&#123;</div><div class="line">    var parsedWordArray = CryptoJS.enc.Base64.parse(base64);</div><div class="line">    var parsedStr = parsedWordArray.toString(CryptoJS.enc.Utf8);</div><div class="line">    return parsedStr;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">-----start------</div><div class="line">test.html:17 origin string is :a12345678</div><div class="line">test.html:18 md5 hex string is :e9bc0e13a8a16cbb07b175d92a113126</div><div class="line">test.html:19 md5 byte direct to base64 method1 is :6bwOE6ihbLsHsXXZKhExJg==</div><div class="line">test.html:20 md5 byte direct to base64 method2 is :6bwOE6ihbLsHsXXZKhExJg==</div><div class="line">test.html:21 base4 encode finish :YTEyMzQ1Njc4</div><div class="line">test.html:22 base4 decode finish :a12345678</div><div class="line">test.html:23 md5 hex string, and then base4 is :ZTliYzBlMTNhOGExNmNiYjA3YjE3NWQ5MmExMTMxMjY=</div><div class="line">test.html:24 -----end--------</div></pre></td></tr></table></figure>
+<p>值得注意的是：<br>MD5转为字符串再进行Base64编码（第一种）<br>与<br>MD5字节数组直接进行Base64编码（第二种）<br>的输出结果不同。<br>原因是Md5结果为128bit，转字符串时，算法默认使用16进制，每4bit为一个字节，结果得到32字节长度的定长字符串，再进行base64编码，得到44字节长度的字符串； 而第二种Md5字节流直接进行Base64编码，1字节=8bit，128bit即16字节，base64编码后为24字节。</p>
+<h2 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">算法</th>
+<th style="text-align:center">bit</th>
+<th style="text-align:center">byte</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"> MD5</td>
+<td style="text-align:center">128</td>
+<td style="text-align:center">32</td>
+</tr>
+<tr>
+<td style="text-align:center"> SHA1</td>
+<td style="text-align:center">160</td>
+<td style="text-align:center">40</td>
+</tr>
+<tr>
+<td style="text-align:center"> SHA224</td>
+<td style="text-align:center">224</td>
+<td style="text-align:center">56</td>
+</tr>
+<tr>
+<td style="text-align:center"> SHA256</td>
+<td style="text-align:center">256</td>
+<td style="text-align:center">64</td>
+</tr>
+<tr>
+<td style="text-align:center"> SHA384</td>
+<td style="text-align:center">384</td>
+<td style="text-align:center">96</td>
+</tr>
+<tr>
+<td style="text-align:center"> SHA512</td>
+<td style="text-align:center">512</td>
+<td style="text-align:center">128</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>数据摘要算法不是加密算法，因为不可逆。常见的数据摘要算法位数及转为字符串所占字节数如上表</li>
+<li>js默认使用iso8859-1编码，几乎对于编码（utf8、unicode、gbk、ASCII）,英文数字等简单字符（码表中序列0-255）的编码，1字符=1字节</li>
+<li>base64编码会把3字节的二进制数据编码为4字节的文本数据，转换过程不足3字节，末尾补足\x00，再在编码的末尾加上1个或2个=号，表示补了多少字节，解码时再去掉。=在URL、Cookie里会造成歧义，所以，有些base64编码后会把=去掉</li>
+<li>Md5摘要的字符串长度为32字节，16字节的Md5摘要是取32字节的中间16字节。如a12345678的摘要，32位为：e9bc0e13a8a16cbb07b175d92a113126，16位为：a8a16cbb07b175d9</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/09/multi_datasource/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1110,359 +1520,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/06/utf8mb4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MonkeyBean">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="帅斌的冒险船">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/08/06/utf8mb4/" itemprop="url">简谈mysql中utf8mb4</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-06T17:20:18+08:00">
-                2017-08-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>最近开发遇到当Mysql存储微信昵称,而微信昵称有emoji表情符号时，数据库存储数据出现乱码。原因是mysql支持的utf8编码最大长度为3字节，如果遇4字节的宽字符(emoji表情符号、不常用的汉字、新增的Unicode字符等)就会插入异常。<br>Mysql在5.5.3之后增加utf8mb4（most bytes 4）编码,专门用于兼容四字节的unicode，一般情况。为了节省空间，使用utf8即可，但是建议使用utf8mb4。</p>
-<h2 id="Linux下更改mysql编码方式"><a href="#Linux下更改mysql编码方式" class="headerlink" title="Linux下更改mysql编码方式"></a>Linux下更改mysql编码方式</h2><p>使用Linux的发行版本为Centos</p>
-<h3 id="首先查看mysql版本，是否支持utf8mb4（5-5-3版本及以上）。"><a href="#首先查看mysql版本，是否支持utf8mb4（5-5-3版本及以上）。" class="headerlink" title="首先查看mysql版本，是否支持utf8mb4（5.5.3版本及以上）。"></a>首先查看mysql版本，是否支持utf8mb4（5.5.3版本及以上）。</h3><p>查看版本简易方法：<br>终端下：mysql -V<br>mysql下:status; 或 select version();</p>
-<h3 id="修改mysql配置文件"><a href="#修改mysql配置文件" class="headerlink" title="修改mysql配置文件"></a>修改mysql配置文件</h3><p>修改my.conf(windows下为my.ini)<br>修改前后的配置文件及系统编码分别如下：
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/08/06/utf8mb4/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/08/java_xml/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MonkeyBean">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="帅斌的冒险船">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/08/java_xml/" itemprop="url">java解析xml</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-08T15:40:20+08:00">
-                2017-07-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>如下xml为例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</div><div class="line">&lt;datasoruce&gt;</div><div class="line">    &lt;property name=&quot;driver&quot;&gt;com.mysql.jdbc.Driver&lt;/property&gt;</div><div class="line">    &lt;property name=&quot;url&quot;&gt;</div><div class="line">        jdbc:mysql://127.0.0.1:3306/poker?useUnicode=true&amp;amp;characterEncoding=utf8&amp;amp;useSSL=true</div><div class="line">    &lt;/property&gt;</div><div class="line">    &lt;property name=&quot;username&quot;&gt;root&lt;/property&gt;</div><div class="line">    &lt;property name=&quot;password&quot;&gt;root&lt;/property&gt;</div><div class="line">&lt;/datasoruce&gt;</div></pre></td></tr></table></figure></p>
-<p>解析引入dom4j,这里使用的为2.0.0版本，具体文档到社区查看，github已有最新2.0.1版本，dom4j更新很慢，也可以说比较稳定。<br>import org.dom4j.Document;<br>import org.dom4j.DocumentException;<br>import org.dom4j.Element;<br>import org.dom4j.io.SAXReader;<br>日志输出使用：<br>import org.slf4j.Logger;<br>import org.slf4j.LoggerFactory;<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/08/java_xml/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/06/js_xml/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MonkeyBean">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="帅斌的冒险船">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/06/js_xml/" itemprop="url">js解析xml</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-06T22:55:23+08:00">
-                2017-07-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="js解析xml字符串"><a href="#js解析xml字符串" class="headerlink" title="js解析xml字符串"></a>js解析xml字符串</h2><p>示例为DOMParser.parseFromString()的简单使用。<br>以下用到ES6的多行字符串，注意包含str值的两个点是Tab键上面、数字键1左边的按键，而不是单引号。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">function testXmlStr()&#123;</div><div class="line">	var str = `&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;&lt;root&gt;</div><div class="line">	&lt;province name=&quot;北京直辖市&quot;&gt;</div><div class="line">	&lt;city&gt;昌平区&lt;/city&gt;</div><div class="line">	&lt;city&gt;朝阳区&lt;/city&gt;</div><div class="line">	&lt;city&gt;崇文区&lt;/city&gt;</div><div class="line">	&lt;city&gt;大兴区&lt;/city&gt;</div><div class="line">	&lt;city&gt;东城区&lt;/city&gt;</div><div class="line">	&lt;city&gt;房山区&lt;/city&gt;</div><div class="line">	&lt;city&gt;丰台区&lt;/city&gt;</div><div class="line">	&lt;city&gt;海淀区&lt;/city&gt;</div><div class="line">	&lt;city&gt;怀柔区&lt;/city&gt;</div><div class="line">    &lt;city&gt;门头沟区&lt;/city&gt;</div><div class="line">    &lt;city&gt;密云区&lt;/city&gt;</div><div class="line">    &lt;city&gt;平谷区&lt;/city&gt;</div><div class="line">    &lt;city&gt;石景山区&lt;/city&gt;</div><div class="line">    &lt;city&gt;顺义区&lt;/city&gt;</div><div class="line">    &lt;city&gt;通州区&lt;/city&gt;</div><div class="line">    &lt;city&gt;西城区&lt;/city&gt;</div><div class="line">    &lt;city&gt;宣武区&lt;/city&gt;</div><div class="line">    &lt;city&gt;延庆区&lt;/city&gt;</div><div class="line">  &lt;/province&gt;&lt;/root&gt;`;  </div><div class="line">  </div><div class="line">	//创建文档对象  </div><div class="line">	var parser=new DOMParser();  </div><div class="line">	var xmlDoc=parser.parseFromString(str,&quot;text/xml&quot;);</div><div class="line">	//提取数据  </div><div class="line">	var countrys = xmlDoc.getElementsByTagName(&apos;city&apos;);  </div><div class="line">	var arr = [];</div><div class="line">	//输出数据</div><div class="line">	for (var i = 0; i &lt; countrys.length; i++) &#123;  </div><div class="line">		arr.push(countrys[i].textContent);  </div><div class="line">	&#125;;  </div><div class="line">	console.log(arr);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h2 id="js解析本地xml文件"><a href="#js解析本地xml文件" class="headerlink" title="js解析本地xml文件"></a>js解析本地xml文件</h2><p>要解析的xml文件部分数据如下：<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/06/js_xml/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1512,7 +1569,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-count">30</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

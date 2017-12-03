@@ -90,19 +90,19 @@
 
 
 
-<meta name="description" content="github上传新项目时，发现没有分类图标（图标错误也是这么改），这里将添加过程记录下来。根目录下新建.gitattributes文件，将以下内容复制保存。123*.js linguist-language=Java*.css linguist-language=Java*.html linguist-language=Java 该文件将html、css、js（想关联的文件）文件关联为Java(目">
+<meta name="description" content=".gitignore文件使用git做版本管理时，首先在根目录建README.md和.gitignore文件，.gitignore为忽略不必要提交的文件，特殊文件不加入版本库中，如编辑器缓存，若ide使用idea，.gitignore文件则要添加：123**/.idea**/*.iml**/target **表示所有层级目录 Github标记图标的更改github上传新项目时，发现没有分类图标（图标">
 <meta name="keywords" content="技术,Git">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Github 标记图标的更改">
+<meta property="og:title" content=".gitignore &amp; .gitattributes 简介">
 <meta property="og:url" content="http://yoursite.com/2017/03/12/gitIgnore/index.html">
 <meta property="og:site_name" content="帅斌的冒险船">
-<meta property="og:description" content="github上传新项目时，发现没有分类图标（图标错误也是这么改），这里将添加过程记录下来。根目录下新建.gitattributes文件，将以下内容复制保存。123*.js linguist-language=Java*.css linguist-language=Java*.html linguist-language=Java 该文件将html、css、js（想关联的文件）文件关联为Java(目">
+<meta property="og:description" content=".gitignore文件使用git做版本管理时，首先在根目录建README.md和.gitignore文件，.gitignore为忽略不必要提交的文件，特殊文件不加入版本库中，如编辑器缓存，若ide使用idea，.gitignore文件则要添加：123**/.idea**/*.iml**/target **表示所有层级目录 Github标记图标的更改github上传新项目时，发现没有分类图标（图标">
 <meta property="og:image" content="http://yoursite.com/assets/github_icon.png">
 <meta property="og:image" content="http://yoursite.com/assets/git_ignore.png">
-<meta property="og:updated_time" content="2017-07-02T03:14:57.537Z">
+<meta property="og:updated_time" content="2017-12-03T03:32:02.274Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Github 标记图标的更改">
-<meta name="twitter:description" content="github上传新项目时，发现没有分类图标（图标错误也是这么改），这里将添加过程记录下来。根目录下新建.gitattributes文件，将以下内容复制保存。123*.js linguist-language=Java*.css linguist-language=Java*.html linguist-language=Java 该文件将html、css、js（想关联的文件）文件关联为Java(目">
+<meta name="twitter:title" content=".gitignore &amp; .gitattributes 简介">
+<meta name="twitter:description" content=".gitignore文件使用git做版本管理时，首先在根目录建README.md和.gitignore文件，.gitignore为忽略不必要提交的文件，特殊文件不加入版本库中，如编辑器缓存，若ide使用idea，.gitignore文件则要添加：123**/.idea**/*.iml**/target **表示所有层级目录 Github标记图标的更改github上传新项目时，发现没有分类图标（图标">
 <meta name="twitter:image" content="http://yoursite.com/assets/github_icon.png">
 
 
@@ -137,7 +137,7 @@
 
 
 
-  <title>Github 标记图标的更改 | 帅斌的冒险船</title>
+  <title>.gitignore & .gitattributes 简介 | 帅斌的冒险船</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -317,7 +317,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Github 标记图标的更改</h1>
+          <h1 class="post-title" itemprop="name headline">.gitignore & .gitattributes 简介</h1>
         
 
         <div class="post-meta">
@@ -364,7 +364,9 @@
       
 
       
-        <p>github上传新项目时，发现没有分类图标（图标错误也是这么改），这里将添加过程记录下来。<br><img src="/assets/github_icon.png" alt="github_icon"><br>根目录下新建.gitattributes文件，将以下内容复制保存。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">*.js linguist-language=Java</div><div class="line">*.css linguist-language=Java</div><div class="line">*.html linguist-language=Java</div></pre></td></tr></table></figure></p>
+        <h2 id="gitignore文件"><a href="#gitignore文件" class="headerlink" title=".gitignore文件"></a>.gitignore文件</h2><p>使用git做版本管理时，首先在根目录建README.md和.gitignore文件，<br>.gitignore为忽略不必要提交的文件，特殊文件不加入版本库中，如编辑器缓存，若ide使用idea，.gitignore文件则要添加：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">**/.idea</div><div class="line">**/*.iml</div><div class="line">**/target</div></pre></td></tr></table></figure></p>
+<p>**表示所有层级目录</p>
+<h2 id="Github标记图标的更改"><a href="#Github标记图标的更改" class="headerlink" title="Github标记图标的更改"></a>Github标记图标的更改</h2><p>github上传新项目时，发现没有分类图标（图标错误也是这么改），这里将添加过程记录下来。<br><img src="/assets/github_icon.png" alt="github_icon"><br>根目录下新建.gitattributes文件，将以下内容复制保存。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">*.js linguist-language=Java</div><div class="line">*.css linguist-language=Java</div><div class="line">*.html linguist-language=Java</div></pre></td></tr></table></figure></p>
 <p>该文件将html、css、js（想关联的文件）文件关联为Java(目标类型)。此时，github将此项目识别为Java项目。<br><img src="/assets/git_ignore.png" alt="git_ignore"></p>
 
       
@@ -490,8 +492,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/avatar.png"
@@ -506,7 +517,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-count">30</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -586,6 +597,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#gitignore文件"><span class="nav-number">1.</span> <span class="nav-text">.gitignore文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Github标记图标的更改"><span class="nav-number">2.</span> <span class="nav-text">Github标记图标的更改</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
