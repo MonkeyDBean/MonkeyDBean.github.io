@@ -1,0 +1,1163 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JAVA,技术,Linux," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/uploads/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="Redis HA官方提供两种方案，Cluster（分片）及Sentinel（哨兵模式），这里仅介绍Sentinel配置及使用。两者不冲突，实际可同时使用。Sentinel优势如下：  监控（Monitoring）: 不断检查主从服务器是否运行正常 通知（Notification) : 被监控的某个redis服务器出现问题时，可通过api通知管理员或其他应用程序 自动故障迁移（Automatic F">
+<meta name="keywords" content="JAVA,技术,Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringBoot Session + Redis Sentinel">
+<meta property="og:url" content="http://yoursite.com/2018/04/17/redis_sentinel/index.html">
+<meta property="og:site_name" content="帅斌的冒险船">
+<meta property="og:description" content="Redis HA官方提供两种方案，Cluster（分片）及Sentinel（哨兵模式），这里仅介绍Sentinel配置及使用。两者不冲突，实际可同时使用。Sentinel优势如下：  监控（Monitoring）: 不断检查主从服务器是否运行正常 通知（Notification) : 被监控的某个redis服务器出现问题时，可通过api通知管理员或其他应用程序 自动故障迁移（Automatic F">
+<meta property="og:image" content="http://yoursite.com/assets/images/sentinel_arch.png">
+<meta property="og:image" content="http://yoursite.com/assets/images/redis_conf_file.png">
+<meta property="og:image" content="http://yoursite.com/assets/images/sentinel_master_slave.png">
+<meta property="og:image" content="http://yoursite.com/assets/images/redis_master_slave_status.png">
+<meta property="og:image" content="http://yoursite.com/assets/images/sentinel_change.png">
+<meta property="og:image" content="http://yoursite.com/assets/images/redis_kill_master.png">
+<meta property="og:image" content="http://yoursite.com/assets/images/redis_masterdown_slave1.png">
+<meta property="og:image" content="http://yoursite.com/assets/images/redis_masterdown_slave2.png">
+<meta property="og:image" content="http://yoursite.com/assets/images/redis_reboot.png">
+<meta property="og:image" content="http://yoursite.com/assets/images/rediscon_apollo.png">
+<meta property="og:updated_time" content="2018-04-19T14:16:34.587Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpringBoot Session + Redis Sentinel">
+<meta name="twitter:description" content="Redis HA官方提供两种方案，Cluster（分片）及Sentinel（哨兵模式），这里仅介绍Sentinel配置及使用。两者不冲突，实际可同时使用。Sentinel优势如下：  监控（Monitoring）: 不断检查主从服务器是否运行正常 通知（Notification) : 被监控的某个redis服务器出现问题时，可通过api通知管理员或其他应用程序 自动故障迁移（Automatic F">
+<meta name="twitter:image" content="http://yoursite.com/assets/images/sentinel_arch.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/17/redis_sentinel/"/>
+
+
+
+
+
+  <title>SpringBoot Session + Redis Sentinel | 帅斌的冒险船</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">帅斌的冒险船</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/17/redis_sentinel/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MonkeyBean">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="帅斌的冒险船">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">SpringBoot Session + Redis Sentinel</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-17T23:05:32+08:00">
+                2018-04-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Redis HA官方提供两种方案，Cluster（分片）及Sentinel（哨兵模式），这里仅介绍Sentinel配置及使用。两者不冲突，实际可同时使用。<br>Sentinel优势如下：</p>
+<ul>
+<li>监控（Monitoring）: 不断检查主从服务器是否运行正常</li>
+<li>通知（Notification) : 被监控的某个redis服务器出现问题时，可通过api通知管理员或其他应用程序</li>
+<li>自动故障迁移（Automatic Failover）: 当主服务器不能正常工作时，失效主服务器的其中一台从服务器升级为新的主服务器，失效主服务器的其他从服务器从属于新主服务器；客户端尝试连接失效主服务器时，集群返回客户端新的主服务器地址，保证可用性</li>
+</ul>
+<h2 id="Redis集群搭建"><a href="#Redis集群搭建" class="headerlink" title="Redis集群搭建"></a>Redis集群搭建</h2><p>Redis Sentinel方案至少需一个Master节点，两个Slave节点，三个Sentinel，本例Redis版本号为3.2.10，使用六个节点，拓扑结构如下：<br><img src="/assets/images/sentinel_arch.png" alt="sentinel_arch"></p>
+<h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><p><img src="/assets/images/redis_conf_file.png" alt="redis_config_file"></p>
+<h4 id="redis-6379-conf"><a href="#redis-6379-conf" class="headerlink" title="redis-6379.conf"></a>redis-6379.conf</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"># 端口</div><div class="line">port 6379</div><div class="line"># 默认为127.0.0.1。0.0.0.0不是真正意义的ip，指本机所有的ipv4地址</div><div class="line">bind 0.0.0.0</div><div class="line"># 守护进程方式，redis在后台运行</div><div class="line">daemonize yes</div><div class="line"># 日志文件名，日志记录启动过程以及故障转移过程</div><div class="line">logfile &quot;6379.log&quot;</div><div class="line"># 指定本地数据库文件名（默认为dump.rdb），redis重启时，将此文件内容执行一遍，获取数据。若开启appendonly，则优先使用appendonly.aof文件初始化数据集，不再使用此rdb文件</div><div class="line">dbfilename &quot;dump-6379.rdb&quot;</div><div class="line"># 工作目录，数据文件及日志文件存储路径</div><div class="line">dir &quot;/data/home/qa/redis_config/data&quot;</div><div class="line"># 安全策略，保护模式，开启则禁止公网访问redis, 开启的条件包括没有绑定ip以及没有设置访问密码，即不设置bind及requirepass参数</div><div class="line">protected-mode no</div><div class="line"># 访问主节点密码</div><div class="line">masterauth root</div><div class="line"># redis-server密码</div><div class="line">requirepass root</div><div class="line"># aof日志开启，每次写操作就会记录一条日志</div><div class="line">appendonly yes</div><div class="line"># 指定日志文件名（默认为appendonly.aof），redis重启时，将此文件内容执行一遍，获取数据</div><div class="line">appendfilename appendonly.aof</div></pre></td></tr></table></figure>
+<p>注：Redis有两种持久化方式，Snapshot(rdb)和Append-only file(aof)。可使用其中一种方式，也可以两种都使用。</p>
+<ul>
+<li><p>rdb方式的持久化通过快照完成，即符合一定条件时redis会自动将内存中的所有数据存储到rdb文件中。相对aof方式，rdb文件更小，数据恢复快，但是会丢失最后一次snapshot后更改的所有数据，如果容忍数据丢失，可采用这种方式。<br>本例对应配置参数为<br>dbfilename “dump-6379.rdb”</p>
+</li>
+<li><p>aof方式，redis默认不开启，aof方式是以追加的方式将所有写操作命令写入到磁盘文件.aof中，所以文件会越来越大，redis重启的恢复时间较长，为了缓解这种问题，redis使用了BGREWRITEAOF，用于删除重复多余的写命令，是一个占用一定系统资源的background进程（redis自行触发），因为rewrite的时候会删除旧的AOF文件，如果AOF文件比较大的话，会消耗更多的系统资源，好处就是数据一般不会丢失。<br>本例对应配置参数为<br>appendonly yes<br>appendfilename appendonly.aof</p>
+<a id="more"></a>
+<h4 id="redis-6380-conf"><a href="#redis-6380-conf" class="headerlink" title="redis-6380.conf"></a>redis-6380.conf</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">port 6380</div><div class="line">bind 0.0.0.0</div><div class="line">daemonize yes</div><div class="line">logfile &quot;6380.log&quot;</div><div class="line">dbfilename &quot;dump-6380.rdb&quot;</div><div class="line">dir &quot;/data/home/qa/redis_config/data&quot;</div><div class="line">protected-mode no</div><div class="line">masterauth root</div><div class="line">requirepass root</div><div class="line">appendonly yes</div><div class="line">appendfilename appendonly.aof</div><div class="line"># 指定主节点ip及端口号,若需外网访问，改为本机的外网地址</div><div class="line">slaveof 127.0.0.1 6379</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="redis-6381-conf"><a href="#redis-6381-conf" class="headerlink" title="redis-6381.conf"></a>redis-6381.conf</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">port 6381</div><div class="line">bind 0.0.0.0</div><div class="line">daemonize yes</div><div class="line">logfile &quot;6381.log&quot;</div><div class="line">dbfilename &quot;dump-6381.rdb&quot;</div><div class="line">dir &quot;/data/home/qa/redis_config/data&quot;</div><div class="line">protected-mode no</div><div class="line">masterauth root</div><div class="line">requirepass root</div><div class="line">appendonly yes</div><div class="line">appendfilename appendonly.aof</div><div class="line"># 指定主节点ip及端口号,若需外网访问,改为本机的外网地址</div><div class="line">slaveof 127.0.0.1 6379</div></pre></td></tr></table></figure>
+<h4 id="sentinel-36379-conf"><a href="#sentinel-36379-conf" class="headerlink" title="sentinel-36379.conf"></a>sentinel-36379.conf</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"># sentinel节点端口</div><div class="line">port 36379</div><div class="line"># 工作目录</div><div class="line">dir &quot;/data/home/qa/redis_config/data&quot;</div><div class="line"># 日志文件</div><div class="line">logfile &quot;36379.log&quot;</div><div class="line"></div><div class="line"># 不开启保护模式</div><div class="line">protected-mode no</div><div class="line"></div><div class="line"># 守护进程，后台运行</div><div class="line">daemonize yes</div><div class="line"></div><div class="line"># 监控的主节点，mymaster为自定义的主节点别名，127.0.0.1为监听访问ip，如需外网访问则改为本机外网ip, 6379为端口号，2表示判断主节点失效至少需两个sentinel节点同意</div><div class="line">sentinel monitor mymaster 127.0.0.1 6379 2</div><div class="line"></div><div class="line"># 设置连接master和slave时的密码。sentinel不能分别为master和slave设置不同的密码，因此master和slave的密码应该设置相同</div><div class="line">sentinel auth-pass mymaster root</div><div class="line"></div><div class="line"># 每个sentinel节点均要定期执行ping命令判断Redis数据节点和其他sentinel节点是否可达，超过30000毫秒认为不可达</div><div class="line">sentinel down-after-milliseconds mymaster 30000</div><div class="line"></div><div class="line"># 当sentinel节点集合对主节点故障判断达成一致时，故障迁移选出新节点，原来的从节点会向新主节点发起复制操作，限制每次想新主节点发起复制操作的从节点个数为1</div><div class="line">sentinel parallel-syncs mymaster 1</div><div class="line"></div><div class="line"># 故障转移超时时间</div><div class="line">sentinel failover-timeout mymaster 180000</div></pre></td></tr></table></figure>
+<p>sentinel-36380.conf和sentinel-36381.conf配置（除sentinel节点端口和日志文件名）与sentinel-36379.conf配置相同。<br>其他参数备注，本例不使用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># 故障转移期间，当warn级别的Sentinel事件发生时（指重要事件，如master不可达,sentinel判断master下线），会触发对应路径的脚本，向脚本发送相应的事件参数。</div><div class="line">sentinel notification-script $master_name $script_path_and_name</div><div class="line">例如</div><div class="line">sentinel notification-script mymaster /data/home/qa/redis_config/notify.sh</div><div class="line"></div><div class="line"># 故障转移结束后，触发应对路径的脚本，并向脚本发送故障转移结果参数</div><div class="line">sentinel client-reconfig-script $master_name $script_path_and_name</div><div class="line">例如</div><div class="line">sentinel client-reconfig-script mymaster /data/home/qa/redis_config/reconfig.sh</div></pre></td></tr></table></figure></p>
+<h3 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h3><p>root模式下</p>
+<h4 id="启动主从节点"><a href="#启动主从节点" class="headerlink" title="启动主从节点"></a>启动主从节点</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">redis-server  redis-6379.conf</div><div class="line">redis-server  redis-6380.conf</div><div class="line">redis-server  redis-6381.conf</div></pre></td></tr></table></figure>
+<p>此时从属关系如下图<br><img src="/assets/images/sentinel_master_slave.png" alt="sentinel_master_slave"><br>登入主从节点，查看主从状态如下图<br><img src="/assets/images/redis_master_slave_status.png" alt="redis_master_slave_status"></p>
+<h4 id="启动sentinel"><a href="#启动sentinel" class="headerlink" title="启动sentinel"></a>启动sentinel</h4><p>启动三个sentinel，可用两种方式，如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">redis-sentinel sentinel-36379.conf</div><div class="line">redis-server sentinel-36380.conf --sentinel</div></pre></td></tr></table></figure></p>
+<p>redis sentinel部署完成后,sentinel配置文件发生如下变化：</p>
+<ul>
+<li>sentinel节点自动发现了从节点、其余Sentinel节点</li>
+<li>去掉了默认配置，如：parallel-syncs、failover-timeout</li>
+<li>新添加了参数，如epoch</li>
+</ul>
+<p>此时查看sentinel-36379.conf配置文件如下<br><img src="/assets/images/sentinel_change.png" alt="sentinel_change"></p>
+<h4 id="故障转移实验"><a href="#故障转移实验" class="headerlink" title="故障转移实验"></a>故障转移实验</h4><p>干掉主节点后，查看sentinel节点监控的主节点信息，如下图，可以看到，节点6381成为主节点<br><img src="/assets/images/redis_kill_master.png" alt="redis_kill_master"><br>查看从节点信息如下图，原本的主节点（端口6379）已经断开了连接<br><img src="/assets/images/redis_masterdown_slave1.png" alt="redis_masterdown_slave1"><br><img src="/assets/images/redis_masterdown_slave2.png" alt="redis_masterdown_slave2"><br>重启端口为6379的数据节点后，查看从节点信息，可以看到6379节点复活，不过此时已经降级为端口6381的从节点，如下图<br><img src="/assets/images/redis_reboot.png" alt="redis_reboot"></p>
+<h2 id="Springboot-接入"><a href="#Springboot-接入" class="headerlink" title="Springboot 接入"></a>Springboot 接入</h2><h3 id="开始接入"><a href="#开始接入" class="headerlink" title="开始接入"></a>开始接入</h3><h4 id="依赖"><a href="#依赖" class="headerlink" title="依赖"></a>依赖</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&lt;!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis --&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;1.5.10.RELEASE&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line"></div><div class="line">&lt;!-- https://mvnrepository.com/artifact/org.springframework.session/spring-session-data-redis --&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;org.springframework.session&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;spring-session-data-redis&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;1.3.2.RELEASE&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
+<h4 id="配置示例"><a href="#配置示例" class="headerlink" title="配置示例"></a>配置示例</h4><p>配置从哪里读取无所谓，本例的配置从apollo读取，如下图：<br><img src="/assets/images/rediscon_apollo.png" alt="rediscon_apollo"></p>
+<h4 id="Java类配置类"><a href="#Java类配置类" class="headerlink" title="Java类配置类"></a>Java类配置类</h4><h5 id="RedisCon"><a href="#RedisCon" class="headerlink" title="RedisCon"></a>RedisCon</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div></pre></td><td class="code"><pre><div class="line">import com.ctrip.framework.apollo.spring.annotation.EnableApolloConfig;</div><div class="line">import org.springframework.boot.context.properties.ConfigurationProperties;</div><div class="line">import org.springframework.stereotype.Component;</div><div class="line"></div><div class="line">@ConfigurationProperties(prefix = &quot;redisCon&quot;)</div><div class="line">@Component(&quot;redisCon&quot;)</div><div class="line">@EnableApolloConfig(value = &quot;RedisCon&quot;)</div><div class="line">public class RedisCon &#123;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 主节点名称,mymaster</div><div class="line">     */</div><div class="line">    private String masterName;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 哨兵集群，ip:port,ip:port</div><div class="line">     */</div><div class="line">    private String sentinelAddress;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 连接池建立最大连接数</div><div class="line">     */</div><div class="line">    private int maxActive;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 最大空闲数</div><div class="line">     */</div><div class="line">    private int maxIdle;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 最小空闲数</div><div class="line">     */</div><div class="line">    private int minIdle;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 最大阻塞时间, 毫秒</div><div class="line">     */</div><div class="line">    private int maxWaitTime;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * redis数据节点密码</div><div class="line">     */</div><div class="line">    private String password;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 连接超时时间，单位毫秒</div><div class="line">     */</div><div class="line">    private int timeout;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 数据库索引</div><div class="line">     */</div><div class="line">    private int dbIndex;</div><div class="line"></div><div class="line"></div><div class="line">    public String getMasterName() &#123;</div><div class="line">        return masterName;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setMasterName(String masterName) &#123;</div><div class="line">        this.masterName = masterName;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getSentinelAddress() &#123;</div><div class="line">        return sentinelAddress;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setSentinelAddress(String sentinelAddress) &#123;</div><div class="line">        this.sentinelAddress = sentinelAddress;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public int getMaxActive() &#123;</div><div class="line">        return maxActive;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setMaxActive(int maxActive) &#123;</div><div class="line">        this.maxActive = maxActive;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public int getMaxIdle() &#123;</div><div class="line">        return maxIdle;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setMaxIdle(int maxIdle) &#123;</div><div class="line">        this.maxIdle = maxIdle;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public int getMinIdle() &#123;</div><div class="line">        return minIdle;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setMinIdle(int minIdle) &#123;</div><div class="line">        this.minIdle = minIdle;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public int getMaxWaitTime() &#123;</div><div class="line">        return maxWaitTime;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setMaxWaitTime(int maxWaitTime) &#123;</div><div class="line">        this.maxWaitTime = maxWaitTime;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public String getPassword() &#123;</div><div class="line">        return password;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setPassword(String password) &#123;</div><div class="line">        this.password = password;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public int getTimeout() &#123;</div><div class="line">        return timeout;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setTimeout(int timeout) &#123;</div><div class="line">        this.timeout = timeout;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public int getDbIndex() &#123;</div><div class="line">        return dbIndex;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setDbIndex(int dbIndex) &#123;</div><div class="line">        this.dbIndex = dbIndex;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="RedisConfig"><a href="#RedisConfig" class="headerlink" title="RedisConfig"></a>RedisConfig</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line">import org.springframework.beans.factory.annotation.Autowired;</div><div class="line">import org.springframework.context.annotation.Bean;</div><div class="line">import org.springframework.data.redis.connection.RedisConnectionFactory;</div><div class="line">import org.springframework.data.redis.connection.RedisSentinelConfiguration;</div><div class="line">import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;</div><div class="line">import org.springframework.data.redis.core.RedisTemplate;</div><div class="line">import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;</div><div class="line">import org.springframework.stereotype.Component;</div><div class="line">import redis.clients.jedis.JedisPoolConfig;</div><div class="line"></div><div class="line">@Component</div><div class="line">@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 86400)</div><div class="line">public class RedisConfig &#123;</div><div class="line"></div><div class="line">    private final RedisCon redisCon;</div><div class="line"></div><div class="line">    @Autowired</div><div class="line">    public RedisConfig(RedisCon redisCon) &#123;</div><div class="line">        this.redisCon = redisCon;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Bean</div><div class="line">    public RedisSentinelConfiguration sentinelConfig() &#123;</div><div class="line">        RedisSentinelConfiguration sentinelConfig = new RedisSentinelConfiguration().master(redisCon.getMasterName());</div><div class="line">        String[] sentinelNodes = redisCon.getSentinelAddress().split(&quot;,&quot;);</div><div class="line">        for (String node : sentinelNodes) &#123;</div><div class="line">            String[] ipAndPort = node.split(&quot;:&quot;);</div><div class="line">            String nodeIp = ipAndPort[0];</div><div class="line">            Integer nodePort = Integer.valueOf(ipAndPort[1]);</div><div class="line">            sentinelConfig.sentinel(nodeIp, nodePort);</div><div class="line">        &#125;</div><div class="line">        return sentinelConfig;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Bean</div><div class="line">    public RedisConnectionFactory redisConnectionFactory() &#123;</div><div class="line">        JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();</div><div class="line">        jedisPoolConfig.setMaxTotal(redisCon.getMaxActive());</div><div class="line">        jedisPoolConfig.setMaxIdle(redisCon.getMaxIdle());</div><div class="line">        jedisPoolConfig.setMinIdle(redisCon.getMinIdle());</div><div class="line">        jedisPoolConfig.setMaxWaitMillis(redisCon.getMaxWaitTime());</div><div class="line">        JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory(sentinelConfig(), jedisPoolConfig);</div><div class="line">        jedisConnectionFactory.setDatabase(redisCon.getDbIndex());</div><div class="line">        jedisConnectionFactory.setPassword(redisCon.getPassword());</div><div class="line">        jedisConnectionFactory.setTimeout(redisCon.getTimeout());</div><div class="line">        return jedisConnectionFactory;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Bean</div><div class="line">    public RedisTemplate&lt;String, Object&gt; redisTemplate() &#123;</div><div class="line">        RedisTemplate&lt;String, Object&gt; template = new RedisTemplate&lt;&gt;();</div><div class="line">        template.setConnectionFactory(redisConnectionFactory());</div><div class="line">        return template;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>至此，完成集群配置及接入。</p>
+<h3 id="问题备注"><a href="#问题备注" class="headerlink" title="问题备注"></a>问题备注</h3><p>1.使用redis作为session，需在logback.xml中更改日志级别不为debug，否则有日志打印过多的报警<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;logger name=&quot;org.springframework.session.web.http.SessionRepositoryFilter.SESSION_LOGGER&quot; level=&quot;WARN&quot;/&gt;</div></pre></td></tr></table></figure></p>
+<p>2.本地window开发环境没有问题，linux环境启动报错如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Error ： redis clients jedis HostAndPort cant resolve localhost address</div><div class="line">java.net.UnknownHostException:  tencent_QA_test11</div><div class="line">···</div><div class="line">···</div></pre></td></tr></table></figure></p>
+<p>解决：<br>1.查看linux系统主机名，shell输入hostname返回tencent_QA_test11<br>2.查看/etc/hosts文件中是否有127.0.0.1对应主机名，如果没有则添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">127.0.0.1  localhost  localhost.localdomain  VM_100_8_centos tencent_QA_test11</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/assets/wechatpay.png" alt="MonkeyBean WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/assets/zhifubao.png" alt="MonkeyBean Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JAVA/" rel="tag"># JAVA</a>
+          
+            <a href="/tags/技术/" rel="tag"># 技术</a>
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/24/docker_redis/" rel="next" title="初探Springboot-Redis">
+                <i class="fa fa-chevron-left"></i> 初探Springboot-Redis
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="MonkeyBean" />
+          <p class="site-author-name" itemprop="name">MonkeyBean</p>
+           
+              <p class="site-description motion-element" itemprop="description">行云流水 天马行空</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/MonkeyDBean" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/monkeybeanZ" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://yaoyaoblog.xyz/" title="耀耀的博客" target="_blank">耀耀的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://monkeysherry.cn/" title="Sherry的博客" target="_blank">Sherry的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://syf.ac.cn/" title="7nocturnal的博客" target="_blank">7nocturnal的博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis集群搭建"><span class="nav-number">1.</span> <span class="nav-text">Redis集群搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置文件"><span class="nav-number">1.1.</span> <span class="nav-text">配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#redis-6379-conf"><span class="nav-number">1.1.1.</span> <span class="nav-text">redis-6379.conf</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#redis-6380-conf"><span class="nav-number">1.1.2.</span> <span class="nav-text">redis-6380.conf</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#redis-6381-conf"><span class="nav-number">1.1.3.</span> <span class="nav-text">redis-6381.conf</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sentinel-36379-conf"><span class="nav-number">1.1.4.</span> <span class="nav-text">sentinel-36379.conf</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#验证"><span class="nav-number">1.2.</span> <span class="nav-text">验证</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#启动主从节点"><span class="nav-number">1.2.1.</span> <span class="nav-text">启动主从节点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启动sentinel"><span class="nav-number">1.2.2.</span> <span class="nav-text">启动sentinel</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#故障转移实验"><span class="nav-number">1.2.3.</span> <span class="nav-text">故障转移实验</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Springboot-接入"><span class="nav-number">2.</span> <span class="nav-text">Springboot 接入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#开始接入"><span class="nav-number">2.1.</span> <span class="nav-text">开始接入</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#依赖"><span class="nav-number">2.1.1.</span> <span class="nav-text">依赖</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置示例"><span class="nav-number">2.1.2.</span> <span class="nav-text">配置示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java类配置类"><span class="nav-number">2.1.3.</span> <span class="nav-text">Java类配置类</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#RedisCon"><span class="nav-number">2.1.3.1.</span> <span class="nav-text">RedisCon</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#RedisConfig"><span class="nav-number">2.1.3.2.</span> <span class="nav-text">RedisConfig</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题备注"><span class="nav-number">2.2.</span> <span class="nav-text">问题备注</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MonkeyBean</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (search_path.endsWith("json")) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
