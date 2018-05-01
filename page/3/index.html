@@ -297,6 +297,123 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/25/schedule/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MonkeyBean">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="帅斌的冒险船">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/25/schedule/" itemprop="url">Spring-boot 定时任务</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-25T15:03:22+08:00">
+                2017-06-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>定时任务在开发中很常见，最近在清理数据库废弃数据时用到定时任务。Spring-boot定时任务如下：</p>
+<h2 id="修改入口程序"><a href="#修改入口程序" class="headerlink" title="修改入口程序"></a>修改入口程序</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">@SpringBootApplication</div><div class="line">@EnableScheduling</div><div class="line">public class MainApplication &#123;</div><div class="line">    private static Logger logger = LoggerFactory.getLogger(MainApplication.class);</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        PokerAgentServerConfig.getInstance().requestConfig();</div><div class="line">        SpringApplication.run(MainApplication.class, args);</div><div class="line">        PokerAgentServerConfig.getInstance().initLogback();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //	配置filter实现前端的跨域访问</div><div class="line">    @Bean</div><div class="line">    public FilterRegistrationBean filterRegistrationBean() &#123;</div><div class="line">        FilterRegistrationBean registration = new FilterRegistrationBean();</div><div class="line">        registration.setFilter(new CrossOriginFilter());</div><div class="line">        registration.addUrlPatterns(&quot;/*&quot;);</div><div class="line">        return registration;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Bean</div><div class="line">    public FilterRegistrationBean filterTokenKeyBean() &#123;</div><div class="line">        FilterRegistrationBean registration = new FilterRegistrationBean();</div><div class="line">        registration.setFilter(new TokenKeyFilter());</div><div class="line">        registration.addUrlPatterns(&quot;/*&quot;);</div><div class="line">        return registration;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/06/25/schedule/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/24/encryption_trans/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1342,124 +1459,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/01/hexo_gitpages/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MonkeyBean">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="帅斌的冒险船">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/01/01/hexo_gitpages/" itemprop="url">Windows下使用Hexo+Github搭建个人博客</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-01T23:39:04+08:00">
-                2017-01-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="Hexo介绍"><a href="#Hexo介绍" class="headerlink" title="Hexo介绍"></a>Hexo介绍</h2><p>静态博客生成器，根据给定的主题，负责把写好的 Markdown 文章转换成一堆 HTML + CSS + Javascript 页面。另外，Hexo 还有把生成好的站点上传到 Github Pages 的功能。</p>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>记录个人学习和生活，作为程序猿，搭建个人博客是个不错的选择。但只是个博客，购买云服务器有些不值当，服务器稍微好些的配置就得上千。之前好友买过国外的服务器，hosts不加域名解析经常访问不到，更悲催的是，.com域名还被污染了，吓得我抱紧自己，决定用免费的gitPages吧。<img src="/assets/scaryDog.png" alt="scaryDog"><br>搭建的时候看过一些教程，还是遇到了一些问题（其实直接看hexo官网就ok的）。<br>我在搭建时，使用的是Win10系统，以下搭建步骤是支持所有Wins系统的。OS系统下搭建与Wins不同，以hexo官网为准，可参考本文</p>
-<h2 id="搭建步骤"><a href="#搭建步骤" class="headerlink" title="搭建步骤"></a>搭建步骤</h2>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/01/01/hexo_gitpages/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1509,7 +1508,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">36</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

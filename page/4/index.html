@@ -297,6 +297,247 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/05/win_dns/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MonkeyBean">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="帅斌的冒险船">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/02/05/win_dns/" itemprop="url">window下修改本机dns及本机域名</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-05T21:15:22+08:00">
+                2017-02-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="修改本机dns服务器"><a href="#修改本机dns服务器" class="headerlink" title="修改本机dns服务器"></a>修改本机dns服务器</h2><p>本地dns出现问题，如某些域名访问不到（无法解析），可修改本机dns服务器<br>路径：控制面板-&gt;网络和Internet-&gt;网络连接-&gt;本地连接-&gt;右键属性-&gt;网络-&gt;双击Internet协议版本4（TCP/IPV4），显示如下<br><img src="/assets/images/ipv4_panel_before.png" alt="ipv4_panel_before"><br>修改为如下<br><img src="/assets/images/ipv4_panel_after.png" alt="ipv4_panel_after"><br>8.8.8.8及8.8.4.4是google提供的公用dns服务器,其他大厂也提供了公用dns服务器，随意选个用就行。</p>
+<h2 id="修改本机域名解析"><a href="#修改本机域名解析" class="headerlink" title="修改本机域名解析"></a>修改本机域名解析</h2><p>hosts文件添加域名解析，可实现</p>
+<ul>
+<li>自定义域名在本地访问本机，实际没啥用，如添加<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">127.0.0.1 dev.test.com</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>cmd下查看域名解析（nslookup），可看到域名已指向本机，本机可通过域名访问本地服务。</p>
+<ul>
+<li>解决域名污染的问题。未备案的域名指向个人搭建的服务器，不幸的话，会遇到域名污染的情况，无法通过域名获取服务，可修改hosts文件添加本机域名解析，一定程度解决问题</li>
+<li>翻墙，下载可靠的hosts文件，替换本机hosts文件，可一定程度翻墙。正经翻墙还是需要有国外服务器，搭建个梯子，正向代理。<br>hosts文件路径：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">C:\Windows\System32\drivers\etc\hosts</div></pre></td></tr></table></figure>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/01/hexo_gitpages/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MonkeyBean">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="帅斌的冒险船">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/01/01/hexo_gitpages/" itemprop="url">Windows下使用Hexo+Github搭建个人博客</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-01T23:39:04+08:00">
+                2017-01-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="Hexo介绍"><a href="#Hexo介绍" class="headerlink" title="Hexo介绍"></a>Hexo介绍</h2><p>静态博客生成器，根据给定的主题，负责把写好的 Markdown 文章转换成一堆 HTML + CSS + Javascript 页面。另外，Hexo 还有把生成好的站点上传到 Github Pages 的功能。</p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>记录个人学习和生活，作为程序猿，搭建个人博客是个不错的选择。但只是个博客，购买云服务器有些不值当，服务器稍微好些的配置就得上千。之前好友买过国外的服务器，hosts不加域名解析经常访问不到，更悲催的是，.com域名还被污染了，吓得我抱紧自己，决定用免费的gitPages吧。<img src="/assets/scaryDog.png" alt="scaryDog"><br>搭建的时候看过一些教程，还是遇到了一些问题（其实直接看hexo官网就ok的）。<br>我在搭建时，使用的是Win10系统，以下搭建步骤是支持所有Wins系统的。OS系统下搭建与Wins不同，以hexo官网为准，可参考本文</p>
+<h2 id="搭建步骤"><a href="#搭建步骤" class="headerlink" title="搭建步骤"></a>搭建步骤</h2>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/01/01/hexo_gitpages/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/10/29/get_post/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -818,7 +1059,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">36</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

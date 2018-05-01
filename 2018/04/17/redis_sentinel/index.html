@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="JAVA,技术,Linux," />
+  <meta name="keywords" content="技术,Linux,JAVA," />
 
 
 
@@ -91,7 +91,7 @@
 
 
 <meta name="description" content="Redis HA官方提供两种方案，Cluster（分片）及Sentinel（哨兵模式），这里仅介绍Sentinel配置及使用。两者不冲突，实际可同时使用。Sentinel优势如下：  监控（Monitoring）: 不断检查主从服务器是否运行正常 通知（Notification) : 被监控的某个redis服务器出现问题时，可通过api通知管理员或其他应用程序 自动故障迁移（Automatic F">
-<meta name="keywords" content="JAVA,技术,Linux">
+<meta name="keywords" content="技术,Linux,JAVA">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SpringBoot Session + Redis Sentinel">
 <meta property="og:url" content="http://yoursite.com/2018/04/17/redis_sentinel/index.html">
@@ -107,7 +107,7 @@
 <meta property="og:image" content="http://yoursite.com/assets/images/redis_masterdown_slave2.png">
 <meta property="og:image" content="http://yoursite.com/assets/images/redis_reboot.png">
 <meta property="og:image" content="http://yoursite.com/assets/images/rediscon_apollo.png">
-<meta property="og:updated_time" content="2018-04-20T14:29:43.846Z">
+<meta property="og:updated_time" content="2018-05-01T10:12:00.904Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringBoot Session + Redis Sentinel">
 <meta name="twitter:description" content="Redis HA官方提供两种方案，Cluster（分片）及Sentinel（哨兵模式），这里仅介绍Sentinel配置及使用。两者不冲突，实际可同时使用。Sentinel优势如下：  监控（Monitoring）: 不断检查主从服务器是否运行正常 通知（Notification) : 被监控的某个redis服务器出现问题时，可通过api通知管理员或其他应用程序 自动故障迁移（Automatic F">
@@ -386,10 +386,10 @@
 <li><p>rdb方式的持久化通过快照完成，即符合一定条件时redis会自动将内存中的所有数据存储到rdb文件中。相对aof方式，rdb文件更小，数据恢复快，但是会丢失最后一次snapshot后更改的所有数据，如果容忍数据丢失，可采用这种方式。<br>本例对应配置参数为<br>dbfilename “dump-6379.rdb”</p>
 </li>
 <li><p>aof方式，redis默认不开启，aof方式是以追加的方式将所有写操作命令写入到磁盘文件.aof中，所以文件会越来越大，redis重启的恢复时间较长，为了缓解这种问题，redis使用了BGREWRITEAOF，用于删除重复多余的写命令，是一个占用一定系统资源的background进程（redis自行触发），因为rewrite的时候会删除旧的AOF文件，如果AOF文件比较大的话，会消耗更多的系统资源，好处就是数据一般不会丢失。<br>本例对应配置参数为<br>appendonly yes<br>appendfilename appendonly.aof</p>
-<a id="more"></a>
-<h4 id="redis-6380-conf"><a href="#redis-6380-conf" class="headerlink" title="redis-6380.conf"></a>redis-6380.conf</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">port 6380</div><div class="line">bind 0.0.0.0</div><div class="line">daemonize yes</div><div class="line">logfile &quot;6380.log&quot;</div><div class="line">dbfilename &quot;dump-6380.rdb&quot;</div><div class="line">dir &quot;/data/home/qa/redis_config/data&quot;</div><div class="line">protected-mode no</div><div class="line">masterauth root</div><div class="line">requirepass root</div><div class="line">appendonly yes</div><div class="line">appendfilename appendonly.aof</div><div class="line"># 指定主节点ip及端口号,若需外网访问，改为本机的外网地址</div><div class="line">slaveof 127.0.0.1 6379</div></pre></td></tr></table></figure>
 </li>
 </ul>
+<a id="more"></a>
+<h4 id="redis-6380-conf"><a href="#redis-6380-conf" class="headerlink" title="redis-6380.conf"></a>redis-6380.conf</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">port 6380</div><div class="line">bind 0.0.0.0</div><div class="line">daemonize yes</div><div class="line">logfile &quot;6380.log&quot;</div><div class="line">dbfilename &quot;dump-6380.rdb&quot;</div><div class="line">dir &quot;/data/home/qa/redis_config/data&quot;</div><div class="line">protected-mode no</div><div class="line">masterauth root</div><div class="line">requirepass root</div><div class="line">appendonly yes</div><div class="line">appendfilename appendonly.aof</div><div class="line"># 指定主节点ip及端口号,若需外网访问，改为本机的外网地址</div><div class="line">slaveof 127.0.0.1 6379</div></pre></td></tr></table></figure>
 <h4 id="redis-6381-conf"><a href="#redis-6381-conf" class="headerlink" title="redis-6381.conf"></a>redis-6381.conf</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">port 6381</div><div class="line">bind 0.0.0.0</div><div class="line">daemonize yes</div><div class="line">logfile &quot;6381.log&quot;</div><div class="line">dbfilename &quot;dump-6381.rdb&quot;</div><div class="line">dir &quot;/data/home/qa/redis_config/data&quot;</div><div class="line">protected-mode no</div><div class="line">masterauth root</div><div class="line">requirepass root</div><div class="line">appendonly yes</div><div class="line">appendfilename appendonly.aof</div><div class="line"># 指定主节点ip及端口号,若需外网访问,改为本机的外网地址</div><div class="line">slaveof 127.0.0.1 6379</div></pre></td></tr></table></figure>
 <h4 id="sentinel-36379-conf"><a href="#sentinel-36379-conf" class="headerlink" title="sentinel-36379.conf"></a>sentinel-36379.conf</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"># sentinel节点端口</div><div class="line">port 36379</div><div class="line"># 工作目录</div><div class="line">dir &quot;/data/home/qa/redis_config/data&quot;</div><div class="line"># 日志文件</div><div class="line">logfile &quot;36379.log&quot;</div><div class="line"></div><div class="line"># 不开启保护模式</div><div class="line">protected-mode no</div><div class="line"></div><div class="line"># 守护进程，后台运行</div><div class="line">daemonize yes</div><div class="line"></div><div class="line"># 监控的主节点，mymaster为自定义的主节点别名，127.0.0.1为监听访问ip，如需外网访问则改为本机外网ip, 6379为端口号，2表示判断主节点失效至少需两个sentinel节点同意</div><div class="line">sentinel monitor mymaster 127.0.0.1 6379 2</div><div class="line"></div><div class="line"># 设置连接master和slave时的密码。sentinel不能分别为master和slave设置不同的密码，因此master和slave的密码应该设置相同</div><div class="line">sentinel auth-pass mymaster root</div><div class="line"></div><div class="line"># 每个sentinel节点均要定期执行ping命令判断Redis数据节点和其他sentinel节点是否可达，超过30000毫秒认为不可达</div><div class="line">sentinel down-after-milliseconds mymaster 30000</div><div class="line"></div><div class="line"># 当sentinel节点集合对主节点故障判断达成一致时，故障迁移选出新节点，原来的从节点会向新主节点发起复制操作，限制每次想新主节点发起复制操作的从节点个数为1</div><div class="line">sentinel parallel-syncs mymaster 1</div><div class="line"></div><div class="line"># 故障转移超时时间</div><div class="line">sentinel failover-timeout mymaster 180000</div></pre></td></tr></table></figure>
 <p>sentinel-36380.conf和sentinel-36381.conf配置（除sentinel节点端口和日志文件名）与sentinel-36379.conf配置相同。<br>其他参数备注，本例不使用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># 故障转移期间，当warn级别的Sentinel事件发生时（指重要事件，如master不可达,sentinel判断master下线），会触发对应路径的脚本，向脚本发送相应的事件参数。</div><div class="line">sentinel notification-script $master_name $script_path_and_name</div><div class="line">例如</div><div class="line">sentinel notification-script mymaster /data/home/qa/redis_config/notify.sh</div><div class="line"></div><div class="line"># 故障转移结束后，触发应对路径的脚本，并向脚本发送故障转移结果参数</div><div class="line">sentinel client-reconfig-script $master_name $script_path_and_name</div><div class="line">例如</div><div class="line">sentinel client-reconfig-script mymaster /data/home/qa/redis_config/reconfig.sh</div></pre></td></tr></table></figure></p>
@@ -464,11 +464,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/JAVA/" rel="tag"># JAVA</a>
-          
             <a href="/tags/技术/" rel="tag"># 技术</a>
           
             <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+            <a href="/tags/JAVA/" rel="tag"># JAVA</a>
           
         </div>
       
@@ -490,6 +490,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/27/frp-map/" rel="prev" title="frp搭建，实现内网穿透（端口映射）">
+                frp搭建，实现内网穿透（端口映射） <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -561,7 +565,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">36</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
