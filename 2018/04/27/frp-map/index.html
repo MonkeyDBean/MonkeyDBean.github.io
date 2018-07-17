@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Linux,技术," />
+  <meta name="keywords" content="技术,Linux," />
 
 
 
@@ -91,7 +91,7 @@
 
 
 <meta name="description" content="内网穿透基本知识参照ngrok搭建 搭建环境准备外网服务器系统为centos7, 内网客户端系统为win7；一个指向外网服务器的公网域名 工具下载git开源项目，release包地址, 下载最新的，这里使用的版本为v0.17.0外网服务下执行：12345wget https://github.com/fatedier/frp/releases/download/v0.17.0/frp_0.17.0">
-<meta name="keywords" content="Linux,技术">
+<meta name="keywords" content="技术,Linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="frp搭建，实现内网穿透（端口映射）">
 <meta property="og:url" content="http://yoursite.com/2018/04/27/frp-map/index.html">
@@ -100,7 +100,7 @@
 <meta property="og:image" content="http://yoursite.com/assets/images/frps_public_log.png">
 <meta property="og:image" content="http://yoursite.com/assets/images/frpc_private_log.png">
 <meta property="og:image" content="http://yoursite.com/assets/images/frp_browser.png">
-<meta property="og:updated_time" content="2018-05-01T10:42:12.567Z">
+<meta property="og:updated_time" content="2018-07-17T14:05:57.344Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="frp搭建，实现内网穿透（端口映射）">
 <meta name="twitter:description" content="内网穿透基本知识参照ngrok搭建 搭建环境准备外网服务器系统为centos7, 内网客户端系统为win7；一个指向外网服务器的公网域名 工具下载git开源项目，release包地址, 下载最新的，这里使用的版本为v0.17.0外网服务下执行：12345wget https://github.com/fatedier/frp/releases/download/v0.17.0/frp_0.17.0">
@@ -374,7 +374,8 @@
 <h4 id="内网客户端"><a href="#内网客户端" class="headerlink" title="内网客户端"></a>内网客户端</h4><p>编辑frpc.ini文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">[common]</div><div class="line"># 外网服务器ip</div><div class="line">server_addr = **.**.**.**</div><div class="line">#与服务端bind_port一致</div><div class="line">server_port = 7000</div><div class="line"></div><div class="line">[web]</div><div class="line"># 声明协议类型</div><div class="line">type = http</div><div class="line">#内网机器web服务端口</div><div class="line">local_port = 8060</div><div class="line"># 指向外网服务的公网域名</div><div class="line">custom_domains = yourdomain</div></pre></td></tr></table></figure></p>
 <p>执行./frpc.exe，连接服务<br><a id="more"></a></p>
 <h4 id="访问"><a href="#访问" class="headerlink" title="访问"></a>访问</h4><p>浏览器输入外网地址，访问内网服务，格式为yourdomain:7001/youpath<br>如下图：<br>外网服务器日志<br><img src="/assets/images/frps_public_log.png" alt="frps_public_log"><br>内网服务器日志<br><img src="/assets/images/frpc_private_log.png" alt="frpc_private_log"><br>浏览器显示<br><img src="/assets/images/frp_browser.png" alt="frp_browser"><br>至此，使用frp完成基本的内网穿透，通过外网可访问内网的web项目，实际可用于解决本地调试第三方回调。</p>
-<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><p>frp功能强大，通过配置frpc.ini和frpc.ini，可实现通过外网ssh登录内网机器、远程桌面、查看frp dashboard、https访问等，配置都很简单，需要则查阅相关资料。</p>
+<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><p>监听多端口，frpc.ini如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">[common]</div><div class="line">server_addr = **.**.**.**</div><div class="line">server_port = 7000</div><div class="line"></div><div class="line">[web1]</div><div class="line">type = http</div><div class="line">local_port = 8070</div><div class="line">custom_domains = yourdomain1</div><div class="line"></div><div class="line">[web2]</div><div class="line">type = http</div><div class="line">local_port = 8080</div><div class="line">custom_domains = yourdomain2</div></pre></td></tr></table></figure></p>
+<p>frp功能强大，通过配置frpc.ini和frpc.ini，可实现通过外网ssh登录内网机器、远程桌面、查看frp dashboard、https访问等，配置都很简单，需要则查阅相关资料。</p>
 
       
     </div>
@@ -425,9 +426,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Linux/" rel="tag"># Linux</a>
-          
             <a href="/tags/技术/" rel="tag"># 技术</a>
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
           
         </div>
       
