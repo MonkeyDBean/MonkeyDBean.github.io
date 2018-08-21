@@ -103,9 +103,9 @@
 <meta property="og:image" content="http://yoursite.com/assets/images/redis-centos-connect.png">
 <meta property="og:image" content="http://yoursite.com/assets/images/redis_test_request.png">
 <meta property="og:image" content="http://yoursite.com/assets/images/redis_test_result.png">
-<meta property="og:image" content="http://yoursite.com/assets/images/redis_session_request.png">
+<meta property="og:image" content="http://yoursite.com/assets/images/redis_session_request.jpg">
 <meta property="og:image" content="http://yoursite.com/assets/images/session_redis_cli.png">
-<meta property="og:updated_time" content="2018-03-29T15:29:46.187Z">
+<meta property="og:updated_time" content="2018-08-21T15:19:35.538Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="初探Springboot-Redis">
 <meta name="twitter:description" content="仅用缓存功能，不与JPA结合。Redis及Docker的基础用法自行查询。 环境准备，安装配置Win71.官网下载redis, 在解压后的目录打开cmd(按住shift, 鼠标右键)，输入1redis-server redis.windows.conf 出现如下界面为启动成功 2.再打开一个cmd，执行 redis-cli 如下 3.在系统变量Path中添加redis目录，下次执行redis-se">
@@ -403,7 +403,7 @@
 <h3 id="1-引入依赖"><a href="#1-引入依赖" class="headerlink" title="1.引入依赖"></a>1.引入依赖</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;!-- https://mvnrepository.com/artifact/org.springframework.session/spring-session-data-redis --&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;org.springframework.session&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;spring-session-data-redis&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;1.3.2.RELEASE&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
 <h3 id="2-注解"><a href="#2-注解" class="headerlink" title="2. 注解"></a>2. 注解</h3><p>只需在上述的RedisConfig加一行注解即可<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@Component</div><div class="line">@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 3600)</div><div class="line">public class RedisConfig &#123;</div><div class="line">	//省略</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <h3 id="3-测试接口"><a href="#3-测试接口" class="headerlink" title="3.测试接口"></a>3.测试接口</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">@ApiOperation(value = &quot;测试session&quot;)</div><div class="line">@GetMapping(&quot;session/uid&quot;)</div><div class="line">public Object getSessionUid(HttpSession session)&#123;</div><div class="line">   UUID uid = (UUID) session.getAttribute(&quot;uid&quot;);</div><div class="line">    if (uid == null) &#123;</div><div class="line">        uid = UUID.randomUUID();</div><div class="line">    &#125;</div><div class="line">    session.setAttribute(&quot;uid&quot;, uid);</div><div class="line">    return session.getAttribute(&quot;uid&quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>请求结果如下：<br><img src="/assets/images/redis_session_request.png" alt="redis_session_request"><br>连上redis,查看<br><img src="/assets/images/session_redis_cli.png" alt="session_redis_cli"></p>
+<p>请求结果如下：<br><img src="/assets/images/redis_session_request.jpg" alt="redis_session_request"><br>连上redis,查看<br><img src="/assets/images/session_redis_cli.png" alt="session_redis_cli"></p>
 <h3 id="4-身份验证"><a href="#4-身份验证" class="headerlink" title="4.身份验证"></a>4.身份验证</h3><p>未使用redis session前，重启服务后，session失效，需重新验证。<br>接入redis session后，重启服务，访问，无需身份验证，session已存储在redis中。</p>
 
       
