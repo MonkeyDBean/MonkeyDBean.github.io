@@ -97,7 +97,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/12/02/transfer_safety/index.html">
 <meta property="og:site_name" content="帅斌的冒险船">
 <meta property="og:description" content="前后端的通信安全，若想完全保障，则要使用https，从tcp层保证传输安全，但https从证书申请、搭建、到使用，成本感人，目前国内只有主流大型网站使用。目前大多数网站还是使用的http。用户的密码在传输时必须是密文，由于前端代码本就是暴露的，即便通过加密混淆也可以反解，所以前端的加密方法必须是不可逆的，若可逆则只能防小白。所以通过算法的安全性保证传输安全。以登录为例。 密码安全性方法一，N次Md">
-<meta property="og:updated_time" content="2017-12-03T03:56:01.002Z">
+<meta property="og:updated_time" content="2018-09-19T13:44:46.969Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="前后端安全策略初探">
 <meta name="twitter:description" content="前后端的通信安全，若想完全保障，则要使用https，从tcp层保证传输安全，但https从证书申请、搭建、到使用，成本感人，目前国内只有主流大型网站使用。目前大多数网站还是使用的http。用户的密码在传输时必须是密文，由于前端代码本就是暴露的，即便通过加密混淆也可以反解，所以前端的加密方法必须是不可逆的，若可逆则只能防小白。所以通过算法的安全性保证传输安全。以登录为例。 密码安全性方法一，N次Md">
@@ -374,7 +374,7 @@
 <li>用户身份信息存储在session中，对于登录后调用的接口，后端判断session中是否有身份信息，没有则返回403。攻击者可以进行cookie劫持和session获取进行攻击，开发者可通过使用session的同时引入token防御。</li>
 <li>能使用https一定不要使用http。</li>
 </ul>
-<h2 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h2><p>之前写了一个<a href="http://monkeybean.cn/2017/06/24/encryption_trans/" target="_blank" rel="external">客户端内嵌WebView与浏览器访问页面的安全机制</a>，在那个项目，用户身份认证使用的token策略，当时顾虑的是session机制可能不靠谱，但实际上网站类产品的身份认证都是使用的session。token身份认证一般是用于客户端和服务器通信（CS），客户端有数据库，可存储token；前后端（BS）的身份认证则是cookie-session，cookie是前端的概念，session是后端的，两者实际是一个。</p>
+<h2 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h2><p>之前写了一个<a href="http://monkeybean.cn/2017/06/24/encryption_trans/" target="_blank" rel="external">客户端内嵌WebView与浏览器访问页面的安全机制</a>，在那个项目，用户身份认证使用的token策略，token身份认证一般是用于客户端和服务器通信（CS），客户端可将token存储到本地数据库；前后端（BS）的身份认证则是cookie-session。</p>
 
       
     </div>
