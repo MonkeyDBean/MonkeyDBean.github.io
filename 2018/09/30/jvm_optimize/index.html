@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="技术,Hexo," />
+  <meta name="keywords" content="技术,JAVA," />
 
 
 
@@ -90,23 +90,19 @@
 
 
 
-<meta name="description" content="Hexo介绍静态博客生成器，根据给定的主题，负责把写好的 Markdown 文章转换成一堆 HTML + CSS + Javascript 页面。另外，Hexo 还有把生成好的站点上传到 Github Pages 的功能。 背景记录个人学习和生活，作为程序猿，搭建个人博客是个不错的选择。但只是个博客，购买云服务器有些不值当，服务器稍微好些的配置就得上千。之前好友买过国外的服务器，hosts不加域名">
-<meta name="keywords" content="技术,Hexo">
+<meta name="description" content="JVM内存模型 堆内存&amp;amp;非堆内存">
+<meta name="keywords" content="技术,JAVA">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Windows下使用Hexo+Github搭建个人博客">
-<meta property="og:url" content="http://yoursite.com/2017/01/01/hexo_gitpages/index.html">
+<meta property="og:title" content="JVM GC优化初探">
+<meta property="og:url" content="http://yoursite.com/2018/09/30/jvm_optimize/index.html">
 <meta property="og:site_name" content="帅斌的冒险船">
-<meta property="og:description" content="Hexo介绍静态博客生成器，根据给定的主题，负责把写好的 Markdown 文章转换成一堆 HTML + CSS + Javascript 页面。另外，Hexo 还有把生成好的站点上传到 Github Pages 的功能。 背景记录个人学习和生活，作为程序猿，搭建个人博客是个不错的选择。但只是个博客，购买云服务器有些不值当，服务器稍微好些的配置就得上千。之前好友买过国外的服务器，hosts不加域名">
-<meta property="og:image" content="http://yoursite.com/assets/scaryDog.png">
-<meta property="og:image" content="http://yoursite.com/assets/despair.png">
-<meta property="og:image" content="http://yoursite.com/assets/cname.png">
-<meta property="og:image" content="http://yoursite.com/assets/cname_config.png">
-<meta property="og:image" content="http://yoursite.com/assets/finish.png">
-<meta property="og:updated_time" content="2017-07-13T15:06:39.931Z">
+<meta property="og:description" content="JVM内存模型 堆内存&amp;amp;非堆内存">
+<meta property="og:image" content="http://yoursite.com/assets/images/jvm_memory_structure.png">
+<meta property="og:updated_time" content="2018-10-11T14:04:52.460Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Windows下使用Hexo+Github搭建个人博客">
-<meta name="twitter:description" content="Hexo介绍静态博客生成器，根据给定的主题，负责把写好的 Markdown 文章转换成一堆 HTML + CSS + Javascript 页面。另外，Hexo 还有把生成好的站点上传到 Github Pages 的功能。 背景记录个人学习和生活，作为程序猿，搭建个人博客是个不错的选择。但只是个博客，购买云服务器有些不值当，服务器稍微好些的配置就得上千。之前好友买过国外的服务器，hosts不加域名">
-<meta name="twitter:image" content="http://yoursite.com/assets/scaryDog.png">
+<meta name="twitter:title" content="JVM GC优化初探">
+<meta name="twitter:description" content="JVM内存模型 堆内存&amp;amp;非堆内存">
+<meta name="twitter:image" content="http://yoursite.com/assets/images/jvm_memory_structure.png">
 
 
 
@@ -134,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/01/01/hexo_gitpages/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/09/30/jvm_optimize/"/>
 
 
 
 
 
-  <title>Windows下使用Hexo+Github搭建个人博客 | 帅斌的冒险船</title>
+  <title>JVM GC优化初探 | 帅斌的冒险船</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -303,7 +299,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/01/hexo_gitpages/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/30/jvm_optimize/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="MonkeyBean">
@@ -320,7 +316,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Windows下使用Hexo+Github搭建个人博客</h1>
+          <h1 class="post-title" itemprop="name headline">JVM GC优化初探</h1>
         
 
         <div class="post-meta">
@@ -332,8 +328,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-01T23:39:04+08:00">
-                2017-01-01
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-30T22:30:30+08:00">
+                2018-09-30
               </time>
             
 
@@ -367,51 +363,37 @@
       
 
       
-        <h2 id="Hexo介绍"><a href="#Hexo介绍" class="headerlink" title="Hexo介绍"></a>Hexo介绍</h2><p>静态博客生成器，根据给定的主题，负责把写好的 Markdown 文章转换成一堆 HTML + CSS + Javascript 页面。另外，Hexo 还有把生成好的站点上传到 Github Pages 的功能。</p>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>记录个人学习和生活，作为程序猿，搭建个人博客是个不错的选择。但只是个博客，购买云服务器有些不值当，服务器稍微好些的配置就得上千。之前好友买过国外的服务器，hosts不加域名解析经常访问不到，更悲催的是，.com域名还被污染了，吓得我抱紧自己，决定用免费的gitPages吧。<img src="/assets/scaryDog.png" alt="scaryDog"><br>搭建的时候看过一些教程，还是遇到了一些问题（其实直接看hexo官网就ok的）。<br>我在搭建时，使用的是Win10系统，以下搭建步骤是支持所有Wins系统的。OS系统下搭建与Wins不同，以hexo官网为准，可参考本文</p>
-<h2 id="搭建步骤"><a href="#搭建步骤" class="headerlink" title="搭建步骤"></a>搭建步骤</h2><a id="more"></a>
-<p>1.首先安装git及node，申请github账号并将ssh key配置完成。</p>
-<p>2.cmd下输入powershell，进入cmd超级加强版（这一步可忽略，对搭建博客无影响）。</p>
-<p>3.npm的任何操作都无法使用时，卸载node重装，并删除</p>
-<pre><code>C:\Users\Administrator\AppData\Roaming\npm
-C:\Users\Administrator\AppData\Roaming\npm-cache文件夹
-</code></pre><p>4.在安装npm时，可能根据某个教程设置了例如：</p>
-<pre><code>npm config set prefix &quot;C:\Program Files\nodejs\node_global&quot;
-npm config set cache &quot;C:\Program Files\nodejs\node_cache&quot;
-</code></pre><p>设置出错可能就导致npm无法使用，此时需恢复到默认。<br>npm config恢复到默认只需删除C:\Users\Administrator.npmrc文件。如果.npmrc不在这个目录下，就全局搜一下啦。<br>当我遇到第3和第4步，我的内心是这样的<img src="/assets/despair.png" alt="despair"></p>
-<p>5.安装hexo，执行命令</p>
-<pre><code>npm install hexo-cli -g
-</code></pre><p>6.安装hexo生成页面部署到github的组件，执行</p>
-<pre><code>npm install hexo-deployer-git --save
-</code></pre><p>7.创建放置博客文件的文件夹</p>
-<pre><code>hexo init blog
-</code></pre><p>8.进入到新创建的博客项目中</p>
-<pre><code>cd blog
-</code></pre><p>9.安装依赖包</p>
-<pre><code>npm install
-</code></pre><p>10.生成博客页面</p>
-<pre><code>hexo generate
-</code></pre><p>11.本地起服</p>
-<pre><code>hexo server
-</code></pre><p>浏览器访问 <a href="http://localhost:4000/" target="_blank" rel="external">http://localhost:4000/</a> 可以预览博客样式</p>
-<p>12.github创建仓库：仓库名必须为youname.github.io, 例如我的仓库名为monkeydbean.github.io</p>
-<p>13.在本地博客目录下，打开git bash,以我的为例，执行</p>
-<pre><code>git init
-git add remote origin https://github.com/MonkeyDBean/MonkeyDBean.github.io.git
-</code></pre><p>14.配置文件_config.yml更改如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line"> type: git</div><div class="line"> repo: https://github.com/MonkeyDBean/MonkeyDBean.github.io.git</div><div class="line"> branch: master</div></pre></td></tr></table></figure></p>
-<p> 注：YAML语法，字典是由简单的键: 值的形式组成(冒号后面必须是一个空格),如type:+&amp;nbsp+git</p>
-<p>15.部署到github，执行</p>
-<pre><code>hexo deploy
-</code></pre><p>若提交不上去，检查语法；没问题的话重新执行</p>
-<pre><code>npm install hexo-deployer-git --save
-hexo deploy
-</code></pre><p>执行到这一步，以上步骤没问题的话，浏览器输入 <a href="https://monkeydbean.github.io" target="_blank" rel="external">https://monkeydbean.github.io</a> 可访问个人博客，此时只有HelloWorld单页面。</p>
-<p>16.每次部署，可按以下步骤进行：</p>
-<pre><code>hexo clean
-hexo generate
-hexo deploy
-</code></pre><p>17.让博客炫起来，最简单的，得有个主题，搜索输入<a href="https://www.zhihu.com/question/24422335" target="_blank" rel="external">hexo 知乎</a>，选一个主题开始使用吧，主题的使用方法在相应主题的github上有详细介绍。<br>包括头像、站点图标等基础设置及第三方接入等高级设置。</p>
-<p>18.绑定域名：<br>首先得有一个域名，域名服务商有很多，我这里用的万网，阿里云域名服务用的就是万网。注册完成后，搜索心仪域名是否被使用，未被使用即可购买，.cn域名比较便宜，第一年29元，无需购买扩展服务。<br>域名购买完成后，添加cname解析如下：<img src="/assets/cname.png" alt="添加解析"><br>同时，在博客public目录下新建CNAME文件：<img src="/assets/cname_config.png" alt="添加解析"><br>执行步骤16，浏览器输入monkeyben.cn即可访问个人博客。<img src="/assets/finish.png" alt="finish"></p>
+        <h2 id="JVM内存模型"><a href="#JVM内存模型" class="headerlink" title="JVM内存模型"></a>JVM内存模型</h2><p><img src="/assets/images/jvm_memory_structure.png" alt="jvm_memory_structure"></p>
+<h3 id="堆内存-amp-非堆内存"><a href="#堆内存-amp-非堆内存" class="headerlink" title="堆内存&amp;非堆内存"></a>堆内存&amp;非堆内存</h3><a id="more"></a>
+<p>JVM内存分为堆内存(Heap Memory)和非堆内存(Non-Heap Memory)。<br>官方的解释为: Java虚拟机具有一个堆，堆是运行时的数据区域，所有类实例和数组的内存均从此处分配。堆是在Java虚拟机启动时创建的，JVM中堆之外的内存称为非堆内存。简单来说堆是Java代码可及的内存，是留给开发人员使用的；非堆就是JVM留给自己用的，所以方法区、JVM内部处理或优化所需的内存(如JIT编译后的代码缓存)、每个类结构(如运行时常数池、字段和方法数据)以及方法和构造方法的代码都在非堆内存中。</p>
+<h3 id="年轻代-amp-老年代-amp-永久代-amp-元空间"><a href="#年轻代-amp-老年代-amp-永久代-amp-元空间" class="headerlink" title="年轻代&amp;老年代&amp;永久代&amp;元空间"></a>年轻代&amp;老年代&amp;永久代&amp;元空间</h3><p>①年轻代(Young Generation): 大多数对象创建于年轻代中，其中大部分对象生命周期较短。<br>年轻代分三个区域，一个Eden(新生代)区，两个大小相同的Survivor区。大部分对象于Eden区中生成，当Eden区满时，仍存活的对象将被复制到两个Survivor区（中的一个）。当这个Survivor区满时，此区存活且不满足“晋升”条件的对象将被复制到另外一个Survivor区。对象每经历一次Minor GC（使用复制算法），年龄加1，达到“晋升年龄阈值”后，被放到老年代，这个过程也称为“晋升”。晋升年龄阈值”通过参数MaxTenuringThreshold设定, 不同回收器默认值不同，一般为15。</p>
+<p>②老年代(Old Generation): 在年轻代中经历了N次垃圾回收后仍然存活的对象，就会被放到老年代。老年代的垃圾回收为Major GC（ 使用标记-清理算法）。<br>整堆包括年轻代和老年代的垃圾回收称为Full GC。</p>
+<p>③永久代(Permanent Generation): Hotspot虚拟机特有的概念，是方法区的一种实现。用于存放Class和Method的元信息，Class在Load时被放入永久代，Class和存放Instance的Heap区不同， GC不会在主程序运行期间对永久代进行清理。</p>
+<p>④元空间(MetaSpace): 与JVM堆不相连的本地内存。jdk1.8之后，废除了永久代，常量池从永久代迁移到了堆内存中，类的元数据如方法区从永久代迁移到了元空间中。GC时不会扫描元空间，减小了full gc的时间。</p>
+<h2 id="参数简介"><a href="#参数简介" class="headerlink" title="参数简介"></a>参数简介</h2><p><a href="https://www.oracle.com/technetwork/java/tuning-139912.html#section4" target="_blank" rel="external">官方文档参考</a><br>-Xms: jvm启动时分配的初始内存, 如-Xms512m, 表示初始分配512M内存。</p>
+<p>-Xmx: jvm运行过程中分配的最大内存, 如-Xmx512m，表示jvm进程最多只能够占用512M内存。</p>
+<p>-Xmn: 分配给年轻代的堆内存，如-Xmn192m. 表示年轻代可使用jvm的最大内存为192M。</p>
+<p>-Xss: jvm启动的每个线程分配的内存大小, 如-Xss256k, 表示每个线程分配了256K内存。</p>
+<p>-XX:PermSize: 永久代的初始内存，默认值依赖于平台。如-XX:PermSize=32m，表示永久代的初始内存设为32M。jdk1.8后被废除，若仍使用，不影响运行，仅启动报警。</p>
+<p>-XX:MaxPermSize: 永久代的最大内存，若无指定，默认无上限（物理内存大小）。如-XX:MaxPermSize=68m，表示永久代最大内存为68M，jdk1.8后被废除。</p>
+<p>-XX:MetaspaceSize: 元空间的初始内存，jdk1.8后出现。默认值依赖于平台。</p>
+<p>-XX:MaxMetaspaceSize: 元空间的最大内存，jdk1.8后出现。如果没有指定，元空间将会根据应用程序在运行时的需求动态设置大小。</p>
+<p>-XX:SurvivorRatio=4: 年轻代中Eden区与Survivor区的比值为4（注意Survivor区有两个）。表示Eden：Survivor=4：2，一个Survivor区占整个年轻代的1/6。</p>
+<p>-XX:+PrintGCTimeStamps: 打印每次GC的时间戳,默认不开启</p>
+<p>-XX:+PrintHeapAtGC: 打印GC前后的详细堆栈信息</p>
+<p>-XX:+PrintGCDetails: 打印每次GC的细节信息,默认不打印</p>
+<p>-XX:+UseParNewGC: 支持在年轻代用多线程进行垃圾收集,默认不开启</p>
+<p>-XX:MaxTenuringThreshold=5: 设置垃圾回收对象的最大年龄为5。如果设置为0，则年轻代对象不经过Survivor区，直接进入老年代 。对于老年代比较多的应用，可以提高效率。如果将此值设置为一个较大值，则年轻代对象会在Survivor区进行多次复制，这样可以增加对象在年轻代的存活时间 。</p>
+<p>-XX:ParallelGCThreads=8: 并行GC的线程数设为8,默认值是CPU数。</p>
+<p>-XX:+UseCMSCompactAtFullCollection: 打开对年老代的压缩。可能会影响性能，但是可以消除碎片。</p>
+<p>-XX:CMSFullGCsBeforeCompaction=3: 设置每3次GC则对内存空间进行压缩、整理。由于并发收集器不对内存空间进行压缩、整理，所以运行一段时间以后会产生碎片，使运行效率降低</p>
+<p>-XX:+UseConcMarkSweepGC: 设置对老生代使用CMS回收。</p>
+<p>-Duser.timezone=GMT+08: 设置java运行环境时区为东8区 。</p>
+<h2 id="实例优化"><a href="#实例优化" class="headerlink" title="实例优化"></a>实例优化</h2><p>首先确认项目的架构和代码等基本没有优化空间，然后通过GC优化，使性能提升。</p>
+<h3 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h3><p>GC优化是系统且复杂的工作，可简单参照如下建议。<br>①JVM初始内存与JVM最大内存的值设置为相等，即-Xms=-Xmx<br>目的：减少内存自动扩容和收缩带来的性能损失</p>
+<p>②SUN官方推荐年轻代配置为整个堆的3/8, 即Xmn为Xmx的3/8，实际根据应用情况调整。如果应用存在大量的短期对象，年轻代适量增大；如果存在相对较多的持久对象，老年代应适当增大。</p>
+<p>③若为docker部署，Pod参数设置为：<br>内存Requested设置与-Xmx大小相同，内存Limited大小为Requested的4/3~3/2, 腾讯云容器（CCS）推荐为2倍。<br>CPU核数根据实际使用情况配置。<br>原因：-Xmx仅为Heap大小，除此之外，还有Non-Heap，如GC 初始及运行内存，元空间等。</p>
+<h3 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h3><p>根据监控，资源按实际消耗的2倍配置。<br>-Xmx:512M<br>-Xms:512M<br>-Xmn=192M<br>元空间大小不显式指定，根据应用程序在运行时的需求动态设置<br>内存Requested设为640M, 内存Limited设为869M, CPU设为0.2-0.5核。</p>
 
       
     </div>
@@ -464,7 +446,7 @@ hexo deploy
           
             <a href="/tags/技术/" rel="tag"># 技术</a>
           
-            <a href="/tags/Hexo/" rel="tag"># Hexo</a>
+            <a href="/tags/JAVA/" rel="tag"># JAVA</a>
           
         </div>
       
@@ -477,8 +459,8 @@ hexo deploy
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/10/29/get_post/" rel="next" title="浅谈Http中GET与POST的区别">
-                <i class="fa fa-chevron-left"></i> 浅谈Http中GET与POST的区别
+              <a href="/2018/09/28/zelda_temple_map/" rel="next" title="塞尔达传说(旷野之息)全神庙位置概览">
+                <i class="fa fa-chevron-left"></i> 塞尔达传说(旷野之息)全神庙位置概览
               </a>
             
           </div>
@@ -486,10 +468,6 @@ hexo deploy
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/02/05/win_dns/" rel="prev" title="window下修改本机dns及本机域名">
-                window下修改本机dns及本机域名 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -651,7 +629,7 @@ hexo deploy
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo介绍"><span class="nav-number">1.</span> <span class="nav-text">Hexo介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">2.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搭建步骤"><span class="nav-number">3.</span> <span class="nav-text">搭建步骤</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM内存模型"><span class="nav-number">1.</span> <span class="nav-text">JVM内存模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#堆内存-amp-非堆内存"><span class="nav-number">1.1.</span> <span class="nav-text">堆内存&非堆内存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#年轻代-amp-老年代-amp-永久代-amp-元空间"><span class="nav-number">1.2.</span> <span class="nav-text">年轻代&老年代&永久代&元空间</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参数简介"><span class="nav-number">2.</span> <span class="nav-text">参数简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实例优化"><span class="nav-number">3.</span> <span class="nav-text">实例优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#方案"><span class="nav-number">3.1.</span> <span class="nav-text">方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实际应用"><span class="nav-number">3.2.</span> <span class="nav-text">实际应用</span></a></li></ol></li></ol></div>
             
 
           </div>
