@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="技术,TypeScript,Egret," />
+  <meta name="keywords" content="技术," />
 
 
 
@@ -90,17 +90,17 @@
 
 
 
-<meta name="description" content="Egret使用已有大半年，相比其他H5引擎，Egret的优势是官方文档齐全，配套工具完善，但性能不是很突出。 曾使用官方提供的配套工具 界面排布及属性预设—Egret Wing 碎图压缩合成大图及MovieClip动画素材处理—TextureMerger 资源管理—ResDepot chrome下调试插件—Egret Inspector">
-<meta name="keywords" content="技术,TypeScript,Egret">
+<meta name="description" content="钉钉机器人，限制为消息仅可发送到群组。自定义机器人：官方文档 通过钉钉机器人发消息，官方提供了天气、github等机器人类别；grafana、elk等封装了自定义机器人webHook的请求发送；而像Jenkins等未封装请求发送的可通过脚本发送请求(如构建镜像完成后发送通知)，如python脚本：1234567891011121314151617181920212223242526# encodi">
+<meta name="keywords" content="技术">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Egret简略总结">
-<meta property="og:url" content="http://yoursite.com/2016/09/02/egret_conclusion/index.html">
+<meta property="og:title" content="钉钉自定义机器人webHook">
+<meta property="og:url" content="http://yoursite.com/2018/06/03/dingding_notify/index.html">
 <meta property="og:site_name" content="帅斌的冒险船">
-<meta property="og:description" content="Egret使用已有大半年，相比其他H5引擎，Egret的优势是官方文档齐全，配套工具完善，但性能不是很突出。 曾使用官方提供的配套工具 界面排布及属性预设—Egret Wing 碎图压缩合成大图及MovieClip动画素材处理—TextureMerger 资源管理—ResDepot chrome下调试插件—Egret Inspector">
-<meta property="og:updated_time" content="2017-07-02T03:14:57.569Z">
+<meta property="og:description" content="钉钉机器人，限制为消息仅可发送到群组。自定义机器人：官方文档 通过钉钉机器人发消息，官方提供了天气、github等机器人类别；grafana、elk等封装了自定义机器人webHook的请求发送；而像Jenkins等未封装请求发送的可通过脚本发送请求(如构建镜像完成后发送通知)，如python脚本：1234567891011121314151617181920212223242526# encodi">
+<meta property="og:updated_time" content="2018-11-08T15:02:56.750Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Egret简略总结">
-<meta name="twitter:description" content="Egret使用已有大半年，相比其他H5引擎，Egret的优势是官方文档齐全，配套工具完善，但性能不是很突出。 曾使用官方提供的配套工具 界面排布及属性预设—Egret Wing 碎图压缩合成大图及MovieClip动画素材处理—TextureMerger 资源管理—ResDepot chrome下调试插件—Egret Inspector">
+<meta name="twitter:title" content="钉钉自定义机器人webHook">
+<meta name="twitter:description" content="钉钉机器人，限制为消息仅可发送到群组。自定义机器人：官方文档 通过钉钉机器人发消息，官方提供了天气、github等机器人类别；grafana、elk等封装了自定义机器人webHook的请求发送；而像Jenkins等未封装请求发送的可通过脚本发送请求(如构建镜像完成后发送通知)，如python脚本：1234567891011121314151617181920212223242526# encodi">
 
 
 
@@ -128,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/09/02/egret_conclusion/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/06/03/dingding_notify/"/>
 
 
 
 
 
-  <title>Egret简略总结 | 帅斌的冒险船</title>
+  <title>钉钉自定义机器人webHook | 帅斌的冒险船</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -297,7 +297,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/02/egret_conclusion/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/03/dingding_notify/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="MonkeyBean">
@@ -314,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Egret简略总结</h1>
+          <h1 class="post-title" itemprop="name headline">钉钉自定义机器人webHook</h1>
         
 
         <div class="post-meta">
@@ -326,8 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-09-02T22:15:15+08:00">
-                2016-09-02
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-03T19:10:02+08:00">
+                2018-06-03
               </time>
             
 
@@ -361,109 +361,9 @@
       
 
       
-        <p>Egret使用已有大半年，相比其他H5引擎，Egret的优势是官方文档齐全，配套工具完善，但性能不是很突出。</p>
-<h2 id="曾使用官方提供的配套工具"><a href="#曾使用官方提供的配套工具" class="headerlink" title="曾使用官方提供的配套工具"></a>曾使用官方提供的配套工具</h2><ul>
-<li>界面排布及属性预设—Egret Wing</li>
-<li>碎图压缩合成大图及MovieClip动画素材处理—TextureMerger</li>
-<li>资源管理—ResDepot</li>
-<li>chrome下调试插件—Egret Inspector <a id="more"></a></li>
-<li>粒子效果制作—EgretFeather</li>
-</ul>
-<p>当然，代码编写还是要用WebStorm及Sublime。以及开发中常用到的小小工具：在线图片压缩—TinyPng.com,合图分割—pngSplit，在线Json转换—bejson，二维码生成器cli.im等等。</p>
-<h2 id="调试参数说明及MovieClip"><a href="#调试参数说明及MovieClip" class="headerlink" title="调试参数说明及MovieClip"></a>调试参数说明及MovieClip</h2><ol>
-<li>index.html中，data-entry-class = “Main”,进入游戏访问的第一个Ts文件，入口类；data-orientation=”auto”,旋转方向设置；data-frame-rate = “60”,游戏帧率设置，可更改，建议为60的约数，正式项目基本设置为60，测试时更改。data-show-fps=”false”,默认为false,开启后可看到实时帧率，测试使用；data-show-log = “false”,默认为false,开启后，代码中egret.log()中的内容即显示在屏幕中，测试使用。</li>
-<li>开启fps后的参数说明。FPS为帧率；Draw为每帧draw方法调用的平均次数，脏矩阵占舞台的百分比；Cost为每帧舞台所有事件处理及矩阵运算耗时，绘制显示对象耗时（单位为ms）。</li>
-<li>MovieClip举例<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">class Bomb extends egret.Sprite</div><div class="line">&#123;</div><div class="line">     private mcf:egret.MovieClipDataFactory;</div><div class="line">     private mc:egret.MovieClip;</div><div class="line">     public constructor()</div><div class="line">     &#123;</div><div class="line">         super();</div><div class="line">         this.init();</div><div class="line">     &#125;</div><div class="line">     public init(str1:string,str2:string,number:number):void</div><div class="line">     &#123;</div><div class="line">         var data = RES.getRes(str1);</div><div class="line">         var tex = RES.getRes(str2);</div><div class="line">         this.mcf = new egret.MovieClipDataFactory(data, tex);</div><div class="line">         this.mc = new egret.MovieClip();</div><div class="line">         this.mc.movieClipData = this.mcf.generateMovieClipData();</div><div class="line">         this.mc.play(number); //playTimes:number — 播放次数。 参数为整数，可选参数，&gt;=1：设定播放次数，&lt;0：循环播放，默认值 0：不改变播          放次数(MovieClip初始播放次数设置为1)，</div><div class="line">         this.addChild(this.mc);</div><div class="line">         this.mc.addEventListener(egret.Event.COMPLETE, this.removeBomb, this);</div><div class="line">     &#125;</div><div class="line">     //轰炸完毕</div><div class="line">     private removeBomb(evt:egret.Event):void</div><div class="line">     &#123;</div><div class="line">          if(this.parent!=null)</div><div class="line">          &#123;</div><div class="line">               this.parent.removeChild(this);</div><div class="line">           &#125;</div><div class="line">      &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h2><ol>
-<li>Audio</li>
-</ol>
-<ul>
-<li>如果需求中需要同时播放多个音频，则使用WebAudio。X5浏览器内核WebAudio可支持多音频。Egret3.1.4之后，index.html文件中，egret.runEgret({renderMode:”webgl”,audioType:0}); 默认的渲染模式为Canvas,之前微信平台上的游戏使用的均为Canvas。音频类型中，默认为0，IOS7以上表示WebAudio；1表示QQ Audio，项目若在腾讯平台上线如QQ空间中的玩吧，则使用QQ Audio，腾讯解析音频有自己的一套方案；2表示强制使用WebAudio;3表示使用浏览器自带的Audio，不推荐。</li>
-<li>当多个音频轮询播放播放的时候，如ababa，如果打开网络侦听，有可能发现播放一次向服务器请求一次，原因是不同浏览器内核对音频实现方式不一样。解决方案是：将轮询播放的多个音频拼成一个音频，通过时间段控制播放。</li>
-<li>由于浏览器的安全限制，加载完成可能无法自动播放背景音乐，这种情况将背景音乐设置成点击播放的形式，如加载完成后，弹出按钮，玩家点击选择是否播放背景音乐。主流H5游戏均是采用这种方式。</li>
-</ul>
-<ol>
-<li>Text</li>
-</ol>
-<ul>
-<li>TextField中使用cacheAsBitmap，可以减少重绘次数。原因是TextField是文本，浏览器渲染通过CPU的计算，对图片渲染速度快，对文本渲染速度慢。</li>
-<li>TextField减少对于描边（stroke）的使用，用图片代替。</li>
-<li>输入文本框尽量出现在软键盘的上面，手机部分浏览器中，如果输入文本框太靠下，弹出的软键盘会遮挡住输入文本框。</li>
-</ul>
-<ol>
-<li>Image</li>
-</ol>
-<ul>
-<li>单张图（包括SpriteSheet）的大小不要超过1024*1024,浏览器对图片大小限制会对超过的该尺寸大小的图片进行自动压缩处理导致图片模糊发虚。</li>
-<li>将碎图合成一张大图，每次进行图片下载时会先进行TCP三次握手协议，这个时间会超过较多小图下载的时间。</li>
-<li>使用九宫格时，不要使用非整数宽高；在List控件中不要使用九宫格图片来减少draw的次数。</li>
-<li>单静态页面，cacheAsBitMap可以减少重绘次数。如在大图中取出部分碎图组成的单静态页面。</li>
-<li>使用SpriteSheet合并的图片尺寸要优于单张图片的总尺寸，尤其是带透明通道的。</li>
-</ul>
-<ol>
-<li>NetWork</li>
-</ol>
-<ul>
-<li>素材处理。不要一次性下载太多的素材，尽量分布在使用前加载。将碎图和成一张大图，减少下载次数。Png图可以使用压缩工具（如TinyPng）压缩减少体积。</li>
-<li>配置文件。尽量将配置文件合并到一个大文件里，减少下载次数。在Http请求中，加载单个文件速度要优于加载多个文件。配置文件去掉格式化，利用在线Json格式化工具（如bejson，sojson）处理Json数据。Json数据可以去掉一些不必要的小数和冗长命名。</li>
-<li>下载处理。资源服务器开启GZIP压缩，提高载入速率；登录加主页面素材不要超过2M；加入静默加载，比如在登录界面操作时下载主页面相关素材。</li>
-</ul>
-<ol>
-<li>Mask</li>
-</ol>
-<ul>
-<li>遮罩如果是DisplayObject，必须加入到显示列表后，方能正常使用。</li>
-<li>遮罩如果是Rectangle，修改遮罩数据后，重新将遮罩赋值给对象。</li>
-</ul>
-<ol>
-<li>DisplayObject</li>
-</ol>
-<ul>
-<li><p>Shape/DisplayObjectContainer，能通过父层计算出来的交互不直接在子容器里加。如EUI中，Group组件中有Image组件，Touch Image的监听直接将Touch监听加在Group上，如果是一个Group中有多张图需要有监听事件，可在Group上加一个监听，根据Group的Touch位置进行响应。</p>
-</li>
-<li><p>禁用不必要显示对象的触摸交互，默认就是关闭的。但是开发时，自己的写的底层框架可能又给打开了，eui的touchenable是默认打开的，不需要touch事件监听时需手动关闭。触摸屏幕实际上就是触摸canvas,canvas根据位置在显示列表中逐层搜索，实际上也是碰撞检测。</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">var sp :egret.Sprite = new egret.Sprite();</div><div class="line"></div><div class="line">this.addChild(sp);</div><div class="line"></div><div class="line">sp.touchChildren = false; //确定子孙对象是否接受触摸事件，默认为true</div><div class="line"></div><div class="line">sp.touchEnabled = false; //此对象是否接受触摸事件，默认为true</div></pre></td></tr></table></figure>
-</li>
-<li><p>能用图片的不用Graphics实现。</p>
-</li>
-<li>尽量将静态图或者文字放到一个容器中，并对容器缓存（cacheAsBitMap）。</li>
-<li>减少显示对象的旋转及缩放。</li>
-<li>尽可能重用对象，建立对象池，而不创建对象并对其执行垃圾回收。创建对象时，将对象创建在循环外部并在循环内反复重用。需要密集的创建对象，要引入对象池，例如做一款打飞机类型的游戏，进入战斗前，飞机，怪物，掉血特效等对象提前初始化，在过程中实时提取，而不是实时创建。</li>
-</ul>
-<ol>
-<li>对象复用与释放</li>
-</ol>
-<ul>
-<li>Event派发要合理使用Event自带的静态方法，如egret.Event.dispatchEvent(this,”dragonbones”)。</li>
-<li>事件删除，用完事件即删除。</li>
-<li>Tween循环结束时，删除。</li>
-<li>显示列表删除，面板不使用则remove掉。</li>
-<li>显示停止计时器，让它们准备好进行垃圾回收。暂停清除计数器clearInterval()、clearTimeout()、Timer.stop()。</li>
-</ul>
-<ol>
-<li>TypeScipt</li>
-</ol>
-<ul>
-<li>尽量不要在使用方法内创建函数，一个函数内不要嵌套另一个函数的定义</li>
-<li>Ts中没有super属性的调用，Js类继承的本质是通过原型链实现的，但是egret提供了egret.superGet 和 egret.superSet 来调用父类属性。</li>
-<li>类方法中，将this赋值给另一个临时变量self，var self = this;如果当前类this使用较多，如for循环内使用时，使用self。</li>
-</ul>
-<ol>
-<li>其他</li>
-</ol>
-<ul>
-<li>LocalToGlobal后的坐标不要有小数；一般情况下坐标计算等也尽量不使用小数。</li>
-<li>对象复用比较高时，如打飞机的子弹，使用对象池优化。</li>
-<li>尽量减少Alpha混合的使用。</li>
-<li>多次调用类属性时，避免直接使用this，如果for循环一直用到this.a，可var _a = this.a，用变量做简单缓存再去计算，效率就会提升，如_length = Array.length。</li>
-<li>Event.ENTER_FRAME数量控制。MainLoop包括ENTER_FRAME（每帧主要执行逻辑）-&gt;CLEAR(清空上一帧图像) -&gt;UPDATE TRANSFORM(计算这一帧的显示) -&gt; UPDATE DRAW。</li>
-<li>位移如跑酷游戏的计算不要通过帧数来计算，通过时间来计算。</li>
-<li>使用60的约数作为帧频数。Egret自带Timer，每秒固定振荡60次。</li>
-<li>对于简单的动画，使用序列帧或者db的急速模式。</li>
-<li>非动作游戏降低帧率可大幅提高性能。</li>
-</ul>
+        <p>钉钉机器人，限制为消息仅可发送到群组。自定义机器人：<a href="https://open-doc.dingtalk.com/docs/doc.htm?spm=a219a.7629140.0.0.556f4a97of3s2A&amp;treeId=257&amp;articleId=105735&amp;docType=1#s0" target="_blank" rel="external">官方文档</a></p>
+<p>通过钉钉机器人发消息，官方提供了天气、github等机器人类别；grafana、elk等封装了自定义机器人webHook的请求发送；而像Jenkins等未封装请求发送的可通过脚本发送请求(如构建镜像完成后发送通知)，如python脚本：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"># encoding: utf-8</div><div class="line">import json</div><div class="line">import urllib2</div><div class="line">import datetime</div><div class="line"></div><div class="line">nowTime = datetime.datetime.now()</div><div class="line">contentText = &quot;构建成功, 当前时间为: &quot; + nowTime.strftime(&quot;%Y-%m-%d %H:%M:%S&quot;)</div><div class="line">print(contentText)</div><div class="line"></div><div class="line">data = &#123;</div><div class="line">	&quot;msgtype&quot;: &quot;text&quot;,</div><div class="line">	&quot;text&quot;: &#123;</div><div class="line">		&quot;content&quot;: contentText</div><div class="line">	&#125;,</div><div class="line">	&quot;at&quot;: &#123;</div><div class="line">		&quot;atMobiles&quot;: [</div><div class="line">			&quot;$someone_phone_number&quot;</div><div class="line">		],</div><div class="line">		&quot;isAtAll&quot;: &quot;false&quot;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">req = urllib2.Request(&apos;$webhook_address&apos;)</div><div class="line">req.add_header(&apos;Content-Type&apos;, &apos;application/json&apos;)</div><div class="line"></div><div class="line">response = urllib2.urlopen(req, json.dumps(data))</div><div class="line">print(&quot;send message to dingding&quot;)</div></pre></td></tr></table></figure></p>
+<p>注：$someone_phone_number为要@成员的手机号、$someone_phone_number为创建自定义机器人时生成的webHook地址</p>
 
       
     </div>
@@ -516,10 +416,6 @@
           
             <a href="/tags/技术/" rel="tag"># 技术</a>
           
-            <a href="/tags/TypeScript/" rel="tag"># TypeScript</a>
-          
-            <a href="/tags/Egret/" rel="tag"># Egret</a>
-          
         </div>
       
 
@@ -531,8 +427,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/08/05/database_introduce/" rel="next" title="数据库范式学习总结">
-                <i class="fa fa-chevron-left"></i> 数据库范式学习总结
+              <a href="/2018/04/27/frp-map/" rel="next" title="frp搭建，实现内网穿透（端口映射）">
+                <i class="fa fa-chevron-left"></i> frp搭建，实现内网穿透（端口映射）
               </a>
             
           </div>
@@ -541,8 +437,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/10/29/get_post/" rel="prev" title="浅谈Http中GET与POST的区别">
-                浅谈Http中GET与POST的区别 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/07/06/uuid_introduce/" rel="prev" title="UUID简介">
+                UUID简介 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -590,17 +486,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/avatar.png"
@@ -695,22 +582,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#曾使用官方提供的配套工具"><span class="nav-number">1.</span> <span class="nav-text">曾使用官方提供的配套工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#调试参数说明及MovieClip"><span class="nav-number">2.</span> <span class="nav-text">调试参数说明及MovieClip</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#性能优化"><span class="nav-number">3.</span> <span class="nav-text">性能优化</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
