@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Bean, Blog" />
+  <meta name="keywords" content="JAVA,技术," />
 
 
 
@@ -90,15 +90,17 @@
 
 
 
-<meta name="description" content="行云流水 天马行空">
-<meta property="og:type" content="website">
-<meta property="og:title" content="帅斌的冒险船">
-<meta property="og:url" content="http://yoursite.com/archives/2017/11/index.html">
+<meta name="description" content="Kafka Manager为简化维护kafka集群的工作，yahoo构建了基于Web的kafka管理工具。通过kafka manager, 可以直观地发现集群中topic、partition的使用与分布等。Kafka Manager Github地址12345678910111213141516171819202122232425262728293031323334yum install -y j">
+<meta name="keywords" content="JAVA,技术">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kafka Manager引入">
+<meta property="og:url" content="http://yoursite.com/2018/12/09/kafka_manager_introduce/index.html">
 <meta property="og:site_name" content="帅斌的冒险船">
-<meta property="og:description" content="行云流水 天马行空">
+<meta property="og:description" content="Kafka Manager为简化维护kafka集群的工作，yahoo构建了基于Web的kafka管理工具。通过kafka manager, 可以直观地发现集群中topic、partition的使用与分布等。Kafka Manager Github地址12345678910111213141516171819202122232425262728293031323334yum install -y j">
+<meta property="og:updated_time" content="2018-12-17T13:44:00.772Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="帅斌的冒险船">
-<meta name="twitter:description" content="行云流水 天马行空">
+<meta name="twitter:title" content="Kafka Manager引入">
+<meta name="twitter:description" content="Kafka Manager为简化维护kafka集群的工作，yahoo构建了基于Web的kafka管理工具。通过kafka manager, 可以直观地发现集群中topic、partition的使用与分布等。Kafka Manager Github地址12345678910111213141516171819202122232425262728293031323334yum install -y j">
 
 
 
@@ -126,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/2017/11/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/12/09/kafka_manager_introduce/"/>
 
 
 
 
 
-  <title>归档 | 帅斌的冒险船</title>
+  <title>Kafka Manager引入 | 帅斌的冒险船</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -157,7 +159,7 @@
     
   
 
-  <div class="container sidebar-position-left  page-archive  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -285,65 +287,179 @@
           <div id="content" class="content">
             
 
-  <section id="posts" class="posts-collapse">
-    <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-    <span class="archive-page-counter">
-      
-      
-       
-      
-      OK! 目前共计 45 篇日志。 继续努力。
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/09/kafka_manager_introduce/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MonkeyBean">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="帅斌的冒险船">
     </span>
 
     
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Kafka Manager引入</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-09T17:05:15+08:00">
+                2018-12-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
 
       
       
-      
 
+      
+        <h2 id="Kafka-Manager"><a href="#Kafka-Manager" class="headerlink" title="Kafka Manager"></a>Kafka Manager</h2><p>为简化维护kafka集群的工作，yahoo构建了基于Web的kafka管理工具。通过kafka manager, 可以直观地发现集群中topic、partition的使用与分布等。<br><a href="https://github.com/yahoo/kafka-manager" target="_blank" rel="external">Kafka Manager Github地址</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">yum install -y java-1.8.0-openjdk</div><div class="line"></div><div class="line">yum install java-devel</div><div class="line"></div><div class="line">git clone https://github.com/yahoo/kafka-manager</div><div class="line"></div><div class="line">cd kafka-manager</div><div class="line"></div><div class="line">curl https://bintray.com/sbt/rpm/rpm &gt; bintray-sbt-rpm.repo</div><div class="line"></div><div class="line">mv bintray-sbt-rpm.repo /etc/yum.repos.d/</div><div class="line"> </div><div class="line">yum clean all</div><div class="line"></div><div class="line">yum repolist all</div><div class="line"></div><div class="line">yum install sbt -y</div><div class="line"></div><div class="line"># 资源为墙外资源, 构建时间较长</div><div class="line">sbt clean dist</div><div class="line"></div><div class="line"># 成功后解压 kafka-manager-1.3.3.21.zip</div><div class="line">cd target/universal</div><div class="line">unzip kafka-manager-1.3.3.21.zip</div><div class="line"></div><div class="line"># 配置zk地址</div><div class="line">vim /conf/application.conf</div><div class="line">kafka-manager.zkhosts=&quot;$domain1:2181,$domain2:2181,$domain3:2181&quot;</div><div class="line"></div><div class="line"># 后台启动, 选择未使用的端口号，默认为9000</div><div class="line">nohup ./kafka-manager -Dhttp.port=8096 &amp;</div><div class="line"></div><div class="line"># 浏览器访问</div><div class="line">$kafka-manager-domain:8096</div></pre></td></tr></table></figure></p>
+<p><a href="https://blog.csdn.net/isea533/article/details/73727485" target="_blank" rel="external">安装参考</a></p>
+<h2 id="Kafka-Api"><a href="#Kafka-Api" class="headerlink" title="Kafka Api"></a>Kafka Api</h2><a id="more"></a>
+<p>以Kafka Api2.1(<a href="http://kafka.apache.org/documentation.html" target="_blank" rel="external">官方文档</a>)为例。</p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">curl -o kafka-util2_1.tgz http://mirror.bit.edu.cn/apache/kafka/2.1.0/kafka_2.12-2.1.0.tgz</div><div class="line"></div><div class="line">tar -xzvf kafka-util2_1.tgz</div><div class="line"></div><div class="line">cd kafka_2.12-2.1.0/bin</div></pre></td></tr></table></figure>
+<h3 id="命令示例"><a href="#命令示例" class="headerlink" title="命令示例"></a>命令示例</h3><p>1.列出所有消费组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">sh kafka-consumer-groups.sh --bootstrap-server $ip:9092 --list</div><div class="line"></div><div class="line"># 返回</div><div class="line">test_group1</div><div class="line">test_group2</div></pre></td></tr></table></figure></p>
+<p>2.查看指定消费组信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">sh kafka-consumer-groups.sh --bootstrap-server  $ip:9092 --group test_group1 --describe</div><div class="line"></div><div class="line"># 返回</div><div class="line">TOPIC                PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID                                                                          HOST            CLIENT-ID</div><div class="line">test_topic1          0          -               11              -               consumer-1-/172.19.2.23-2018-12-09 13:28:34:066-5ac252bc-83bd-4178-a364-21a3bfda7ce1 /172.19.2.23    consumer-1</div></pre></td></tr></table></figure></p>
+<p>3.消费某个topic的消息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sh kafka-console-consumer.sh --bootstrap-server $ip:9092 --topic test_topic1 --from-beginning</div></pre></td></tr></table></figure></p>
+<p>腾讯云CKafka手册: <a href="https://cloud.tencent.com/document/product/597/10112" target="_blank" rel="external">参考链接</a></p>
+
+      
+    </div>
+
+    <div>
       
         
-        <div class="collection-title">
-          <h2 class="archive-year motion-element" id="archive-year-2017">2017</h2>
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/assets/wechatpay.png" alt="MonkeyBean WeChat Pay"/>
+          <p>微信打赏</p>
         </div>
       
       
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/assets/zhifubao.png" alt="MonkeyBean Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
 
       
+    </div>
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
+    <div>
+      
         
-            <a class="post-title-link" href="/2017/11/30/md5_base64/" itemprop="url">
-              
-                <span itemprop="name">CryptoJS的使用引入</span>
-              
-            </a>
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JAVA/" rel="tag"># JAVA</a>
+          
+            <a href="/tags/技术/" rel="tag"># 技术</a>
+          
+        </div>
+      
+
+      
         
-      </h2>
+      
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-30T22:10:20+08:00"
-              content="2017-11-30" >
-          11-30
-        </time>
-      </div>
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/24/k8s_readiness/" rel="next" title="Kubernetes Pod 之 Readiness 探针引入">
+                <i class="fa fa-chevron-left"></i> Kubernetes Pod 之 Readiness 探针引入
+              </a>
+            
+          </div>
 
-    </header>
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </article>
 
 
 
-    
-
-  </section>
-
-  
-
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -351,6 +467,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -370,8 +490,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/avatar.png"
@@ -466,6 +595,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Kafka-Manager"><span class="nav-number">1.</span> <span class="nav-text">Kafka Manager</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kafka-Api"><span class="nav-number">2.</span> <span class="nav-text">Kafka Api</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">2.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#命令示例"><span class="nav-number">2.2.</span> <span class="nav-text">命令示例</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -591,11 +736,9 @@
 
 
   
-  
-    <script type="text/javascript" id="motion.page.archive">
-      $('.archive-year').velocity('transition.slideLeftIn');
-    </script>
-  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
 
 
   
