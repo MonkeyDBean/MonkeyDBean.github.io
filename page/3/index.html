@@ -297,6 +297,130 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/24/reqModel_bean/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MonkeyBean">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="帅斌的冒险船">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/24/reqModel_bean/" itemprop="url">Spring使用hibernate-validator对请求参数校验</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-24T01:43:20+08:00">
+                2017-08-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>服务端收到通过拦截器的请求后，第一步，即为对请求参数的合法性校验。<br>合法性校验依次为三部分：</p>
+<ul>
+<li>参数是否存在</li>
+<li>参数类型是否合法</li>
+<li>其他复杂校验</li>
+</ul>
+<p>一般的参数校验举例如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">public HashMap&lt;String, Object&gt; roleInfo(HttpServletRequest request) &#123;</div><div class="line">        HashMap&lt;String, Object&gt; result = new HashMap&lt;String, Object&gt;();</div><div class="line">        String roleId;</div><div class="line">        try &#123;</div><div class="line">            roleId = request.getParameter(&quot;id&quot;);</div><div class="line">        &#125; catch (Throwable t) &#123;</div><div class="line">            logger.error(&quot;ProxyController roleInfo args error:&quot; + t);</div><div class="line">            result.put(&quot;result&quot;, StatusCode.ILLEGAL_PARAM.getValue());</div><div class="line">            result.put(&quot;description&quot;, StatusCode.ILLEGAL_PARAM.getDescription());</div><div class="line">            return result;</div><div class="line">        &#125;</div><div class="line">        if (!LegalUtil.isLegalRoleId(roleId)) &#123;</div><div class="line">            logger.error(&quot;ProxyController roleinfo roleId error:&quot; + roleId);</div><div class="line">            result.put(&quot;result&quot;, StatusCode.ILLEGAL_PARAM.getValue());</div><div class="line">            result.put(&quot;description&quot;, StatusCode.ILLEGAL_PARAM.getDescription());</div><div class="line">            return result;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return proxyService.getRoleInfo(Integer.valueOf(request.getSession().getAttribute(&quot;agencyID&quot;).toString()), Integer.valueOf(roleId));</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>如果采用如下方式接受传入参数，看起来好像可以解决校验臃肿的问题：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public HashMap&lt;String, Object&gt; roleInfo(@RequestParam(value = &quot;id&quot;) int id) &#123;</div><div class="line">        if (!LegalUtil.isLegalRoleId(roleId)) &#123;</div><div class="line">            logger.error(&quot;ProxyController roleinfo roleId error:&quot; + roleId);</div><div class="line">            result.put(&quot;result&quot;, StatusCode.ILLEGAL_PARAM.getValue());</div><div class="line">            result.put(&quot;description&quot;, StatusCode.ILLEGAL_PARAM.getDescription());</div><div class="line">            return result;</div><div class="line">        &#125;</div><div class="line">        return proxyService.getRoleInfo(Integer.valueOf(request.getSession().getAttribute(&quot;agencyID&quot;).toString()), Integer.valueOf(roleId));</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>但是如果参数过多呢，会导致传入参数按个列出显得过长，而是耦合太紧，也无法复用。<br>统一提出为Model类型，使用hibernate-validator校验（hibernate-validator的引入及注解使用参照官方文档），采用bean注入方式调用，使代码看起来不那么臃肿，层次分明，Model大多时候可以复用，如下所示：<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/08/24/reqModel_bean/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/20/rsa_java/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1335,123 +1459,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/25/schedule/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MonkeyBean">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="帅斌的冒险船">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/06/25/schedule/" itemprop="url">Spring-boot 定时任务</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-25T15:03:22+08:00">
-                2017-06-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>定时任务在开发中很常见，最近在清理数据库废弃数据时用到定时任务。Spring-boot定时任务如下：</p>
-<h2 id="修改入口程序"><a href="#修改入口程序" class="headerlink" title="修改入口程序"></a>修改入口程序</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">@SpringBootApplication</div><div class="line">@EnableScheduling</div><div class="line">public class MainApplication &#123;</div><div class="line">    private static Logger logger = LoggerFactory.getLogger(MainApplication.class);</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        PokerAgentServerConfig.getInstance().requestConfig();</div><div class="line">        SpringApplication.run(MainApplication.class, args);</div><div class="line">        PokerAgentServerConfig.getInstance().initLogback();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //	配置filter实现前端的跨域访问</div><div class="line">    @Bean</div><div class="line">    public FilterRegistrationBean filterRegistrationBean() &#123;</div><div class="line">        FilterRegistrationBean registration = new FilterRegistrationBean();</div><div class="line">        registration.setFilter(new CrossOriginFilter());</div><div class="line">        registration.addUrlPatterns(&quot;/*&quot;);</div><div class="line">        return registration;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Bean</div><div class="line">    public FilterRegistrationBean filterTokenKeyBean() &#123;</div><div class="line">        FilterRegistrationBean registration = new FilterRegistrationBean();</div><div class="line">        registration.setFilter(new TokenKeyFilter());</div><div class="line">        registration.addUrlPatterns(&quot;/*&quot;);</div><div class="line">        return registration;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/06/25/schedule/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1501,7 +1508,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-count">46</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
