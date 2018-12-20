@@ -297,6 +297,242 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/09/multi_datasource/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MonkeyBean">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="帅斌的冒险船">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/09/multi_datasource/" itemprop="url">SpringBoot+Mybatis配置多数据源</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-09T23:20:20+08:00">
+                2017-10-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>开发企业级应用程序时常遇到要使用多个服务器上数据库的情况，此时需要配置多个数据源。查阅相关资料，遇到不少坑，亲测如下：</p>
+<h4 id="项目目录结构"><a href="#项目目录结构" class="headerlink" title="项目目录结构"></a>项目目录结构</h4><p><img src="/assets/multi_datasource_dic.png" alt="multi_dataSource_dic"></p>
+<h4 id="关键文件"><a href="#关键文件" class="headerlink" title="关键文件"></a>关键文件</h4><h6 id="pom文件配置："><a href="#pom文件配置：" class="headerlink" title="pom文件配置："></a>pom文件配置：</h6>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/10/09/multi_datasource/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/25/blockqueue/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MonkeyBean">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="帅斌的冒险船">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/25/blockqueue/" itemprop="url">Java 阻塞队列实现超时机制</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-25T21:50:12+08:00">
+                2017-08-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h4 id="阻塞队列概念"><a href="#阻塞队列概念" class="headerlink" title="阻塞队列概念"></a>阻塞队列概念</h4><p>定义：阻塞队列 (BlockingQueue)是Java util.concurrent包下重要的数据结构，BlockingQueue提供了线程安全的队列访问方式：当阻塞队列进行插入数据时，如果队列已满，线程将会阻塞等待直到队列非满；从阻塞队列取数据时，如果队列已空，线程将会阻塞等待直到队列非空。并发包下很多高级同步类的实现都是基于BlockingQueue实现的。<br>BlockingQueue是个接口，实现有ArrayBlockingQueue、DelayQueue、LinkedBlockingQueue、PriorityBlockingQueue、SynchronousQueue。<br>本文使用ArrayBlockingQueue：有界的阻塞队列，内部实现是将对象放到一个数组中。jdk源码为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">public ArrayBlockingQueue(int capacity, boolean fair) &#123;</div><div class="line">    if (capacity &lt;= 0)</div><div class="line">        throw new IllegalArgumentException();</div><div class="line">    this.items = new Object[capacity];</div><div class="line">    lock = new ReentrantLock(fair);</div><div class="line">    notEmpty = lock.newCondition();</div><div class="line">    notFull =  lock.newCondition();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>参数capacity为数组容量；fair为true，插入或删除对象时，按FIFO顺序处理。</p>
+<h4 id="阻塞队列工具实现"><a href="#阻塞队列工具实现" class="headerlink" title="阻塞队列工具实现"></a>阻塞队列工具实现</h4>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/08/25/blockqueue/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/25/filter_emoji/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1223,241 +1459,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/06/js_xml/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MonkeyBean">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="帅斌的冒险船">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/06/js_xml/" itemprop="url">js解析xml</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-06T22:55:23+08:00">
-                2017-07-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="js解析xml字符串"><a href="#js解析xml字符串" class="headerlink" title="js解析xml字符串"></a>js解析xml字符串</h2><p>示例为DOMParser.parseFromString()的简单使用。<br>以下用到ES6的多行字符串，注意包含str值的两个点是Tab键上面、数字键1左边的按键，而不是单引号。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">function testXmlStr()&#123;</div><div class="line">	var str = `&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;&lt;root&gt;</div><div class="line">	&lt;province name=&quot;北京直辖市&quot;&gt;</div><div class="line">	&lt;city&gt;昌平区&lt;/city&gt;</div><div class="line">	&lt;city&gt;朝阳区&lt;/city&gt;</div><div class="line">	&lt;city&gt;崇文区&lt;/city&gt;</div><div class="line">	&lt;city&gt;大兴区&lt;/city&gt;</div><div class="line">	&lt;city&gt;东城区&lt;/city&gt;</div><div class="line">	&lt;city&gt;房山区&lt;/city&gt;</div><div class="line">	&lt;city&gt;丰台区&lt;/city&gt;</div><div class="line">	&lt;city&gt;海淀区&lt;/city&gt;</div><div class="line">	&lt;city&gt;怀柔区&lt;/city&gt;</div><div class="line">    &lt;city&gt;门头沟区&lt;/city&gt;</div><div class="line">    &lt;city&gt;密云区&lt;/city&gt;</div><div class="line">    &lt;city&gt;平谷区&lt;/city&gt;</div><div class="line">    &lt;city&gt;石景山区&lt;/city&gt;</div><div class="line">    &lt;city&gt;顺义区&lt;/city&gt;</div><div class="line">    &lt;city&gt;通州区&lt;/city&gt;</div><div class="line">    &lt;city&gt;西城区&lt;/city&gt;</div><div class="line">    &lt;city&gt;宣武区&lt;/city&gt;</div><div class="line">    &lt;city&gt;延庆区&lt;/city&gt;</div><div class="line">  &lt;/province&gt;&lt;/root&gt;`;  </div><div class="line">  </div><div class="line">	//创建文档对象  </div><div class="line">	var parser=new DOMParser();  </div><div class="line">	var xmlDoc=parser.parseFromString(str,&quot;text/xml&quot;);</div><div class="line">	//提取数据  </div><div class="line">	var countrys = xmlDoc.getElementsByTagName(&apos;city&apos;);  </div><div class="line">	var arr = [];</div><div class="line">	//输出数据</div><div class="line">	for (var i = 0; i &lt; countrys.length; i++) &#123;  </div><div class="line">		arr.push(countrys[i].textContent);  </div><div class="line">	&#125;;  </div><div class="line">	console.log(arr);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h2 id="js解析本地xml文件"><a href="#js解析本地xml文件" class="headerlink" title="js解析本地xml文件"></a>js解析本地xml文件</h2><p>要解析的xml文件部分数据如下：<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/06/js_xml/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/swagger2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MonkeyBean">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="帅斌的冒险船">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/05/swagger2/" itemprop="url">Spring-boot集成Swagger2</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T22:37:16+08:00">
-                2017-07-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>Swagger用于定义API文档，实现前后端开发分离，测试时不再需要浏览器输入URL访问Controller。对于post请求，无需使用postman模拟，在接口文档中填参数，可直接模拟发请求。本文介绍Swagger2的引入及常用注解。</p>
-<h2 id="pom-xml中添加依赖"><a href="#pom-xml中添加依赖" class="headerlink" title="pom.xml中添加依赖"></a>pom.xml中添加依赖</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;io.springfox&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;springfox-swagger2&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;2.6.1&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;io.springfox&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;springfox-swagger-ui&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;2.6.1&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
-<h2 id="引入Swagger2"><a href="#引入Swagger2" class="headerlink" title="引入Swagger2"></a>引入Swagger2</h2><p>新建类，注解方式引入Swagger2
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/05/swagger2/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1507,7 +1508,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-count">47</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

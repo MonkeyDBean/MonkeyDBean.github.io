@@ -98,7 +98,7 @@
 <meta property="og:site_name" content="帅斌的冒险船">
 <meta property="og:description" content="JVM内存模型 堆内存&amp;amp;非堆内存">
 <meta property="og:image" content="http://yoursite.com/assets/images/jvm_memory_structure.png">
-<meta property="og:updated_time" content="2018-10-11T14:04:52.460Z">
+<meta property="og:updated_time" content="2018-12-20T05:43:54.538Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM GC优化初探">
 <meta name="twitter:description" content="JVM内存模型 堆内存&amp;amp;非堆内存">
@@ -379,15 +379,17 @@
 <p>-XX:MetaspaceSize: 元空间的初始内存，jdk1.8后出现。默认值依赖于平台。</p>
 <p>-XX:MaxMetaspaceSize: 元空间的最大内存，jdk1.8后出现。如果没有指定，元空间将会根据应用程序在运行时的需求动态设置大小。</p>
 <p>-XX:SurvivorRatio=4: 年轻代中Eden区与Survivor区的比值为4（注意Survivor区有两个）。表示Eden：Survivor=4：2，一个Survivor区占整个年轻代的1/6。</p>
-<p>-XX:+PrintGCTimeStamps: 打印每次GC的时间戳,默认不开启</p>
-<p>-XX:+PrintHeapAtGC: 打印GC前后的详细堆栈信息</p>
-<p>-XX:+PrintGCDetails: 打印每次GC的细节信息,默认不打印</p>
-<p>-XX:+UseParNewGC: 支持在年轻代用多线程进行垃圾收集,默认不开启</p>
+<p>-XX:+PrintGCTimeStamps: 打印每次GC的时间戳,默认不开启。</p>
+<p>-XX:+PrintHeapAtGC: 打印GC前后的详细堆栈信息。</p>
+<p>-XX:+PrintGCDetails: 打印每次GC的细节信息,默认不打印。</p>
+<p>-XX:+UseParNewGC: 支持在年轻代用多线程进行垃圾收集,默认不开启。</p>
 <p>-XX:MaxTenuringThreshold=5: 设置垃圾回收对象的最大年龄为5。如果设置为0，则年轻代对象不经过Survivor区，直接进入老年代 。对于老年代比较多的应用，可以提高效率。如果将此值设置为一个较大值，则年轻代对象会在Survivor区进行多次复制，这样可以增加对象在年轻代的存活时间 。</p>
 <p>-XX:ParallelGCThreads=8: 并行GC的线程数设为8,默认值是CPU数。</p>
 <p>-XX:+UseCMSCompactAtFullCollection: 打开对年老代的压缩。可能会影响性能，但是可以消除碎片。</p>
 <p>-XX:CMSFullGCsBeforeCompaction=3: 设置每3次GC则对内存空间进行压缩、整理。由于并发收集器不对内存空间进行压缩、整理，所以运行一段时间以后会产生碎片，使运行效率降低</p>
 <p>-XX:+UseConcMarkSweepGC: 设置对老生代使用CMS回收。</p>
+<p>-XX:+DisableExplicitGC，禁止代码中显式调用GC，加上此参数，代码中调用System.gc()没有效果（附：显式调用System.gc()，只是建议JVM进行垃圾回收，但是最终会不会执行垃圾回收是不确定的）。如果应用中使用了java nio中的direct memory，那么使用-XX:+DisableExplicitGC一定要小心，存在潜在的内存泄露风险。</p>
+<p>-XX:MaxDirectMemorySize来指定最大的堆外内存大小。</p>
 <p>-Duser.timezone=GMT+08: 设置java运行环境时区为东8区 。</p>
 <h2 id="实例优化"><a href="#实例优化" class="headerlink" title="实例优化"></a>实例优化</h2><p>首先确认项目的架构和代码等基本没有优化空间，然后通过GC优化，使性能提升。</p>
 <h3 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h3><p>GC优化是系统且复杂的工作，可简单参照如下建议。<br>①JVM初始内存与JVM最大内存的值设置为相等，即-Xms=-Xmx<br>目的：减少内存自动扩容和收缩带来的性能损失</p>
@@ -543,7 +545,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">45</span>
+                <span class="site-state-item-count">47</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

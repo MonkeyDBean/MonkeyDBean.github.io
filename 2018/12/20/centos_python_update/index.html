@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="技术,DataBase," />
+  <meta name="keywords" content="Linux,技术," />
 
 
 
@@ -90,22 +90,17 @@
 
 
 
-<meta name="description" content="最近开发遇到当Mysql存储微信昵称,而微信昵称有emoji表情符号时，数据库存储数据出现乱码。原因是mysql支持的utf8编码最大长度为3字节，如果遇4字节的宽字符(emoji表情符号、不常用的汉字、新增的Unicode字符等)就会插入异常。Mysql在5.5.3之后增加utf8mb4（most bytes 4）编码,专门用于兼容四字节的unicode，一般情况。为了节省空间，使用utf8即可">
-<meta name="keywords" content="技术,DataBase">
+<meta name="description" content="系统版本为Centos6.9, 查看已安装Python版本为2.6.612345cat /etc/redhat-releaseCentOS release 6.9 (Final)python -VPython 2.6.6 升级12345678910111213141516171819202122232425# 下载cd /usr/local/srcwget https://www.python.o">
+<meta name="keywords" content="Linux,技术">
 <meta property="og:type" content="article">
-<meta property="og:title" content="简谈mysql中utf8mb4">
-<meta property="og:url" content="http://yoursite.com/2017/08/06/utf8mb4/index.html">
+<meta property="og:title" content="Centos Python2升级记录">
+<meta property="og:url" content="http://yoursite.com/2018/12/20/centos_python_update/index.html">
 <meta property="og:site_name" content="帅斌的冒险船">
-<meta property="og:description" content="最近开发遇到当Mysql存储微信昵称,而微信昵称有emoji表情符号时，数据库存储数据出现乱码。原因是mysql支持的utf8编码最大长度为3字节，如果遇4字节的宽字符(emoji表情符号、不常用的汉字、新增的Unicode字符等)就会插入异常。Mysql在5.5.3之后增加utf8mb4（most bytes 4）编码,专门用于兼容四字节的unicode，一般情况。为了节省空间，使用utf8即可">
-<meta property="og:image" content="http://yoursite.com/assets/before_show_character.png">
-<meta property="og:image" content="http://yoursite.com/assets/before_mysql_config.png">
-<meta property="og:image" content="http://yoursite.com/assets/after_show_character.png">
-<meta property="og:image" content="http://yoursite.com/assets/after_mysql_config.png">
-<meta property="og:updated_time" content="2017-08-24T16:50:57.404Z">
+<meta property="og:description" content="系统版本为Centos6.9, 查看已安装Python版本为2.6.612345cat /etc/redhat-releaseCentOS release 6.9 (Final)python -VPython 2.6.6 升级12345678910111213141516171819202122232425# 下载cd /usr/local/srcwget https://www.python.o">
+<meta property="og:updated_time" content="2018-12-20T13:59:55.018Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="简谈mysql中utf8mb4">
-<meta name="twitter:description" content="最近开发遇到当Mysql存储微信昵称,而微信昵称有emoji表情符号时，数据库存储数据出现乱码。原因是mysql支持的utf8编码最大长度为3字节，如果遇4字节的宽字符(emoji表情符号、不常用的汉字、新增的Unicode字符等)就会插入异常。Mysql在5.5.3之后增加utf8mb4（most bytes 4）编码,专门用于兼容四字节的unicode，一般情况。为了节省空间，使用utf8即可">
-<meta name="twitter:image" content="http://yoursite.com/assets/before_show_character.png">
+<meta name="twitter:title" content="Centos Python2升级记录">
+<meta name="twitter:description" content="系统版本为Centos6.9, 查看已安装Python版本为2.6.612345cat /etc/redhat-releaseCentOS release 6.9 (Final)python -VPython 2.6.6 升级12345678910111213141516171819202122232425# 下载cd /usr/local/srcwget https://www.python.o">
 
 
 
@@ -133,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/08/06/utf8mb4/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/12/20/centos_python_update/"/>
 
 
 
 
 
-  <title>简谈mysql中utf8mb4 | 帅斌的冒险船</title>
+  <title>Centos Python2升级记录 | 帅斌的冒险船</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -302,7 +297,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/06/utf8mb4/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/20/centos_python_update/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="MonkeyBean">
@@ -319,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">简谈mysql中utf8mb4</h1>
+          <h1 class="post-title" itemprop="name headline">Centos Python2升级记录</h1>
         
 
         <div class="post-meta">
@@ -331,8 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-06T17:20:18+08:00">
-                2017-08-06
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-20T22:15:18+08:00">
+                2018-12-20
               </time>
             
 
@@ -366,13 +361,9 @@
       
 
       
-        <p>最近开发遇到当Mysql存储微信昵称,而微信昵称有emoji表情符号时，数据库存储数据出现乱码。原因是mysql支持的utf8编码最大长度为3字节，如果遇4字节的宽字符(emoji表情符号、不常用的汉字、新增的Unicode字符等)就会插入异常。<br>Mysql在5.5.3之后增加utf8mb4（most bytes 4）编码,专门用于兼容四字节的unicode，一般情况。为了节省空间，使用utf8即可，但是建议使用utf8mb4。</p>
-<h2 id="Linux下更改mysql编码方式"><a href="#Linux下更改mysql编码方式" class="headerlink" title="Linux下更改mysql编码方式"></a>Linux下更改mysql编码方式</h2><p>使用Linux的发行版本为Centos</p>
-<h3 id="首先查看mysql版本，是否支持utf8mb4（5-5-3版本及以上）。"><a href="#首先查看mysql版本，是否支持utf8mb4（5-5-3版本及以上）。" class="headerlink" title="首先查看mysql版本，是否支持utf8mb4（5.5.3版本及以上）。"></a>首先查看mysql版本，是否支持utf8mb4（5.5.3版本及以上）。</h3><p>查看版本简易方法：<br>终端下：mysql -V<br>mysql下:status; 或 select version();</p>
-<h3 id="修改mysql配置文件"><a href="#修改mysql配置文件" class="headerlink" title="修改mysql配置文件"></a>修改mysql配置文件</h3><p>修改my.conf(windows下为my.ini)<br>修改前后的配置文件及系统编码分别如下：<a id="more"></a><br>修改前编码：<br><img src="/assets/before_show_character.png" alt="before_show_character"><br>修改前配置文件：<br><img src="/assets/before_mysql_config.png" alt="before_mysql_config"><br>修改后的编码：<br><img src="/assets/after_show_character.png" alt="after_show_character"><br>修改后的配置文件：<br><img src="/assets/after_mysql_config.png" alt="after_mysql_config"></p>
-<h3 id="修改database、table及column的字符集"><a href="#修改database、table及column的字符集" class="headerlink" title="修改database、table及column的字符集"></a>修改database、table及column的字符集</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ALTER DATABASE database_name CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;</div><div class="line">ALTER TABLE table_name CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;</div><div class="line">ALTER TABLE table_name CHANGE column_name VARCHAR(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;</div></pre></td></tr></table></figure>
-<h3 id="重启mysql"><a href="#重启mysql" class="headerlink" title="重启mysql"></a>重启mysql</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">service mysql restart 或 systemctl restart mysqld.service</div></pre></td></tr></table></figure>
-<h3 id="若更新sql，指定编码方式为utf8mb4"><a href="#若更新sql，指定编码方式为utf8mb4" class="headerlink" title="若更新sql，指定编码方式为utf8mb4"></a>若更新sql，指定编码方式为utf8mb4</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysql -uyourName -pyourPassword --default-character-set=utf8mb4 mahjongforagency &lt; /root/update.sql</div></pre></td></tr></table></figure>
+        <p>系统版本为Centos6.9, 查看已安装Python版本为2.6.6<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">cat /etc/redhat-release</div><div class="line">CentOS release 6.9 (Final)</div><div class="line"></div><div class="line">python -V</div><div class="line">Python 2.6.6</div></pre></td></tr></table></figure></p>
+<p>升级<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"># 下载</div><div class="line">cd /usr/local/src</div><div class="line">wget https://www.python.org/ftp/python/2.7.15/Python-2.7.15.tgz</div><div class="line"></div><div class="line"># 解压</div><div class="line">tar zxf Python-2.7.15.tgz</div><div class="line">cd Python-2.7.15</div><div class="line"></div><div class="line"># 配置</div><div class="line">./configure</div><div class="line"></div><div class="line"># 编译（make all：即make, 仅编译；make install：编译并安装；make clean：清除编译结果；make distclean：清除所有生成的文件）</div><div class="line">make install</div><div class="line">make clean</div><div class="line"></div><div class="line"># 查看版本</div><div class="line">/usr/local/bin/python2.7 -V</div><div class="line"></div><div class="line"># 建立软连接，将系统默认的python指向python2.7</div><div class="line">mv /usr/bin/python /usr/bin/python2.6</div><div class="line">ln -s /usr/local/bin/python2.7 /usr/bin/python</div><div class="line"></div><div class="line"># yum不支持 python2.7 ,此时yum已经无法使用，更改如下恢复yum</div><div class="line">vim /usr/bin/yum</div><div class="line">将yum引用python的路径, 由/usr/bin/python 更改为 /usr/bin/python2.6</div></pre></td></tr></table></figure></p>
+<p>查看当前版本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">python -V</div><div class="line">Python 2.7.15</div></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -423,9 +414,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/技术/" rel="tag"># 技术</a>
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
           
-            <a href="/tags/DataBase/" rel="tag"># DataBase</a>
+            <a href="/tags/技术/" rel="tag"># 技术</a>
           
         </div>
       
@@ -438,8 +429,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/30/centos_ntpd/" rel="next" title="Centos网络时间同步">
-                <i class="fa fa-chevron-left"></i> Centos网络时间同步
+              <a href="/2018/12/09/kafka_manager_introduce/" rel="next" title="Kafka Manager引入">
+                <i class="fa fa-chevron-left"></i> Kafka Manager引入
               </a>
             
           </div>
@@ -448,8 +439,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/08/08/mysql_insert/" rel="prev" title="mysql插入测试数据示例">
-                mysql插入测试数据示例 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/12/20/centos_node_install/" rel="prev" title="Centos Node安装记录">
+                Centos Node安装记录 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -497,17 +488,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/avatar.png"
@@ -602,22 +584,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux下更改mysql编码方式"><span class="nav-number">1.</span> <span class="nav-text">Linux下更改mysql编码方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#首先查看mysql版本，是否支持utf8mb4（5-5-3版本及以上）。"><span class="nav-number">1.1.</span> <span class="nav-text">首先查看mysql版本，是否支持utf8mb4（5.5.3版本及以上）。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改mysql配置文件"><span class="nav-number">1.2.</span> <span class="nav-text">修改mysql配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改database、table及column的字符集"><span class="nav-number">1.3.</span> <span class="nav-text">修改database、table及column的字符集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重启mysql"><span class="nav-number">1.4.</span> <span class="nav-text">重启mysql</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#若更新sql，指定编码方式为utf8mb4"><span class="nav-number">1.5.</span> <span class="nav-text">若更新sql，指定编码方式为utf8mb4</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
