@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="技术,JAVA," />
+  <meta name="keywords" content="技术,Linux," />
 
 
 
@@ -90,17 +90,17 @@
 
 
 
-<meta name="description" content="如下xml为例：123456789&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot; ?&amp;gt;&amp;lt;datasoruce&amp;gt;    &amp;lt;property name=&amp;quot;driver&amp;quot;&amp;gt;com.mysql.jdbc.Driver&amp;lt;/property&amp;gt;    &amp;lt;property n">
-<meta name="keywords" content="技术,JAVA">
+<meta name="description" content="一、简介1.原因GFW(Great Fire Wall, 网络防火城墙)。 2.方法Shodowsockets转发请求。代理服务器隐藏了请求客户端(正向代理)，因此请求不被拦截。 3.流程以访问google为例：①用户发起网络请求，浏览器访问google。②请求发送到本地代理客户端(shadowsockets客户端)。③本地代理拿到请求数据，发送到墙外的代理服务器(shadowsockets服务端">
+<meta name="keywords" content="技术,Linux">
 <meta property="og:type" content="article">
-<meta property="og:title" content="java解析xml">
-<meta property="og:url" content="http://yoursite.com/2017/07/08/java_xml/index.html">
+<meta property="og:title" content="Shadowsockets Introduce">
+<meta property="og:url" content="http://yoursite.com/2016/11/06/shadowsockets_introduce/index.html">
 <meta property="og:site_name" content="帅斌的冒险船">
-<meta property="og:description" content="如下xml为例：123456789&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot; ?&amp;gt;&amp;lt;datasoruce&amp;gt;    &amp;lt;property name=&amp;quot;driver&amp;quot;&amp;gt;com.mysql.jdbc.Driver&amp;lt;/property&amp;gt;    &amp;lt;property n">
-<meta property="og:updated_time" content="2017-07-10T03:03:43.568Z">
+<meta property="og:description" content="一、简介1.原因GFW(Great Fire Wall, 网络防火城墙)。 2.方法Shodowsockets转发请求。代理服务器隐藏了请求客户端(正向代理)，因此请求不被拦截。 3.流程以访问google为例：①用户发起网络请求，浏览器访问google。②请求发送到本地代理客户端(shadowsockets客户端)。③本地代理拿到请求数据，发送到墙外的代理服务器(shadowsockets服务端">
+<meta property="og:updated_time" content="2018-12-24T11:41:28.403Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="java解析xml">
-<meta name="twitter:description" content="如下xml为例：123456789&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot; ?&amp;gt;&amp;lt;datasoruce&amp;gt;    &amp;lt;property name=&amp;quot;driver&amp;quot;&amp;gt;com.mysql.jdbc.Driver&amp;lt;/property&amp;gt;    &amp;lt;property n">
+<meta name="twitter:title" content="Shadowsockets Introduce">
+<meta name="twitter:description" content="一、简介1.原因GFW(Great Fire Wall, 网络防火城墙)。 2.方法Shodowsockets转发请求。代理服务器隐藏了请求客户端(正向代理)，因此请求不被拦截。 3.流程以访问google为例：①用户发起网络请求，浏览器访问google。②请求发送到本地代理客户端(shadowsockets客户端)。③本地代理拿到请求数据，发送到墙外的代理服务器(shadowsockets服务端">
 
 
 
@@ -128,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/07/08/java_xml/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/11/06/shadowsockets_introduce/"/>
 
 
 
 
 
-  <title>java解析xml | 帅斌的冒险船</title>
+  <title>Shadowsockets Introduce | 帅斌的冒险船</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -297,7 +297,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/08/java_xml/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/11/06/shadowsockets_introduce/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="MonkeyBean">
@@ -314,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">java解析xml</h1>
+          <h1 class="post-title" itemprop="name headline">Shadowsockets Introduce</h1>
         
 
         <div class="post-meta">
@@ -326,8 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-08T15:40:20+08:00">
-                2017-07-08
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-06T12:24:20+08:00">
+                2016-11-06
               </time>
             
 
@@ -361,19 +361,21 @@
       
 
       
-        <p>如下xml为例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</div><div class="line">&lt;datasoruce&gt;</div><div class="line">    &lt;property name=&quot;driver&quot;&gt;com.mysql.jdbc.Driver&lt;/property&gt;</div><div class="line">    &lt;property name=&quot;url&quot;&gt;</div><div class="line">        jdbc:mysql://127.0.0.1:3306/poker?useUnicode=true&amp;amp;characterEncoding=utf8&amp;amp;useSSL=true</div><div class="line">    &lt;/property&gt;</div><div class="line">    &lt;property name=&quot;username&quot;&gt;root&lt;/property&gt;</div><div class="line">    &lt;property name=&quot;password&quot;&gt;root&lt;/property&gt;</div><div class="line">&lt;/datasoruce&gt;</div></pre></td></tr></table></figure></p>
-<p>解析引入dom4j,这里使用的为2.0.0版本，具体文档到社区查看，github已有最新2.0.1版本，dom4j更新很慢，也可以说比较稳定。<br>import org.dom4j.Document;<br>import org.dom4j.DocumentException;<br>import org.dom4j.Element;<br>import org.dom4j.io.SAXReader;<br>日志输出使用：<br>import org.slf4j.Logger;<br>import org.slf4j.LoggerFactory;<br><a id="more"></a>解析类如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">public class XmlParser</div><div class="line">&#123;</div><div class="line">    private static final Logger logger = LoggerFactory.getLogger(XmlParser.class);</div><div class="line"></div><div class="line">    public static HashMap&lt;String, String&gt; parse(InputStream inputStream)</div><div class="line">    &#123;</div><div class="line">        SAXReader reader = new SAXReader();</div><div class="line">        Document document = null;</div><div class="line">        try</div><div class="line">        &#123;</div><div class="line">            document = reader.read(inputStream);</div><div class="line">        &#125;</div><div class="line">        catch (DocumentException e)</div><div class="line">        &#123;</div><div class="line">            logger.error(&quot;parse xml error: &#123;&#125;&quot;, e);</div><div class="line">        &#125;</div><div class="line">        Element root = document.getRootElement();</div><div class="line">        List nodes = root.elements(&quot;property&quot;);</div><div class="line">        Iterator&lt;Element&gt; it = nodes.iterator();</div><div class="line">        HashMap&lt;String, String&gt; map = new HashMap&lt;&gt;();</div><div class="line">        while (it.hasNext())</div><div class="line">        &#123;</div><div class="line">            Element element = it.next();</div><div class="line">            map.put(element.attribute(&quot;name&quot;).getText(), element.getStringValue());</div><div class="line">        &#125;</div><div class="line">        return map;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>外层调用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">InputStream inputStream = DbManager.class.getResourceAsStream(&quot;/datasource.xml&quot;);</div><div class="line">HashMap&lt;String, String&gt; map = XmlParser.parse(inputStream);</div></pre></td></tr></table></figure></p>
-<p>另外，如果验证拿到xml的合法性，则如下，将输入流解析为字符流输出，引入com.google.common.io.CharStreams;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">// 输出连接数据库的配置文件</div><div class="line">InputStream inputStream = DbManager.class.getResourceAsStream(&quot;/datasource.xml&quot;);</div><div class="line">try &#123;</div><div class="line">    String text = CharStreams.toString(new InputStreamReader(inputStream, &quot;UTF-8&quot;));</div><div class="line">    logger.info(&quot;dataSource.xml str: \n&#123;&#125;&quot;,text);</div><div class="line">&#125; catch (IOException e) &#123;</div><div class="line">    logger.error(&quot;dataSource.xml IOException e -&gt;&#123;&#125;&quot;, e);</div><div class="line">&#125;</div><div class="line">inputStream = DbManager.class.getResourceAsStream(&quot;/datasource.xml&quot;);</div><div class="line">HashMap&lt;String, String&gt; map = XmlParser.parse(inputStream);</div></pre></td></tr></table></figure></p>
-<p>String text = CharStreams.toString(new InputStreamReader(inputStream, “UTF-8”));已经将输入流读取完毕,已到流的结尾，不可直接再次使用。需重新获取inputStream = DbManager.class.getResourceAsStream(“/datasource.xml”);</p>
-<p>补充，上一步执行了两次<br>inputStream = DbManager.class.getResourceAsStream(“/datasource.xml”);<br>效率很低,看起来也很傻。又看了下inputStream有mark/reset方法，解决了我的问题。如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">inputStream = DbManager.class.getResourceAsStream(&quot;/datasource.xml&quot;);</div><div class="line">try &#123;</div><div class="line">	// inputStream.markSupported();</div><div class="line">    inputStream.mark(inputStream.available());</div><div class="line">    String text = CharStreams.toString(new InputStreamReader(inputStream, &quot;UTF-8&quot;));</div><div class="line">    inputStream.reset();</div><div class="line">    logger.info(&quot;dataSource.xml str: \n&#123;&#125;&quot;,text);</div><div class="line">&#125; catch (IOException e) &#123;</div><div class="line">    logger.error(&quot;dataSource.xml IOException e -&gt;&#123;&#125;&quot;, e);</div><div class="line">&#125;</div><div class="line">HashMap&lt;String, String&gt; map = XmlParser.parse(inputStream);</div></pre></td></tr></table></figure></p>
-<p>InputStream本身提供三个接口</p>
-<ul>
-<li>markSupported()；InputStream是否支持mark，默认不支持</li>
-<li>mark(int readLimit);用于标记当前位置，在读取一定数量的数据(小于readlimit的数据)后使用reset可以回到mark标记的位置。</li>
-<li>reset()；回到mark标记位置。</li>
-</ul>
-<p>子类需要支持mark必须重写这三个方法。</p>
+        <h2 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h2><h3 id="1-原因"><a href="#1-原因" class="headerlink" title="1.原因"></a>1.原因</h3><p>GFW(Great Fire Wall, 网络防火城墙)。</p>
+<h3 id="2-方法"><a href="#2-方法" class="headerlink" title="2.方法"></a>2.方法</h3><p>Shodowsockets转发请求。代理服务器隐藏了请求客户端(正向代理)，因此请求不被拦截。</p>
+<h3 id="3-流程"><a href="#3-流程" class="headerlink" title="3.流程"></a>3.流程</h3><p>以访问google为例：<br>①用户发起网络请求，浏览器访问google。<br>②请求发送到本地代理客户端(shadowsockets客户端)。<br>③本地代理拿到请求数据，发送到墙外的代理服务器(shadowsockets服务端)。<br>④代理服务器向google发起请求, 收到响应数据后，再返回给代理客户端。<br>⑤代理客户端将响应数据交给浏览器，请求完成。</p>
+<h2 id="二、准备"><a href="#二、准备" class="headerlink" title="二、准备"></a>二、准备</h2><p>一台可访问的墙外服务器(VPN供应商如Vultr、搬瓦工、亚马逊等), 推荐Vultr。</p>
+<h2 id="三、安装"><a href="#三、安装" class="headerlink" title="三、安装"></a>三、安装</h2><h3 id="1-服务端"><a href="#1-服务端" class="headerlink" title="1.服务端"></a>1.服务端</h3><a id="more"></a>
+<p>centos安装shadowsockets, 使用pip(python install package)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">①first step:</div><div class="line">yum -y update</div><div class="line">yum -y install python-pip</div><div class="line">或</div><div class="line">yum install python-setuptools &amp;&amp; easy_install pip</div><div class="line"></div><div class="line">②second step: </div><div class="line">pip install shadowsocks</div></pre></td></tr></table></figure></p>
+<p>创建配置文件/etc/shadowsockets<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    &quot;server&quot;:&quot;0.0.0.0&quot;, </div><div class="line">    &quot;server_port&quot;:8388,</div><div class="line">    &quot;password&quot;:&quot;mypassword&quot;,</div><div class="line">    &quot;method&quot;:&quot;aes-256-cfb&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>server值0.0.0.0指当前服务器。<br>服务端口任选未使用的端口号，之后shadowsockets客户端会通过该端口连接。<br>起服命令，前台运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssserver -c /etc/shadowsocks.json</div></pre></td></tr></table></figure></p>
+<p>后台运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ssserver -c /etc/shadowsocks.json -d start</div><div class="line">ssserver -c /etc/shadowsocks.json -d stop</div></pre></td></tr></table></figure></p>
+<h3 id="2-客户端"><a href="#2-客户端" class="headerlink" title="2.客户端"></a>2.客户端</h3><p>服务端源码以及各平台的客户端下载前往github：<a href="https://github.com/shadowsocks" target="_blank" rel="external">传送</a><br>客户端下载安装后，通过图形界面配置shadowsocket服务端地址及密码后，即可访问google等墙外资源。此时可查看客户端json配置包含如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">	&quot;server&quot;: &quot;$server_address&quot;,</div><div class="line">	&quot;server_port&quot;: 8388,</div><div class="line">	&quot;password&quot;: &quot;mypassword&quot;,</div><div class="line">	&quot;method&quot;: &quot;aes-256-cfb&quot;,</div><div class="line">	&quot;remarks&quot;: &quot;myserver&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="3-移动端"><a href="#3-移动端" class="headerlink" title="3.移动端"></a>3.移动端</h3><h4 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h4><p>以上安装支持Windows、MacOS、Android。<br>IOS平台有付费App支持Shadowsockets，如SuperWingy、RocketWingy、ShadowRocket。<br>应用配置完成后，可随时随地访问墙外资源。</p>
+<h4 id="Http代理"><a href="#Http代理" class="headerlink" title="Http代理"></a>Http代理</h4><p>前提：局域网的一台电脑已可访问墙外资源，同时在shadowsockets客户端，右键选择允许来自局域网的连接。</p>
+<p>移动端配置：手机、平板等移动设备，连接局域网后，点击无线局域网详细信息，找到http代理，选择自动，URL填可翻墙电脑的代理客户端地址，如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://$ip:1080/pac</div></pre></td></tr></table></figure></p>
+<p>此时移动端设备已可访问墙外资源。</p>
+<p>另外，局域网的其他电脑也可通过设置Http代理访问墙外资源，如chrome浏览器设置-&gt;高级-&gt;打开代理设置-&gt;连接-&gt;局域网设置-&gt;代理服务器，配置地址(如上述$ip)及端口(1080)后即可。</p>
 
       
     </div>
@@ -426,7 +428,7 @@
           
             <a href="/tags/技术/" rel="tag"># 技术</a>
           
-            <a href="/tags/JAVA/" rel="tag"># JAVA</a>
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
           
         </div>
       
@@ -439,8 +441,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/06/js_xml/" rel="next" title="js解析xml">
-                <i class="fa fa-chevron-left"></i> js解析xml
+              <a href="/2016/10/29/get_post/" rel="next" title="浅谈Http中GET与POST的区别">
+                <i class="fa fa-chevron-left"></i> 浅谈Http中GET与POST的区别
               </a>
             
           </div>
@@ -449,8 +451,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/07/30/centos_ntpd/" rel="prev" title="Centos网络时间同步">
-                Centos网络时间同步 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/01/01/hexo_gitpages/" rel="prev" title="Windows下使用Hexo+Github搭建个人博客">
+                Windows下使用Hexo+Github搭建个人博客 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -498,8 +500,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/avatar.png"
@@ -594,6 +605,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、简介"><span class="nav-number">1.</span> <span class="nav-text">一、简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-原因"><span class="nav-number">1.1.</span> <span class="nav-text">1.原因</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-方法"><span class="nav-number">1.2.</span> <span class="nav-text">2.方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-流程"><span class="nav-number">1.3.</span> <span class="nav-text">3.流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、准备"><span class="nav-number">2.</span> <span class="nav-text">二、准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、安装"><span class="nav-number">3.</span> <span class="nav-text">三、安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-服务端"><span class="nav-number">3.1.</span> <span class="nav-text">1.服务端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-客户端"><span class="nav-number">3.2.</span> <span class="nav-text">2.客户端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-移动端"><span class="nav-number">3.3.</span> <span class="nav-text">3.移动端</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#应用"><span class="nav-number">3.3.1.</span> <span class="nav-text">应用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Http代理"><span class="nav-number">3.3.2.</span> <span class="nav-text">Http代理</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
