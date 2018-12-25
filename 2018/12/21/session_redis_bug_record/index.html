@@ -90,19 +90,17 @@
 
 
 
-<meta name="description" content="背景limax是比较小众的应用服务器框架，zdb是limax采用的数据存储方式。zdb采用k-v存储，没有事务的概念，自带锁（加锁和解锁同操作封装在一起，对外隐藏），编程较为简单。项目前期使用zdb进行数据存储，随着项目规模的扩大，暴露出一些问题。每个服务器都有一个zdb.xml文件，基于该文件，ant构建生成的table和xbean也只有当前服务器可以读取。为保证数据一致性，zdb使用方式若未严">
+<meta name="description" content="场景Springboot使用Redis作为分布式节点的共享Session, 使用Kafka传输日志到ELK，出现每小时百万条报警，报警日志均为WARN级别，如下：12RedisOperationsSessionRepository：Unable to publish SessionDestroyedEvent for sessionRedisMessageListenerContainer：Exe">
 <meta name="keywords" content="技术,JAVA">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Limax ZDB简单介绍及死锁分析">
-<meta property="og:url" content="http://yoursite.com/2017/05/22/limax_zdb/index.html">
+<meta property="og:title" content="Springboot Redis Session 消息监听遗漏Bug记录">
+<meta property="og:url" content="http://yoursite.com/2018/12/21/session_redis_bug_record/index.html">
 <meta property="og:site_name" content="帅斌的冒险船">
-<meta property="og:description" content="背景limax是比较小众的应用服务器框架，zdb是limax采用的数据存储方式。zdb采用k-v存储，没有事务的概念，自带锁（加锁和解锁同操作封装在一起，对外隐藏），编程较为简单。项目前期使用zdb进行数据存储，随着项目规模的扩大，暴露出一些问题。每个服务器都有一个zdb.xml文件，基于该文件，ant构建生成的table和xbean也只有当前服务器可以读取。为保证数据一致性，zdb使用方式若未严">
-<meta property="og:image" content="http://yoursite.com/assets/embarrassed.png">
-<meta property="og:updated_time" content="2017-07-05T14:52:15.556Z">
+<meta property="og:description" content="场景Springboot使用Redis作为分布式节点的共享Session, 使用Kafka传输日志到ELK，出现每小时百万条报警，报警日志均为WARN级别，如下：12RedisOperationsSessionRepository：Unable to publish SessionDestroyedEvent for sessionRedisMessageListenerContainer：Exe">
+<meta property="og:updated_time" content="2018-12-25T13:40:26.418Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Limax ZDB简单介绍及死锁分析">
-<meta name="twitter:description" content="背景limax是比较小众的应用服务器框架，zdb是limax采用的数据存储方式。zdb采用k-v存储，没有事务的概念，自带锁（加锁和解锁同操作封装在一起，对外隐藏），编程较为简单。项目前期使用zdb进行数据存储，随着项目规模的扩大，暴露出一些问题。每个服务器都有一个zdb.xml文件，基于该文件，ant构建生成的table和xbean也只有当前服务器可以读取。为保证数据一致性，zdb使用方式若未严">
-<meta name="twitter:image" content="http://yoursite.com/assets/embarrassed.png">
+<meta name="twitter:title" content="Springboot Redis Session 消息监听遗漏Bug记录">
+<meta name="twitter:description" content="场景Springboot使用Redis作为分布式节点的共享Session, 使用Kafka传输日志到ELK，出现每小时百万条报警，报警日志均为WARN级别，如下：12RedisOperationsSessionRepository：Unable to publish SessionDestroyedEvent for sessionRedisMessageListenerContainer：Exe">
 
 
 
@@ -130,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/05/22/limax_zdb/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/12/21/session_redis_bug_record/"/>
 
 
 
 
 
-  <title>Limax ZDB简单介绍及死锁分析 | 帅斌的冒险船</title>
+  <title>Springboot Redis Session 消息监听遗漏Bug记录 | 帅斌的冒险船</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -299,7 +297,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/22/limax_zdb/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/21/session_redis_bug_record/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="MonkeyBean">
@@ -316,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Limax ZDB简单介绍及死锁分析</h1>
+          <h1 class="post-title" itemprop="name headline">Springboot Redis Session 消息监听遗漏Bug记录</h1>
         
 
         <div class="post-meta">
@@ -328,8 +326,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-22T22:50:55+08:00">
-                2017-05-22
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-21T22:45:22+08:00">
+                2018-12-21
               </time>
             
 
@@ -363,32 +361,12 @@
       
 
       
-        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p><a href="http://www.limax-project.org/" target="_blank" rel="external">limax</a>是比较小众的应用服务器框架，zdb是limax采用的数据存储方式。zdb采用k-v存储，没有事务的概念，自带锁（加锁和解锁同操作封装在一起，对外隐藏），编程较为简单。<br>项目前期使用zdb进行数据存储，随着项目规模的扩大，暴露出一些问题。每个服务器都有一个zdb.xml文件，基于该文件，ant构建生成的table和xbean也只有当前服务器可以读取。为保证数据一致性，zdb使用方式若未严格注意，导致数据分散在不同职能的服务器上，当某个功能需要的数据需要从不同的服务器上读取时，这就很尴尬了，数据读取繁琐，服务器之间通信协议的繁琐导致编程的繁琐。现在正在逐步废弃zdb，采用主流的mysql+redis存储。<br><img src="/assets/embarrassed.png" alt="embarrassed"><br><a id="more"></a></p>
-<h2 id="ZDB"><a href="#ZDB" class="headerlink" title="ZDB"></a>ZDB</h2><p>zdb定义表时，主键无法定义键名，只需定义主键类型。以简单的手机绑定送钻功能为例,zdb设计如下，mobile_id_table为表名，string为主键类型，当前表主键为账户ID，value为记录类，MobileIdBean定义记录包括的字段。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;table name=&quot;mobile_id_table&quot; key=&quot;string&quot; value=&quot;MobileIdBean&quot;/&gt;</div><div class="line">&lt;xbean name=&quot;MobileIdBean&quot;&gt;</div><div class="line">&lt;variable name=&quot;accountId&quot; type=&quot;int&quot;/&gt;&lt;!-- 账号ID --&gt;</div><div class="line">   &lt;variable name=&quot;bindTime&quot; type=&quot;long&quot;/&gt;&lt;!-- 绑定时间 --&gt;</div><div class="line">   &lt;variable name=&quot;status&quot; type=&quot;string&quot;/&gt;&lt;!-- 验证状态 --&gt;</div><div class="line">   &lt;variable name=&quot;code&quot; type=&quot;string&quot;/&gt;&lt;!-- 验证码 --&gt;</div><div class="line">   &lt;variable name=&quot;codeTime&quot; type=&quot;long&quot;/&gt;&lt;!-- 验证码发放时间 --&gt;</div><div class="line">&lt;/xbean&gt;</div></pre></td></tr></table></figure>
-<p>需求中除了通过手机号查绑定时间和账户ID，还有通过账号ID查绑定时间和手机号。由于zdb的局限性，导致第二张表的产生。zdb查特定数据只能通过主键，所以这里采取双向表的方式，但是有数据冗余的问题，都存储了绑定时间。但是查数据快，无论何种方式查，都仅需查一张表。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;table name=&quot;id_mobile_table&quot; key=&quot;int&quot; value=&quot;IdMobileBean&quot;/&gt;</div><div class="line">&lt;xbean name=&quot;IdMobileBean&quot;&gt;</div><div class="line">&lt;variable name=&quot;accountMobile&quot; type=&quot;string&quot;/&gt;&lt;!-- 账号手机号 --&gt;</div><div class="line">&lt;variable name=&quot;bindTime&quot; type=&quot;long&quot;/&gt;&lt;!-- 绑定时间 --&gt;</div><div class="line">&lt;variable name=&quot;bindAward&quot; type=&quot;int&quot;/&gt;&lt;!-- 绑定所得奖励，历史记录 --&gt;</div><div class="line">&lt;/xbean&gt;</div></pre></td></tr></table></figure>
-<p>为解决上述数据冗余的问题，可采用如下方式：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;table name=&quot;id_mobile_table&quot; key=&quot;int&quot; value=&quot;IdMobileBean&quot;/&gt;</div><div class="line">&lt;xbean name=&quot;IdMobileBean&quot;&gt;</div><div class="line">	&lt;variable name=&quot;accountMobile&quot; type=&quot;string&quot;/&gt;&lt;!-- 账号手机号 --&gt;</div><div class="line">&lt;/xbean&gt;</div></pre></td></tr></table></figure>
-<p>通过手机查，直接查第一张表。通过账号ID查，查第二张表，拿到手机号后再查第一张表。通过账号ID查数据就变得比较繁琐，需要读两张表。<br>zdb定义定义完成后，cmd到对应路径下执行ant，即生成相应的table类及xbean类。<br>zdb遍历数据效率比较低。只有walk一种方式:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">table.mobile_id_table.get().walk((key, value) -&gt; &#123;return true;&#125;);</div></pre></td></tr></table></figure>
-<p>操作是从硬盘中读取数据到内存，效率比较低。而且会导致数据不一致的情况，增删改数据后，可能出现内存数据尚未落地到硬盘，get().walk获取的数据是从硬盘直接获得的，获取到的是未执行增删改前的错误数据。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">table.Channel_version_table.get().getCache().walk((key, value) -&gt; &#123; &#125;);</div></pre></td></tr></table></figure>
-<p>操作是从内存中读取数据，相对于第一种，效率肯定高。<br>这种操作只会读取内存的数据，不会读取硬盘的数据，会导致数据读取不完全。采取的解决方法是起服时将所需表的数据get().walk到内存中，后续数据都是操作内存，除了提升效率外，不会导致数据不一致或数据不完全的情况。<br>zdb读取数据时，能不使用walk遍历就不适用walk遍历数据，可采用配置文件或者哈希表存储主键（适用于记录较少的情况），然后逐一select。select操作是先从内存中读数据，若内存中无数据，再从硬盘中读取数据。</p>
-<h2 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h2><p>还未弃用zdb时，由于编程的错误导致死锁，这里介绍一下zdb死锁的情况及注意事项。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">MobileIdBean mobileIdBean = table.Mobile_id_table.select(phoneNumber);</div><div class="line">if (mobileIdBean == null)</div><div class="line">&#123;</div><div class="line">	mobileIdBean = table.Mobile_id_table.insert(phoneNumber);</div><div class="line">	mobileIdBean.setAccountId(roleId);</div><div class="line">	mobileIdBean.setCodeTime(0);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>并发执行select（线程获取读锁）同一个phoneNumber时，会出现多线程进入到if里，执行最快的线程insert（升级为写锁），成功，后续setAccountId等操作正常进行。而其余线程insert失败，返回null，操作出错。<br>应该将select更改为update,初始就获取写锁，并发的后续线程就只能等待前一线程结束，不会出现多个线程同时进入到if的情况。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">MobileIdBean mobileIdBean = table.Mobile_id_table.update(phoneNumber);</div><div class="line">if (mobileIdBean == null)</div><div class="line">&#123;</div><div class="line">	mobileIdBean = table.Mobile_id_table.insert(phoneNumber);</div><div class="line">	mobileIdBean.setAccountId(roleId);</div><div class="line">	mobileIdBean.setCodeTime(0);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>涉及到后续数据更改的情况，不要使用select，select获取的读锁，其他操作（insert/delete/update）获取的是写锁。</p>
-<h2 id="题外话，关于缓存"><a href="#题外话，关于缓存" class="headerlink" title="题外话，关于缓存"></a>题外话，关于缓存</h2><p>针对主流的mysql+redis存储。由于直接对mysql读写数据效率低，引入缓存可解决效率问题。引入缓存可能会出现与数据库数据不一致的情况，避免这种情况的发生，读写数据时可采取如下策略保证缓存与数据库数据保持一致。</p>
-<ul>
-<li>读数据保持一致<br>先读取缓存，若不存在则从DB中读取，并将结果写入到缓存中；下次数据读取时便可以直接从缓存中获取数据。</li>
-<li>写数据保持一致（淘汰策略）<br>数据的修改是直接失效缓存数据，再修改DB内容，避免DB修改成功，但由于网络或者其他问题导致缓存数据没有清理，造成了脏数据。</li>
-<li>淘汰策略简单容易编程， 但是性能不好，先写入 mysql的时候有可能耗时过长。</li>
-<li>可考虑双写策略：不但写入Redis，还会写入 Mysql。双写策略性在Redis上写入性能很好，此时数据立刻可用，在Mysql上可能会出现大量并发写入阻塞，一般会采用高可靠消息队列加强Mysql的写入。</li>
-<li>还有一种版本策略，每次写入Redis，做增量写入，不覆盖原有数据，将数据版本增加，采用消息队列延迟写入 Mysql。版本策略编程较为复杂。</li>
-<li>如果数据逻辑上是读多写少，采用淘汰策略足够。</li>
-</ul>
+        <h2 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h2><p>Springboot使用Redis作为分布式节点的共享Session, 使用Kafka传输日志到ELK，出现每小时百万条报警，报警日志均为WARN级别，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">RedisOperationsSessionRepository：Unable to publish SessionDestroyedEvent for session</div><div class="line">RedisMessageListenerContainer：Execution of message listener failed, and no ErrorHandler has been set</div></pre></td></tr></table></figure></p>
+<p>Session失效监听失败, 报警源码如下：<br><a href="https://github.com/spring-projects/spring-session/blob/master/spring-session-data-redis/src/main/java/org/springframework/session/data/redis/RedisOperationsSessionRepository.java" target="_blank" rel="external">RedisOperationsSessionRepository</a><br><a href="https://github.com/spring-projects/spring-data-redis/blob/master/src/main/java/org/springframework/data/redis/listener/RedisMessageListenerContainer.java" target="_blank" rel="external">RedisMessageListenerContainer</a></p>
+<h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><h3 id="紧急解决"><a href="#紧急解决" class="headerlink" title="紧急解决"></a>紧急解决</h3><a id="more"></a>
+<p>日志报警撑爆了用于传输日志的Kafka，首先更新logback，新增如下，屏蔽日志，但问题仍在。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;logger name=&quot;org.springframework.session.data.redis.RedisOperationsSessionRepository&quot; level=&quot;ERROR&quot;/&gt;</div><div class="line">&lt;logger name=&quot;org.springframework.data.redis.listener.RedisMessageListenerContainer&quot; level=&quot;ERROR&quot;/&gt;</div></pre></td></tr></table></figure></p>
+<h3 id="Bug修复"><a href="#Bug修复" class="headerlink" title="Bug修复"></a>Bug修复</h3><p>相关依赖为最新版本: spring-boot-starter-parent与spring-boot-starter-data-redis为1.5.18.RELEASE，spring-session-data-redis为1.3.4.RELEASE。<br>查源码(<a href="https://github.com/spring-projects/spring-data-redis/blob/master/src/main/java/org/springframework/data/redis/listener/KeyExpirationEventMessageListener.java" target="_blank" rel="external">KeyExpirationEventMessageListener</a>)可知,  KeyExpirationEventMessageListener重写了父类KeyspaceEventMessageListener的doHandleMessage方法，只需重写KeyspaceEventMessageListener的onMessage方法即可解决问题，如下：<br>1.新增类KeyExpiredListener<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">import org.slf4j.Logger;</div><div class="line">import org.slf4j.LoggerFactory;</div><div class="line">import org.springframework.data.redis.connection.Message;</div><div class="line">import org.springframework.data.redis.listener.KeyExpirationEventMessageListener;</div><div class="line">import org.springframework.data.redis.listener.RedisMessageListenerContainer;</div><div class="line">import java.nio.charset.StandardCharsets;</div><div class="line"></div><div class="line">public class KeyExpiredListener extends KeyExpirationEventMessageListener &#123;</div><div class="line">    private static final Logger logger = LoggerFactory.getLogger(KeyExpiredListener.class);</div><div class="line">    </div><div class="line">    public KeyExpiredListener(RedisMessageListenerContainer listenerContainer) &#123;</div><div class="line">        super(listenerContainer);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onMessage(Message message, byte[] pattern) &#123;</div><div class="line">        if (message == null || message.getChannel() == null || message.getBody() == null) &#123;</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line">        String key = new String(message.getBody(), StandardCharsets.UTF_8);</div><div class="line">        String channel = new String(message.getChannel(), StandardCharsets.UTF_8);</div><div class="line">        logger.info(&quot;redis key expired, key: &#123;&#125;, channel: &#123;&#125;, time: &#123;&#125;&quot;, key, channel, System.currentTimeMillis());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>2.RedisConfig类新增RedisMessageListenerContainer、KeyExpiredListener的构建<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div></pre></td><td class="code"><pre><div class="line">import org.springframework.beans.factory.annotation.Autowired;</div><div class="line">import org.springframework.context.annotation.Bean;</div><div class="line">import org.springframework.data.redis.connection.RedisConnectionFactory;</div><div class="line">import org.springframework.data.redis.connection.RedisSentinelConfiguration;</div><div class="line">import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;</div><div class="line">import org.springframework.data.redis.core.RedisTemplate;</div><div class="line">import org.springframework.data.redis.listener.RedisMessageListenerContainer;</div><div class="line">import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;</div><div class="line">import org.springframework.stereotype.Component;</div><div class="line">import redis.clients.jedis.JedisPoolConfig;</div><div class="line"></div><div class="line">@Component</div><div class="line">@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 86400)</div><div class="line">public class RedisConfig &#123;</div><div class="line">    private final RedisCon redisCon;</div><div class="line"></div><div class="line">    @Autowired</div><div class="line">    public RedisConfig(RedisCon redisCon) &#123;</div><div class="line">        this.redisCon = redisCon;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Bean</div><div class="line">    public RedisSentinelConfiguration sentinelConfig() &#123;</div><div class="line">        RedisSentinelConfiguration sentinelConfig = new RedisSentinelConfiguration().master(redisCon.getMasterName());</div><div class="line">        String[] sentinelNodes = redisCon.getSentinelAddress().split(&quot;,&quot;);</div><div class="line">        for (String node : sentinelNodes) &#123;</div><div class="line">            String[] ipAndPort = node.split(&quot;:&quot;);</div><div class="line">            String nodeIp = ipAndPort[0];</div><div class="line">            Integer nodePort = Integer.valueOf(ipAndPort[1]);</div><div class="line">            sentinelConfig.sentinel(nodeIp, nodePort);</div><div class="line">        &#125;</div><div class="line">        return sentinelConfig;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Bean</div><div class="line">    public RedisConnectionFactory redisConnectionFactory() &#123;</div><div class="line">        JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();</div><div class="line">        jedisPoolConfig.setMaxTotal(redisCon.getMaxActive());</div><div class="line">        jedisPoolConfig.setMaxIdle(redisCon.getMaxIdle());</div><div class="line">        jedisPoolConfig.setMinIdle(redisCon.getMinIdle());</div><div class="line">        jedisPoolConfig.setMaxWaitMillis(redisCon.getMaxWaitTime());</div><div class="line">        JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory(sentinelConfig(), jedisPoolConfig);</div><div class="line">        jedisConnectionFactory.setDatabase(redisCon.getDbIndex());</div><div class="line">        if (redisCon.getPassword() != null &amp;&amp; !&quot;&quot;.equals(redisCon.getPassword())) &#123;</div><div class="line">            jedisConnectionFactory.setPassword(redisCon.getPassword());</div><div class="line">        &#125;</div><div class="line">        jedisConnectionFactory.setTimeout(redisCon.getTimeout());</div><div class="line">        jedisConnectionFactory.afterPropertiesSet();</div><div class="line">        return jedisConnectionFactory;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Bean</div><div class="line">    public RedisTemplate&lt;String, Object&gt; redisTemplate() &#123;</div><div class="line">        RedisTemplate&lt;String, Object&gt; template = new RedisTemplate&lt;&gt;();</div><div class="line">        template.setConnectionFactory(redisConnectionFactory());</div><div class="line">        return template;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Bean</div><div class="line">    public RedisMessageListenerContainer redisMessageListenerContainer() &#123;</div><div class="line">        RedisMessageListenerContainer redisMessageListenerContainer = new RedisMessageListenerContainer();</div><div class="line">        redisMessageListenerContainer.setConnectionFactory(redisConnectionFactory());</div><div class="line">        return redisMessageListenerContainer;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Bean</div><div class="line">    public KeyExpiredListener keyExpiredListener() &#123;</div><div class="line">        return new KeyExpiredListener(this.redisMessageListenerContainer());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -454,8 +432,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/05/16/mysql/" rel="next" title="Wins下MySQL配置">
-                <i class="fa fa-chevron-left"></i> Wins下MySQL配置
+              <a href="/2018/12/20/centos_node_install/" rel="next" title="Centos Node安装记录">
+                <i class="fa fa-chevron-left"></i> Centos Node安装记录
               </a>
             
           </div>
@@ -463,10 +441,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/05/24/phone_id/" rel="prev" title="常见正则合法性校验">
-                常见正则合法性校验 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -628,7 +602,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ZDB"><span class="nav-number">2.</span> <span class="nav-text">ZDB</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#死锁"><span class="nav-number">3.</span> <span class="nav-text">死锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#题外话，关于缓存"><span class="nav-number">4.</span> <span class="nav-text">题外话，关于缓存</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#场景"><span class="nav-number">1.</span> <span class="nav-text">场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决"><span class="nav-number">2.</span> <span class="nav-text">解决</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#紧急解决"><span class="nav-number">2.1.</span> <span class="nav-text">紧急解决</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bug修复"><span class="nav-number">2.2.</span> <span class="nav-text">Bug修复</span></a></li></ol></li></ol></div>
             
 
           </div>
