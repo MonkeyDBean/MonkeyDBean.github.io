@@ -98,7 +98,7 @@
 <meta property="og:site_name" content="帅斌的冒险船">
 <meta property="og:description" content="JVM内存模型 堆内存&amp;amp;非堆内存">
 <meta property="og:image" content="http://yoursite.com/assets/images/jvm_memory_structure.png">
-<meta property="og:updated_time" content="2018-12-26T13:58:33.277Z">
+<meta property="og:updated_time" content="2018-12-28T14:48:47.108Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM GC优化初探">
 <meta name="twitter:description" content="JVM内存模型 堆内存&amp;amp;非堆内存">
@@ -389,14 +389,15 @@
 <p>-XX:CMSFullGCsBeforeCompaction=3: 设置每3次GC则对内存空间进行压缩、整理。由于并发收集器不对内存空间进行压缩、整理，所以运行一段时间以后会产生碎片，使运行效率降低</p>
 <p>-XX:+UseConcMarkSweepGC: 设置对老生代使用CMS回收。</p>
 <p>-XX:+DisableExplicitGC: 禁止代码中显式调用GC，加上此参数，代码中调用System.gc()没有效果（附：显式调用System.gc()，只是建议JVM进行垃圾回收，但是最终会不会执行垃圾回收是不确定的）。如果应用中使用了java nio中的direct memory，那么使用-XX:+DisableExplicitGC一定要小心，存在潜在的内存泄露风险。</p>
-<p>-XX:MaxDirectMemorySize: java nio direct buffer的最大值，若未指定MaxDirectMemorySize，此时MaxDirectMemorySize大小等同-Xmx的值, 建议显式指定大小，如-XX:MaxDirectMemorySize=128M。</p>
+<p>-XX:MaxDirectMemorySize: java  nio direct buffer的最大值，若未指定MaxDirectMemorySize，此时MaxDirectMemorySize大小等同-Xmx的值, 建议显式指定大小，如-XX:MaxDirectMemorySize=128M。</p>
 <p>-XX:NativeMemoryTracking=summary: Hotspot VM开启本地内存的统计，通过命令jcmd pid VM.native_memory summary查看。jcmd是jdk1.7新增的命令行工具, oracle官方建议使用<a href="https://docs.oracle.com/javase/8/docs/technotes/guides/vm/nmt-8.html" target="_blank" rel="external">jcmd</a>代替<a href="https://docs.oracle.com/javase/7/docs/technotes/tools/share/jmap.html" target="_blank" rel="external">jmap</a>。</p>
 <p>-Duser.timezone=GMT+08: 设置java运行环境时区为东8区 。</p>
 <h2 id="实例优化"><a href="#实例优化" class="headerlink" title="实例优化"></a>实例优化</h2><p>首先确认项目的架构和代码等基本没有优化空间，然后通过GC优化，使性能提升。</p>
 <h3 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h3><p>GC优化是系统且复杂的工作，可简单参照如下建议。<br>①JVM初始内存与JVM最大内存的值设置为相等，即-Xms=-Xmx<br>目的：减少内存自动扩容和收缩带来的性能损失</p>
 <p>②SUN官方推荐年轻代配置为整个堆的3/8, 即Xmn为Xmx的3/8，实际根据应用情况调整。如果应用存在大量的短期对象，年轻代适量增大；如果存在相对较多的持久对象，老年代应适当增大。</p>
 <p>③若为docker部署，Pod参数设置为：<br>内存Requested设置与-Xmx大小相同，内存Limited大小为Requested的4/3~3/2, 腾讯云容器（CCS）推荐为2倍。<br>CPU核数根据实际使用情况配置。<br>原因：-Xmx仅为Heap大小，除此之外，还有Non-Heap，如GC 初始及运行内存，元空间等。</p>
-<h3 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h3><p>根据监控，资源按实际消耗的2倍配置。<br>-Xmx512M<br>-Xms512M<br>-Xmn192M<br>-XX:MaxDirectMemorySize=192M<br>元空间大小不显式指定，根据应用程序在运行时的需求动态设置<br>内存Requested设为768M, 内存Limited设为1G, CPU设为0.2-0.5核。</p>
+<h3 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h3><p>通过如下命令查看资源实际使用，如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">top</div><div class="line">jmap -heap pid</div><div class="line">jcmd pid VM.native_memory summary</div><div class="line">jstat -gc pid</div><div class="line">jps -m -l -v</div></pre></td></tr></table></figure></p>
+<p>查容器监控及Grafana_Metrics监控，资源按实际消耗的2倍配置。<br>-Xmx512M<br>-Xms512M<br>-Xmn192M<br>-XX:MaxDirectMemorySize=192M<br>元空间大小不显式指定，根据应用程序在运行时的需求动态设置<br>内存Requested设为768M, 内存Limited设为1G, CPU设为0.2-0.5核。</p>
 
       
     </div>
