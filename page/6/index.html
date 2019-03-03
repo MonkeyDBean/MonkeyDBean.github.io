@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="技术,JAVA," />
+  <meta name="keywords" content="Bean, Blog" />
 
 
 
@@ -90,17 +90,15 @@
 
 
 
-<meta name="description" content="背景根据是否可重复执行，将定时任务分为两种，一种是清除缓存数据或清理数据库过期数据等重复执行无影响的，另一种是不可重复执行的，如定时创建订单，定时处理数据，定时发邮件。 单机单节点的服务升级为容器多节点，各节点通过负载均衡对外提供一致服务，升级后会有定时任务重复执行的问题。 解决多点同时执行定时任务的关键是，如何保证多点中仅某一个节点处理同一任务。思路如各节点的共识机制、主从方案(保证某个节点为主">
-<meta name="keywords" content="技术,JAVA">
-<meta property="og:type" content="article">
-<meta property="og:title" content="分布式集群定时任务">
-<meta property="og:url" content="http://yoursite.com/2019/01/23/schedule_multi/index.html">
+<meta name="description" content="行云流水 天马行空">
+<meta property="og:type" content="website">
+<meta property="og:title" content="帅斌的冒险船">
+<meta property="og:url" content="http://yoursite.com/page/6/index.html">
 <meta property="og:site_name" content="帅斌的冒险船">
-<meta property="og:description" content="背景根据是否可重复执行，将定时任务分为两种，一种是清除缓存数据或清理数据库过期数据等重复执行无影响的，另一种是不可重复执行的，如定时创建订单，定时处理数据，定时发邮件。 单机单节点的服务升级为容器多节点，各节点通过负载均衡对外提供一致服务，升级后会有定时任务重复执行的问题。 解决多点同时执行定时任务的关键是，如何保证多点中仅某一个节点处理同一任务。思路如各节点的共识机制、主从方案(保证某个节点为主">
-<meta property="og:updated_time" content="2019-02-01T14:00:12.055Z">
+<meta property="og:description" content="行云流水 天马行空">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="分布式集群定时任务">
-<meta name="twitter:description" content="背景根据是否可重复执行，将定时任务分为两种，一种是清除缓存数据或清理数据库过期数据等重复执行无影响的，另一种是不可重复执行的，如定时创建订单，定时处理数据，定时发邮件。 单机单节点的服务升级为容器多节点，各节点通过负载均衡对外提供一致服务，升级后会有定时任务重复执行的问题。 解决多点同时执行定时任务的关键是，如何保证多点中仅某一个节点处理同一任务。思路如各节点的共识机制、主从方案(保证某个节点为主">
+<meta name="twitter:title" content="帅斌的冒险船">
+<meta name="twitter:description" content="行云流水 天马行空">
 
 
 
@@ -128,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/01/23/schedule_multi/"/>
+  <link rel="canonical" href="http://yoursite.com/page/6/"/>
 
 
 
 
 
-  <title>分布式集群定时任务 | 帅斌的冒险船</title>
+  <title>帅斌的冒险船</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -159,7 +157,9 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail ">
+  <div class="container sidebar-position-left 
+   page-home 
+ ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -286,9 +286,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-
-  <div id="posts" class="posts-expand">
+  <section id="posts" class="posts-expand">
     
+      
 
   
 
@@ -297,7 +297,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/23/schedule_multi/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/05/database_introduce/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="MonkeyBean">
@@ -314,7 +314,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">分布式集群定时任务</h1>
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/08/05/database_introduce/" itemprop="url">数据库范式学习总结</a></h1>
         
 
         <div class="post-meta">
@@ -326,8 +328,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-23T23:12:22+08:00">
-                2019-01-23
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-08-05T16:39:08+08:00">
+                2016-08-05
               </time>
             
 
@@ -361,119 +363,56 @@
       
 
       
-        <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>根据是否可重复执行，将定时任务分为两种，一种是清除缓存数据或清理数据库过期数据等重复执行无影响的，另一种是不可重复执行的，如定时创建订单，定时处理数据，定时发邮件。</p>
-<p>单机单节点的服务升级为容器多节点，各节点通过负载均衡对外提供一致服务，升级后会有定时任务重复执行的问题。</p>
-<p>解决多点同时执行定时任务的关键是，如何保证多点中仅某一个节点处理同一任务。思路如各节点的共识机制、主从方案(保证某个节点为主节点，仅主节点执行定时任务)、多节点执行定时任务加锁(通过单线程的redis存储状态)等。</p>
-<p>集群各节点共用的部分则为问题解决的关键，方案如数据库(mysql、redis、mongodb等)的状态记录、配置中心通过ip标记执行节点、注册中心取最小索引为主节点。</p>
-<h2 id="方案举例"><a href="#方案举例" class="headerlink" title="方案举例"></a>方案举例</h2><p>以下均为在SpringBoot下测试，本地测试时配置不同的服务端口保证端口资源无冲突。<br>备注：①任务需保留请求触发的接口，预防定时任务因某种原因失效。②多点部署时保证各节点服务无时间差。</p>
-<h3 id="标记处理"><a href="#标记处理" class="headerlink" title="标记处理"></a>标记处理</h3><a id="more"></a>
-<p>各节点定时任务生成uuid入库，一段时间后，查询最后入库的记录(即先标记的为无效记录)，与当前uuid比对，uuid相同的节点则执行定时任务。实现如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">@Component</div><div class="line">@EnableScheduling</div><div class="line">public class ScheduleTask &#123;</div><div class="line">    private static Logger logger = LoggerFactory.getLogger(ScheduleTask.class);</div><div class="line">    private final ScheduleDataDao scheduleDataDao;</div><div class="line"></div><div class="line">    @Autowired</div><div class="line">    public ScheduleTask(ScheduleDataDao scheduleDataDao) &#123;</div><div class="line">        this.scheduleDataDao = scheduleDataDao;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Bean</div><div class="line">    public TaskScheduler taskScheduler() &#123;</div><div class="line">        return new ConcurrentTaskScheduler();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Scheduled(fixedRate = 3000)</div><div class="line">    public void testSchedule() throws InterruptedException &#123;</div><div class="line">        String testTaskFlag = &quot;testTaskId&quot;;</div><div class="line">        logger.info(&quot;start schedule, time: &#123;&#125;&quot;, System.currentTimeMillis());</div><div class="line"></div><div class="line">        //生成节点标识</div><div class="line">        String uuid = UUID.randomUUID().toString();</div><div class="line"></div><div class="line">        //任务记录入库</div><div class="line">        Map&lt;String, Object&gt; param = new HashMap&lt;&gt;();</div><div class="line">        param.put(&quot;taskId&quot;, testTaskFlag);</div><div class="line">        param.put(&quot;uuid&quot;, uuid);</div><div class="line">        scheduleDataDao.addTaskRecord(param);</div><div class="line"></div><div class="line">        //休眠</div><div class="line">        Thread.sleep(1000);</div><div class="line"></div><div class="line">        //有效节点判断</div><div class="line">        String validUuid = scheduleDataDao.queryLatestTaskRecord(testTaskFlag);</div><div class="line">        if (validUuid != null &amp;&amp; uuid.equals(validUuid)) &#123;</div><div class="line"></div><div class="line">            //处理流程TODO、执行记录入库</div><div class="line">            param.put(&quot;custom&quot;, &quot;insert operation&quot;);</div><div class="line">            scheduleDataDao.addActualTaskRecord(param);</div><div class="line">            logger.info(&quot;schedule execute finished, time: &#123;&#125;&quot;, System.currentTimeMillis());</div><div class="line">        &#125;</div><div class="line">        logger.info(&quot;end schedule, time: &#123;&#125;&quot;, System.currentTimeMillis());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>以上方式，两张数据表，一张用于存储所有节点定时任务标记，作为执行判断的依据，另一张仅用于存储实际执行任务记录，通过数据库表清晰了解执行情况。</p>
-<p>生产环境如果不能保证集群节点有相同的时钟序列，可在插入标记记录前，查询最后的标记记录，不存在则插入，若存在，则判断时间间隔是否大于某个阈值，大于则插入。</p>
-<h3 id="整合Quartz"><a href="#整合Quartz" class="headerlink" title="整合Quartz"></a>整合Quartz</h3><p>Quartz是功能完善的任务调度框架，支持集群环境下的任务调度，代价是将任务调度状态序列化到数据库。Quartz框架需要10多张表协同，配置繁多。<br>Quartz 集群和其他分布式集群不同的是，集群实例之间不需要互相通信，只需和DB交互，通过DB感知其他节点，实现Job调度。因此节点扩容只需启动新实例，不需要做额外配置。<br>Quartz组件：</p>
-<ul>
-<li>Scheduler：任务调度控制器，管理 Trigger 和 Job，所有的调度都是由它控制。</li>
-<li>Trigger：任务调度单元，定义触发的条件。CronTrigger 可以通过 Cron 表达式规定任务触发规则，SimpleTrigger 规定任务执行几次，每次的时间间隔，类似 SchedulerExecutor。</li>
-<li>Job：调度任务，JobDetail定义业务执行的具体过程。一个 Job 可以对应多个 Trigger，一个 Trigger 只能对应一个 Job。</li>
-</ul>
-<p>Scheduler线程：</p>
-<ul>
-<li>调度线程，负责任务调度 (QuartzSchedulerThread)</li>
-<li>工作线程池，负责执行任务 (QuartzSchedulerResources)</li>
-</ul>
-<p><a href="http://www.quartz-scheduler.org/" target="_blank" rel="external">官网</a><br><a href="https://github.com/MonkeyDBean/BeanLaboratory/tree/master/BootQuartz" target="_blank" rel="external">个人示例项目</a><br><a href="https://zhuanlan.zhihu.com/p/35628221" target="_blank" rel="external">参考1</a>、<a href="https://blog.csdn.net/KokJuis/article/details/78526709" target="_blank" rel="external">参考2</a><br>maven pom依赖<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&lt;!-- https://mvnrepository.com/artifact/org.quartz-scheduler/quartz --&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;org.quartz-scheduler&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;quartz&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;2.3.0&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line">&lt;!-- https://mvnrepository.com/artifact/org.quartz-scheduler/quartz-jobs --&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;org.quartz-scheduler&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;quartz-jobs&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;2.3.0&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line">&lt;!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support --&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;org.springframework&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;spring-context-support&lt;/artifactId&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure></p>
-<p>Quartz相关表<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">QRTZ_BLOB_TRIGGERS</div><div class="line">QRTZ_CALENDARS</div><div class="line">QRTZ_CRON_TRIGGERS </div><div class="line">QRTZ_FIRED_TRIGGERS</div><div class="line">QRTZ_JOB_DETAILS</div><div class="line">QRTZ_LOCKS</div><div class="line">QRTZ_PAUSED_TRIGGER_GRPS</div><div class="line">QRTZ_SCHEDULER_STATE</div><div class="line">QRTZ_SIMPLE_TRIGGERS</div><div class="line">QRTZ_SIMPROP_TRIGGERS</div><div class="line">QRTZ_TRIGGERS</div></pre></td></tr></table></figure></p>
-<h3 id="外部请求"><a href="#外部请求" class="headerlink" title="外部请求"></a>外部请求</h3><p>服务本身留有请求触发的接口，接收请求后执行原有定时任务的业务逻辑。如脚本(py、shell或其他外部程序)定时请求到容器组，容器组负载均衡到某一pod处理。若使用kubernetes管理容器服务，定制任务使用kubernetes cronjob。</p>
-
+        
+          <p>近期重温数据库范式。</p>
+<h2 id="第一范式（1NF）"><a href="#第一范式（1NF）" class="headerlink" title="第一范式（1NF）"></a>第一范式（1NF）</h2><p>属性不可再分，强调的是原子性。<br>如表：【联系人】（姓名，性别，电话），在实际场景中，联系人有家庭电话和公司电话，那么这种表结构设计就没有达到 1NF。要符合 1NF 我们只需把列（电话）拆分，即：【联系人】（姓名，性别，家庭电话，公司电话）。</p>
+<h2 id="第二范式（2NF）"><a href="#第二范式（2NF）" class="headerlink" title="第二范式（2NF）"></a>第二范式（2NF）</h2><p>首先，符合1NF，并且，非主属性完全依赖于码，即没有包含在主键中的列必须完全依赖于主键，而不能只依赖于主键的一部分。强调的是完全依赖而非部分依赖。<br>考虑一个订单明细表：【OrderDetail】（OrderID，ProductID，UnitPrice，Discount，Quantity，ProductName）。
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/08/05/database_introduce/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
       
     </div>
 
     <div>
       
-        
-
-      
     </div>
 
     <div>
       
-        
-  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
-    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-      <span>赏</span>
-    </button>
-    <div id="QR" style="display: none;">
-      
-        <div id="wechat" style="display: inline-block">
-          <img id="wechat_qr" src="/assets/wechatpay.png" alt="MonkeyBean WeChat Pay"/>
-          <p>微信打赏</p>
-        </div>
-      
-      
-        <div id="alipay" style="display: inline-block">
-          <img id="alipay_qr" src="/assets/zhifubao.png" alt="MonkeyBean Alipay"/>
-          <p>支付宝打赏</p>
-        </div>
-      
-    </div>
-  </div>
-
-
-      
     </div>
 
     <div>
-      
-        
-
       
     </div>
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/技术/" rel="tag"># 技术</a>
-          
-            <a href="/tags/JAVA/" rel="tag"># JAVA</a>
-          
-        </div>
+
       
 
       
-        
-      
 
       
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2018/12/21/session_redis_bug_record/" rel="next" title="Springboot Redis Session 消息监听遗漏Bug记录">
-                <i class="fa fa-chevron-left"></i> Springboot Redis Session 消息监听遗漏Bug记录
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-          </div>
-        </div>
       
-
-      
+        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
+    
+  </section>
 
-    <div class="post-spread">
-      
-    </div>
-  </div>
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span>
+  </nav>
+
 
 
           </div>
@@ -481,10 +420,6 @@
 
 
           
-  <div class="comments" id="comments">
-    
-  </div>
-
 
         </div>
         
@@ -504,17 +439,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/avatar.png"
@@ -609,22 +535,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方案举例"><span class="nav-number">2.</span> <span class="nav-text">方案举例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#标记处理"><span class="nav-number">2.1.</span> <span class="nav-text">标记处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#整合Quartz"><span class="nav-number">2.2.</span> <span class="nav-text">整合Quartz</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#外部请求"><span class="nav-number">2.3.</span> <span class="nav-text">外部请求</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -750,10 +660,6 @@
 
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
-
-
 
   
 
