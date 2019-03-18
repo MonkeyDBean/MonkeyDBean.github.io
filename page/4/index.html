@@ -1304,9 +1304,25 @@
 
       
         
-          <p>正则表达式用于各个情形的数据校验，例如对请求参数的校验，客户端给服务器发送数据前，需初步对数据进行合法性校验；由于客户端数据不可信，服务器要对数据进行严格的合法性校验。<br>本文记录的是常用的身份证及手机号等合法性正则校验。以Java编程为例。</p>
-<h2 id="手机号合法性校验"><a href="#手机号合法性校验" class="headerlink" title="手机号合法性校验"></a>手机号合法性校验</h2><p>这里合法性校验对象为中国大陆及港澳手机号。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line">    * 手机号合法性判断（大陆及港澳）</div><div class="line">    */</div><div class="line">   public static boolean isPhoneLegal(String str) throws PatternSyntaxException &#123;</div><div class="line">       return isMainLandPhoneLegal(str) || isHKPhoneLegal(str);</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   /**</div><div class="line">    * 大陆手机号码11位数，匹配格式：简单匹配</div><div class="line">    */</div><div class="line">   public static boolean isChinaPhoneLegal(String str) throws PatternSyntaxException &#123;</div><div class="line">       String regExp = &quot;^1[3456789]\\d&#123;9&#125;$&quot;;</div><div class="line">       Pattern p = Pattern.compile(regExp);</div><div class="line">       Matcher m = p.matcher(str);</div><div class="line">       return m.matches();</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   /**</div><div class="line">    * 香港手机号码8位数，5|6|8|9开头+7位任意数</div><div class="line"> * 澳门手机号以6开头，可归到香港手机号判断中</div><div class="line"> *</div><div class="line">    */</div><div class="line">   public static boolean isHKPhoneLegal(String str) throws PatternSyntaxException &#123;</div><div class="line">       String regExp = &quot;^(5|6|8|9)\\d&#123;7&#125;$&quot;;</div><div class="line">       Pattern p = Pattern.compile(regExp);</div><div class="line">       Matcher m = p.matcher(str);</div><div class="line">       return m.matches();</div><div class="line">   &#125;</div></pre></td></tr></table></figure></p>
-<p>以上手机号校验太严格，一般情况，不建议使用，大陆手机号可用以下正则简单校验即可:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">String regExp = &quot;^1[34578]\\d&#123;9&#125;$&quot;;</div></pre></td></tr></table></figure></p>
+          <p>正则表达式用于各个情形的数据校验，用于匹配字符串。例如对请求参数的校验，客户端给服务器发送数据前，需初步对数据进行合法性校验；由于客户端数据不可信，服务器要对数据进行严格的合法性校验。<br>本文记录的是常用的身份证及手机号等合法性正则校验，以Java编程为例。</p>
+<h2 id="正则基本语法"><a href="#正则基本语法" class="headerlink" title="正则基本语法"></a>正则基本语法</h2><p>^ 匹配字符串的起始位置，如果将 ^ 用作括号表达式中的第一个字符，则会对字符集求反，[^abc] 与除 a、b 和 c 以外的任何字符匹配</p>
+<p>$ 匹配字符串的结束位置</p>
+<p>* 任意次（零次或多次）匹配前面的字符或子表达式，等效于 {0,}</p>
+<p>+ 至少一次（一次或多次）匹配前面的字符或子表达式，等效于 {1,}</p>
+<p>? 零次或一次匹配前面的字符或子表达式，等效于 {0,1}</p>
+<p>. 匹配单个字符， a.c 与“abc”、“a1c”和“a-c”匹配</p>
+<p>| 或，z|food 与“z”或“food”匹配。(z|f)ood 与“zood”或“food”匹配</p>
+<p>( ) 小括号表示匹配括号中全部字符</p>
+<p>[] 中括号表示匹配括号中一个字符 范围描述 如[0-9 a-z A-Z]</p>
+<p>{} 大括号用于限定匹配次数，如{n}表示匹配n次；{n,}表示至少匹配n次；{n,m}表示至少匹配n次,最多匹配m次</p>
+<p>\ 转义字符,如上基本符号匹配都需要转义字符,如 * 表示匹配*号。\f 为换页符，\n 为换行符，\r 为回车符，\t 为Tab 字符，\v 为垂直制表符</p>
+<p>\w  表示英文字母和数字以及下划线，等效于 [A-Za-z0-9_]</p>
+<p>\W 英文字母，数字，下滑线以外的字符，等效于 [^A-Za-z0-9_]</p>
+<p>\d 表示数字，等效于 [0-9]  </p>
+<p>\D 非数字，等效于 [^0-9]</p>
+<p>\s 任何空白字符。其中包括空格、制表符和换页符,[\f\n\r\t\v]</p>
+<p>\S 任何非空白字符,[^\f\n\r\t\v]</p>
+<h2 id="常见正则校验"><a href="#常见正则校验" class="headerlink" title="常见正则校验"></a>常见正则校验</h2><h3 id="手机号合法性校验"><a href="#手机号合法性校验" class="headerlink" title="手机号合法性校验"></a>手机号合法性校验</h3>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/05/24/phone_id/#more" rel="contents">
