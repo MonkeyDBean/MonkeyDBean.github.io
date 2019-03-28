@@ -280,18 +280,18 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Centos网络时间同步]]></title>
-    <url>%2F2017%2F07%2F30%2Fcentos_ntpd%2F</url>
-    <content type="text"><![CDATA[场景系统为Centos6或7, 多个服务器之间存在时间合法性验证，由于各服务器时间不统一，验证不通过。 解决方法执行如下命令矫正本地时间，网络同步12345678# 安装网络时间协议yum install ntp# 开启ntp daemon，开机自启动chkconfig ntpd on# 同步系统时间，可选任意可靠的时间服务器，这里用的是pool.ntp.orgntpdate pool.ntp.org# 启动时间同步协议service ntpd start]]></content>
+    <title><![CDATA[Https简介及配置]]></title>
+    <url>%2F2017%2F07%2F30%2Fhttps_introduce_config%2F</url>
+    <content type="text"><![CDATA[简介Https(Secure Hypertext Transfer Protocol)相比Http(Hypertext Transfer Protocol Vertion)，字面意思，更安全。Https是在Http协议基础上增加了SSL加密传送信息的协议, 传输加密，保证通信过程数据不会被泄露或窜改，防信息泄露如钓鱼网站。Https连接过程: 客户端发送请求到服务器端 服务端返回证书和公钥(公钥作为证书的一部分) 客户端验证证书和公钥的有效性，若有效，则生成共享密钥并使用公钥加密发送到服务器端 服务端使用私钥解密数据，并使用收到的共享密钥加密数据，发送给客户端 客户端使用共享密钥解密数据 SSL连接建立 Https需配置第三方签发的证书，配置过程如下. SSL证书申请及配置申请个人使用，免费SSL证书即可，签发速度快，可保护完整域名，不支持通配符。这里使用的是阿里云域名服务，进入域名基本信息，选择免费开启SSL证书，按照引导操作配置，最终如下 配置]]></content>
       <tags>
         <tag>技术</tag>
         <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Https简介及配置]]></title>
-    <url>%2F2017%2F07%2F30%2Fhttps_introduce_config%2F</url>
-    <content type="text"><![CDATA[简介Https(Secure Hypertext Transfer Protocol)相比Http(Hypertext Transfer Protocol Vertion)，字面意思，更安全。Https是在Http协议基础上增加了SSL加密传送信息的协议, 传输加密，保证通信过程数据不会被泄露或窜改，防信息泄露如钓鱼网站。Https连接过程: 客户端发送请求到服务器端 服务端返回证书和公钥(公钥作为证书的一部分) 客户端验证证书和公钥的有效性，若有效，则生成共享密钥并使用公钥加密发送到服务器端 服务端使用私钥解密数据，并使用收到的共享密钥加密数据，发送给客户端 客户端使用共享密钥解密数据 SSL连接建立 Https需配置第三方签发的证书，配置过程如下. SSL证书申请及配置申请个人使用，免费SSL证书即可，签发速度快，可保护完整域名，不支持通配符。这里使用的是阿里云域名服务，进入域名基本信息，选择免费开启SSL证书，按照引导操作配置，最终如下 配置]]></content>
+    <title><![CDATA[Centos网络时间同步]]></title>
+    <url>%2F2017%2F07%2F30%2Fcentos_ntpd%2F</url>
+    <content type="text"><![CDATA[场景系统为Centos6或7, 多个服务器之间存在时间合法性验证，由于各服务器时间不统一，验证不通过。 解决方法执行如下命令矫正本地时间，网络同步12345678# 安装网络时间协议yum install ntp# 开启ntp daemon，开机自启动chkconfig ntpd on# 同步系统时间，可选任意可靠的时间服务器，这里用的是pool.ntp.orgntpdate pool.ntp.org# 启动时间同步协议service ntpd start]]></content>
       <tags>
         <tag>技术</tag>
         <tag>Linux</tag>
@@ -346,6 +346,15 @@
     <title><![CDATA[客户端内嵌WebView与浏览器访问页面的安全机制]]></title>
     <url>%2F2017%2F06%2F24%2Fencryption_trans%2F</url>
     <content type="text"><![CDATA[近期新增代理商系统，游戏内加入webview以及从浏览器登录系统两种方式。作为服务端开发，与主管讨论之后，不同已有基于netty开发的多个服务器，服务端新增基于Spring-boot开发的服务器提供微服务。本文介绍安全机制设计与实现。 客户端内嵌WebView与服务器通信的加密方案安全验证采用token做密钥，摘要算法保证内容正确。摘要算法采用最常见的MD5即可。加密过程是服务端生成token，并把这个token发给客户端，客户端（这里包括WebView内页面）每次请求都附带stime以及token， 对这个字符串做计算形成摘要(sign)。客户端调用WebView之前，通过protobuffer协议获取token。123456789101112131415161718//请求访问代理页面的tokenmessage CGGetAgtTokenREQ&#123;&#125;message GCGetAgtTokenRES&#123; required int32 result = 1; required string token = 2;&#125;&lt;Protocol P_CG_GET_AGT_TOKEN_REQ = &quot;请求访问代理页面的token&quot; PROTOCOL_CLASS=&quot;com.kodgames.message.proto.game.GameProtoBuf.CGGetAgtTokenREQ&quot; /&gt;&lt;Protocol P_GC_GET_AGT_TOKEN_RES = &quot;响应token&quot; PROTOCOL_CLASS=&quot;com.kodgames.message.proto.game.GameProtoBuf.GCGetAgtTokenRES&quot; &gt;&lt;String name=&quot;GC_GET_AGT_TOKEN_SUCCESS&quot; isSuccess=&quot;true&quot;&gt;请求成功&lt;/String&gt;&lt;String name=&quot;GC_GET_AGT_TOKEN_FAILED&quot;&gt;请求失败&lt;/String&gt;&lt;/Protocol&gt; 此时客户端得到的token格式是:1&quot;GAME-&quot;+随机字符串 随机字符串生成规则采用:1UUID.randomUUID().toString().replaceAll(&quot;-&quot;, &quot;&quot;).substring(0,16).toUpperCase(); 客户端第一次拉起WebView，发送格式如下。页面直接将请求参数转发到服务端，服务端拿到完整url，在拦截器中用同样的算法做身份验证：1234567http://172.16.2.172:8091/agent/is_agent?id=5006872&amp;stime=1497680416778&amp;sign=35454B055CC325EA1AF2126E27707052其中token = &quot;GAME-XXXXXXXXX&quot;path = &quot;/agent/is_agent&quot;queryString = &quot;id=5006872&amp;stime=1497680416778&quot;sign = md5(queryString + &quot;&amp;token=&quot; + token) queryString是未加密之前的请求字符串，stime是客户端当前时间戳，服务端设置请求有效时间为一分钟，防止重放攻击。由于token只在第一次由服务端下发给客户端，后续无传输，所以在不泄露token的前提下，可有效保证客户端提交数据合法。 token发放机制，采用双token隔离安全性：123456789客户端初次请求服务端获取token，此时token=&quot;GAME-&quot;+随机字符串。客户端拉起webview访问页面，页面第一次向服务端提交请求，控制器判断token的类型，如果token类型是&quot;GAME-&quot;+随机字符串，则控制器重新发放页面内专用的token。此时token=&quot;AGENT-&quot;+随机字符串。webtoken是通过cookie的机制发送：Cookie cookie = new Cookie(&quot;token&quot;,token);httpServletResponse.addCookie(cookie);后续页面内请求均采用此token。退出页面时，把cookie置空，以免token泄露。 每次客户端访问时，会重新向服务端请求token，服务端更新token后发送给客户端。 浏览器网页登录与服务器通信的加密方案浏览器访问的用户认证不采用传统的sessionId，沿袭内嵌WebView与服务器通信的token认证，通过访问路径区分三种安全机制： 用户登录及修改密码采用临时token策略，用户进入页面即获取临时token及uuid，登录请求时携带uuid。服务端验证通过后，将临时token写入到用户正式表中，临时token表删除token。出现到一个问题，就是只有认证成功的用户，临时token才会被删除，其他情况不会被删除，导致临时token表即会越来越大，采用定时任务删除临时表token，即临时token表每天凌晨四点清理一次。涉及到密码相关的传输，密码本身要先加密一次。 用户登录后的安全保障同内嵌WebView与服务器通信的安全机制相同。 发送验证码、初次进入页面、用户确认等无安全威胁的请求，不走安全验证，服务端无需过滤。 举例说明，初次访问页面及登录请求格式如下：123http://172.16.2.163:8091/no_filter/first_comehttp://172.16.2.163:8091/agent/community_login?id=10003&amp;name=10001&amp;pwd=20CC88D2E204FFA768509D33FA882492&amp;type=1&amp;uuid=2f52ef92b73b43659045567ba29881c4&amp;stime=1498728038692&amp;sign=ECD622B701C2B90E33319E7E08A422A9]]></content>
+      <tags>
+        <tag>技术</tag>
+        <tag>JAVA</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[SpringBoot项目创建及配置参数简介]]></title>
+    <url>%2F2017%2F06%2F10%2Fspringboot_create%2F</url>
+    <content type="text"><![CDATA[项目搭建多种方式可选。1.在线创建：https://start.spring.io/ 下载生成压缩包导入IDE即可2.IDE创建(idea为例,两种方式)： New Project -&gt; Spring Initializr -&gt; Choose Version And Dependency (推荐) New Project -&gt; Maven -&gt; Finish -&gt; Change parent to Spring-boot-starter-parent 3.Spring Boot CLI下载后，解压，将bin目录添加至系统变量Path中，打开cmd, 运行spring –version验证是否安装成功 运行如下命令创建简单项目(本质与在线创建方式相同，连接start.spring.io并下载zip包)1spring init --build=maven --java-version=1.8 --dependencies=web --packaging=jar --boot-version=1.5.1.RELEASE 官方文档 配置参数 如数据库配置123456server.port=8080spring.datasource.url=jdbc:mysql://127.0.0.1:3306/db_test?useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=falsespring.datasource.username=rootspring.datasource.password=rootspring.datasource.driver-class-name=com.mysql.jdbc.Drivermybatis.mapper-locations=classpath:*DataDaoMapper.xml 根据不同版本查看不同版本文档，更改url中的版本号路径即可，1.5.x文档为：官方文档1.5.x SpringBoot默认读取resource目录下的application.properties文件； 通过设置spring.profiles.active的值可实现不同环境下读取不同的配置文件； 若想加载其他路径下的配置文件或加载多个配置文件，启动类加@PropertySource注解，参数value传文件地址，多个文件则以逗号隔开。]]></content>
       <tags>
         <tag>技术</tag>
         <tag>JAVA</tag>
@@ -461,9 +470,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[数据库范式学习总结]]></title>
+    <title><![CDATA[数据库范式重温总结]]></title>
     <url>%2F2016%2F08%2F05%2Fdatabase_introduce%2F</url>
-    <content type="text"><![CDATA[近期重温数据库范式。 第一范式（1NF）属性不可再分，强调的是原子性。如表：【联系人】（姓名，性别，电话），在实际场景中，联系人有家庭电话和公司电话，那么这种表结构设计就没有达到 1NF。要符合 1NF 我们只需把列（电话）拆分，即：【联系人】（姓名，性别，家庭电话，公司电话）。 第二范式（2NF）首先，符合1NF，并且，非主属性完全依赖于码，即没有包含在主键中的列必须完全依赖于主键，而不能只依赖于主键的一部分。强调的是完全依赖而非部分依赖。考虑一个订单明细表：【OrderDetail】（OrderID，ProductID，UnitPrice，Discount，Quantity，ProductName）。 因为我们知道在一个订单中可以订购多种产品，所以单单一个 OrderID 是不足以成为主键的，主键应该是（OrderID，ProductID）。显而易见 Discount（折扣），Quantity（数量）完全依赖（取决）于主键（OderID，ProductID），而 UnitPrice，ProductName 只依赖于 ProductID。所以 OrderDetail 表不符合 2NF。不符合 2NF 的设计容易产生冗余数据。可以把【OrderDetail】表拆分为【OrderDetail】（OrderID，ProductID，Discount，Quantity）和【Product】（ProductID，UnitPrice，ProductName）来消除原订单表中UnitPrice，ProductName多次重复的情况。 第三范式（3NF）首先，符合 2NF，另外非主键列必须直接依赖于主键，不能存在传递依赖。即不能存在：非主键列 A 依赖于非主键列 B，非主键列 B 依赖于主键的情况。 强调的是消除传递依赖。考虑一个订单表【Order】（OrderID，OrderDate，CustomerID，CustomerName，CustomerAddr，CustomerCity）主键是（OrderID）。其中 OrderDate，CustomerID，CustomerName，CustomerAddr，CustomerCity 等非主键列都完全依赖于主键（OrderID），所以符合 2NF。不过问题是 CustomerName，CustomerAddr，CustomerCity 直接依赖的是 CustomerID（非主键列），而不是直接依赖于主键，它是通过传递才依赖于主键，所以不符合 3NF。通过拆分【Order】为【Order】（OrderID，OrderDate，CustomerID）和【Customer】（CustomerID，CustomerName，CustomerAddr，CustomerCity）从而达到 3NF。 BC范式（BCNF）任何字段都不能传递依赖任一侯选关键字。第三范式为非主键列不能传递依赖，而BC范式为所有键列都不能传递依赖。在第三范式的基础上，进一步消除了主属性的传递依赖。BC范式既检查非主属性，又检查主属性。 第四范式（4CF）把同一表内的多对多关系删除。 第五范式（5CF）从最终结构重新建立原始结构。 正确认识数据冗余主键与外键在多表中的重复出现, 不属于数据冗余，这个概念必须清楚。非键字段的重复出现, 才是数据冗余！而且是一种低级冗余，即重复性的冗余。高级冗余不是字段的重复出现，而是字段的派生出现。例：商品中的“单价、数量、金额”三个字段，“金额”就是由“单价”乘以“数量”派生出来的，它就是冗余，而且是一种高级冗余。冗余的目的是为了提高处理速度。只有低级冗余才会增加数据的不一致性，因为同一数据，可能从不同时间、地点、角色上多次录入。 总结绝大多数实际开发最多用到BC范式。第四和第五范式感兴趣多看看资料，了解即可。范式不是越高越好，过于范式化会对数据库的逻辑可读性和使用效率起到阻碍。数据库连接有性能消耗，实际开发过程中，会有数据冗余，以空间换时间，所以提倡高级冗余(派生性冗余)，反对低级冗余(重复性冗余)。]]></content>
+    <content type="text"><![CDATA[第一范式（1NF）属性不可再分，强调的是原子性。如表：【联系人】（姓名，性别，电话），在实际场景中，联系人有家庭电话和公司电话，那么这种表结构设计就没有达到 1NF。要符合 1NF 我们只需把列（电话）拆分，即：【联系人】（姓名，性别，家庭电话，公司电话）。 第二范式（2NF）首先，符合1NF，并且，非主属性完全依赖于码，即没有包含在主键中的列必须完全依赖于主键，而不能只依赖于主键的一部分。强调的是完全依赖而非部分依赖。考虑一个订单明细表：【OrderDetail】（OrderID，ProductID，UnitPrice，Discount，Quantity，ProductName）。 因为我们知道在一个订单中可以订购多种产品，所以单单一个 OrderID 是不足以成为主键的，主键应该是（OrderID，ProductID）。显而易见 Discount（折扣），Quantity（数量）完全依赖（取决）于主键（OderID，ProductID），而 UnitPrice，ProductName 只依赖于 ProductID。所以 OrderDetail 表不符合 2NF。不符合 2NF 的设计容易产生冗余数据。可以把【OrderDetail】表拆分为【OrderDetail】（OrderID，ProductID，Discount，Quantity）和【Product】（ProductID，UnitPrice，ProductName）来消除原订单表中UnitPrice，ProductName多次重复的情况。 第三范式（3NF）首先，符合 2NF，另外非主键列必须直接依赖于主键，不能存在传递依赖。即不能存在：非主键列 A 依赖于非主键列 B，非主键列 B 依赖于主键的情况。 强调的是消除传递依赖。考虑一个订单表【Order】（OrderID，OrderDate，CustomerID，CustomerName，CustomerAddr，CustomerCity）主键是（OrderID）。其中 OrderDate，CustomerID，CustomerName，CustomerAddr，CustomerCity 等非主键列都完全依赖于主键（OrderID），所以符合 2NF。不过问题是 CustomerName，CustomerAddr，CustomerCity 直接依赖的是 CustomerID（非主键列），而不是直接依赖于主键，它是通过传递才依赖于主键，所以不符合 3NF。通过拆分【Order】为【Order】（OrderID，OrderDate，CustomerID）和【Customer】（CustomerID，CustomerName，CustomerAddr，CustomerCity）从而达到 3NF。 BC范式（BCNF）任何字段都不能传递依赖任一侯选关键字。第三范式为非主键列不能传递依赖，而BC范式为所有键列都不能传递依赖。在第三范式的基础上，进一步消除了主属性的传递依赖。BC范式既检查非主属性，又检查主属性。 第四范式（4CF）把同一表内的多对多关系删除。 第五范式（5CF）从最终结构重新建立原始结构。 正确认识数据冗余主键与外键在多表中的重复出现, 不属于数据冗余，这个概念必须清楚。非键字段的重复出现, 才是数据冗余！而且是一种低级冗余，即重复性的冗余。高级冗余不是字段的重复出现，而是字段的派生出现。例：商品中的“单价、数量、金额”三个字段，“金额”就是由“单价”乘以“数量”派生出来的，它就是冗余，而且是一种高级冗余。冗余的目的是为了提高处理速度。只有低级冗余才会增加数据的不一致性，因为同一数据，可能从不同时间、地点、角色上多次录入。 总结绝大多数实际开发最多用到BC范式。第四和第五范式感兴趣多看看资料，了解即可。范式不是越高越好，过于范式化会对数据库的逻辑可读性和使用效率起到阻碍。数据库连接有性能消耗，实际开发过程中，会有数据冗余，以空间换时间，所以提倡高级冗余(派生性冗余)，反对低级冗余(重复性冗余)。 其他Mysql语句执行顺序如下1234567891011(1)from(3)join(2)on(4)where(5)group by(6)avg,sum....(7)having(8)select(9)distinct(10)order by(11)limit]]></content>
       <tags>
         <tag>技术</tag>
         <tag>DataBase</tag>

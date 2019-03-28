@@ -416,119 +416,6 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/30/centos_ntpd/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MonkeyBean">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="帅斌的冒险船">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/30/centos_ntpd/" itemprop="url">Centos网络时间同步</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-30T07:50:45+08:00">
-                2017-07-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h2><p>系统为Centos6或7, 多个服务器之间存在时间合法性验证，由于各服务器时间不统一，验证不通过。</p>
-<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>执行如下命令矫正本地时间，网络同步<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 安装网络时间协议</div><div class="line">yum install ntp</div><div class="line"># 开启ntp daemon，开机自启动</div><div class="line">chkconfig ntpd on</div><div class="line"># 同步系统时间，可选任意可靠的时间服务器，这里用的是pool.ntp.org</div><div class="line">ntpdate pool.ntp.org</div><div class="line"># 启动时间同步协议</div><div class="line">service ntpd start</div></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/30/https_introduce_config/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -609,6 +496,119 @@
 <p>Https需配置第三方签发的证书，配置过程如下.</p>
 <h2 id="SSL证书申请及配置"><a href="#SSL证书申请及配置" class="headerlink" title="SSL证书申请及配置"></a>SSL证书申请及配置</h2><h3 id="申请"><a href="#申请" class="headerlink" title="申请"></a>申请</h3><p>个人使用，免费SSL证书即可，签发速度快，可保护完整域名，不支持通配符。这里使用的是阿里云域名服务，进入域名基本信息，选择免费开启SSL证书，按照引导操作配置，最终如下<br><img src="/assets/https_analyze.png" alt="https_analyze"></p>
 <h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p><img src="/assets/https_nginx_config.png" alt="https_nginx_config"></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/30/centos_ntpd/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MonkeyBean">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="帅斌的冒险船">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/30/centos_ntpd/" itemprop="url">Centos网络时间同步</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-30T07:50:45+08:00">
+                2017-07-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h2><p>系统为Centos6或7, 多个服务器之间存在时间合法性验证，由于各服务器时间不统一，验证不通过。</p>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><p>执行如下命令矫正本地时间，网络同步<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 安装网络时间协议</div><div class="line">yum install ntp</div><div class="line"># 开启ntp daemon，开机自启动</div><div class="line">chkconfig ntpd on</div><div class="line"># 同步系统时间，可选任意可靠的时间服务器，这里用的是pool.ntp.org</div><div class="line">ntpdate pool.ntp.org</div><div class="line"># 启动时间同步协议</div><div class="line">service ntpd start</div></pre></td></tr></table></figure></p>
 
           
         
@@ -1356,7 +1356,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/24/phone_id/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/10/springboot_create/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="MonkeyBean">
@@ -1375,7 +1375,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/05/24/phone_id/" itemprop="url">常见正则合法性校验</a></h1>
+                <a class="post-title-link" href="/2017/06/10/springboot_create/" itemprop="url">SpringBoot项目创建及配置参数简介</a></h1>
         
 
         <div class="post-meta">
@@ -1387,8 +1387,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-24T23:20:24+08:00">
-                2017-05-24
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-10T17:22:07+08:00">
+                2017-06-10
               </time>
             
 
@@ -1423,32 +1423,18 @@
 
       
         
-          <p>正则表达式用于各个情形的数据校验，用于匹配字符串。例如对请求参数的校验，客户端给服务器发送数据前，需初步对数据进行合法性校验；由于客户端数据不可信，服务器要对数据进行严格的合法性校验。<br>本文记录的是常用的身份证及手机号等合法性正则校验，以Java编程为例。</p>
-<h2 id="正则基本语法"><a href="#正则基本语法" class="headerlink" title="正则基本语法"></a>正则基本语法</h2><p>^ 匹配字符串的起始位置，如果将 ^ 用作括号表达式中的第一个字符，则会对字符集求反，[^abc] 与除 a、b 和 c 以外的任何字符匹配</p>
-<p>$ 匹配字符串的结束位置</p>
-<p>* 任意次（零次或多次）匹配前面的字符或子表达式，等效于 {0,}</p>
-<p>+ 至少一次（一次或多次）匹配前面的字符或子表达式，等效于 {1,}</p>
-<p>? 零次或一次匹配前面的字符或子表达式，等效于 {0,1}</p>
-<p>. 匹配单个字符， a.c 与“abc”、“a1c”和“a-c”匹配</p>
-<p>| 或，z|food 与“z”或“food”匹配。(z|f)ood 与“zood”或“food”匹配</p>
-<p>( ) 小括号表示匹配括号中全部字符</p>
-<p>[] 中括号表示匹配括号中一个字符 范围描述 如[0-9 a-z A-Z]</p>
-<p>{} 大括号用于限定匹配次数，如{n}表示匹配n次；{n,}表示至少匹配n次；{n,m}表示至少匹配n次,最多匹配m次</p>
-<p>\ 转义字符,如上基本符号匹配都需要转义字符,如 * 表示匹配*号。\f 为换页符，\n 为换行符，\r 为回车符，\t 为Tab 字符，\v 为垂直制表符</p>
-<p>\w  表示英文字母和数字以及下划线，等效于 [A-Za-z0-9_]</p>
-<p>\W 英文字母，数字，下滑线以外的字符，等效于 [^A-Za-z0-9_]</p>
-<p>\d 表示数字，等效于 [0-9]  </p>
-<p>\D 非数字，等效于 [^0-9]</p>
-<p>\s 任何空白字符。其中包括空格、制表符和换页符,[\f\n\r\t\v]</p>
-<p>\S 任何非空白字符,[^\f\n\r\t\v]</p>
-<p>exp1(?=exp2) 前瞻(look ahead),查找exp2前面的exp1,如 a(?=b) 匹配ab但不匹配ac</p>
-<p>(?&lt;=exp2)exp1 后顾(look behind),查找exp2后面的exp1,如 (?&lt;=b)a 匹配ba但不匹配bc</p>
-<p>exp1(?!exp2) 负前瞻,查找后面不是exp2的exp1, 如 a(?!b) 匹配ac但不匹配ab</p>
-<p>(?&lt;!=exp2)exp1 负后顾,查找前面不是exp2的exp1, 如 (?&lt;!b)a 匹配ca但不匹配ba</p>
-<h2 id="常见正则校验"><a href="#常见正则校验" class="headerlink" title="常见正则校验"></a>常见正则校验</h2><h3 id="手机号合法性校验"><a href="#手机号合法性校验" class="headerlink" title="手机号合法性校验"></a>手机号合法性校验</h3>
+          <h2 id="项目搭建"><a href="#项目搭建" class="headerlink" title="项目搭建"></a>项目搭建</h2><p>多种方式可选。<br>1.在线创建：<a href="https://start.spring.io/" target="_blank" rel="external">https://start.spring.io/</a> 下载生成压缩包导入IDE即可<br>2.IDE创建(idea为例,两种方式)：</p>
+<ul>
+<li>New Project -&gt; Spring Initializr -&gt; Choose Version And Dependency (推荐)</li>
+<li>New Project -&gt; Maven -&gt; Finish -&gt; Change parent to Spring-boot-starter-parent</li>
+</ul>
+<p>3.Spring Boot CLI<br><a href="https://repo.spring.io/snapshot/org/springframework/boot/spring-boot-cli/" target="_blank" rel="external">下载</a>后，解压，将bin目录添加至系统变量Path中，打开cmd, 运行spring –version验证是否安装成功</p>
+<p>运行如下命令创建简单项目(本质与在线创建方式相同，连接start.spring.io并下载zip包)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">spring init --build=maven --java-version=1.8 --dependencies=web --packaging=jar --boot-version=1.5.1.RELEASE</div></pre></td></tr></table></figure></p>
+<p><a href="https://docs.spring.io/spring-boot/docs/1.5.x/reference/html/getting-started-installing-spring-boot.html#getting-started-installing-the-cli" target="_blank" rel="external">官方文档</a></p>
+<h2 id="配置参数"><a href="#配置参数" class="headerlink" title="配置参数"></a>配置参数</h2>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/05/24/phone_id/#more" rel="contents">
+            <a class="btn" href="/2017/06/10/springboot_create/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1534,7 +1520,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-count">53</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

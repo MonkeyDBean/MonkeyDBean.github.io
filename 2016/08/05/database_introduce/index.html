@@ -90,17 +90,17 @@
 
 
 
-<meta name="description" content="近期重温数据库范式。 第一范式（1NF）属性不可再分，强调的是原子性。如表：【联系人】（姓名，性别，电话），在实际场景中，联系人有家庭电话和公司电话，那么这种表结构设计就没有达到 1NF。要符合 1NF 我们只需把列（电话）拆分，即：【联系人】（姓名，性别，家庭电话，公司电话）。 第二范式（2NF）首先，符合1NF，并且，非主属性完全依赖于码，即没有包含在主键中的列必须完全依赖于主键，而不能只依赖">
+<meta name="description" content="第一范式（1NF）属性不可再分，强调的是原子性。如表：【联系人】（姓名，性别，电话），在实际场景中，联系人有家庭电话和公司电话，那么这种表结构设计就没有达到 1NF。要符合 1NF 我们只需把列（电话）拆分，即：【联系人】（姓名，性别，家庭电话，公司电话）。 第二范式（2NF）首先，符合1NF，并且，非主属性完全依赖于码，即没有包含在主键中的列必须完全依赖于主键，而不能只依赖于主键的一部分。强调的">
 <meta name="keywords" content="技术,DataBase">
 <meta property="og:type" content="article">
-<meta property="og:title" content="数据库范式学习总结">
+<meta property="og:title" content="数据库范式重温总结">
 <meta property="og:url" content="http://yoursite.com/2016/08/05/database_introduce/index.html">
 <meta property="og:site_name" content="帅斌的冒险船">
-<meta property="og:description" content="近期重温数据库范式。 第一范式（1NF）属性不可再分，强调的是原子性。如表：【联系人】（姓名，性别，电话），在实际场景中，联系人有家庭电话和公司电话，那么这种表结构设计就没有达到 1NF。要符合 1NF 我们只需把列（电话）拆分，即：【联系人】（姓名，性别，家庭电话，公司电话）。 第二范式（2NF）首先，符合1NF，并且，非主属性完全依赖于码，即没有包含在主键中的列必须完全依赖于主键，而不能只依赖">
-<meta property="og:updated_time" content="2017-07-05T14:50:50.661Z">
+<meta property="og:description" content="第一范式（1NF）属性不可再分，强调的是原子性。如表：【联系人】（姓名，性别，电话），在实际场景中，联系人有家庭电话和公司电话，那么这种表结构设计就没有达到 1NF。要符合 1NF 我们只需把列（电话）拆分，即：【联系人】（姓名，性别，家庭电话，公司电话）。 第二范式（2NF）首先，符合1NF，并且，非主属性完全依赖于码，即没有包含在主键中的列必须完全依赖于主键，而不能只依赖于主键的一部分。强调的">
+<meta property="og:updated_time" content="2019-03-28T15:15:57.947Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="数据库范式学习总结">
-<meta name="twitter:description" content="近期重温数据库范式。 第一范式（1NF）属性不可再分，强调的是原子性。如表：【联系人】（姓名，性别，电话），在实际场景中，联系人有家庭电话和公司电话，那么这种表结构设计就没有达到 1NF。要符合 1NF 我们只需把列（电话）拆分，即：【联系人】（姓名，性别，家庭电话，公司电话）。 第二范式（2NF）首先，符合1NF，并且，非主属性完全依赖于码，即没有包含在主键中的列必须完全依赖于主键，而不能只依赖">
+<meta name="twitter:title" content="数据库范式重温总结">
+<meta name="twitter:description" content="第一范式（1NF）属性不可再分，强调的是原子性。如表：【联系人】（姓名，性别，电话），在实际场景中，联系人有家庭电话和公司电话，那么这种表结构设计就没有达到 1NF。要符合 1NF 我们只需把列（电话）拆分，即：【联系人】（姓名，性别，家庭电话，公司电话）。 第二范式（2NF）首先，符合1NF，并且，非主属性完全依赖于码，即没有包含在主键中的列必须完全依赖于主键，而不能只依赖于主键的一部分。强调的">
 
 
 
@@ -134,7 +134,7 @@
 
 
 
-  <title>数据库范式学习总结 | 帅斌的冒险船</title>
+  <title>数据库范式重温总结 | 帅斌的冒险船</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -314,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">数据库范式学习总结</h1>
+          <h1 class="post-title" itemprop="name headline">数据库范式重温总结</h1>
         
 
         <div class="post-meta">
@@ -361,8 +361,7 @@
       
 
       
-        <p>近期重温数据库范式。</p>
-<h2 id="第一范式（1NF）"><a href="#第一范式（1NF）" class="headerlink" title="第一范式（1NF）"></a>第一范式（1NF）</h2><p>属性不可再分，强调的是原子性。<br>如表：【联系人】（姓名，性别，电话），在实际场景中，联系人有家庭电话和公司电话，那么这种表结构设计就没有达到 1NF。要符合 1NF 我们只需把列（电话）拆分，即：【联系人】（姓名，性别，家庭电话，公司电话）。</p>
+        <h2 id="第一范式（1NF）"><a href="#第一范式（1NF）" class="headerlink" title="第一范式（1NF）"></a>第一范式（1NF）</h2><p>属性不可再分，强调的是原子性。<br>如表：【联系人】（姓名，性别，电话），在实际场景中，联系人有家庭电话和公司电话，那么这种表结构设计就没有达到 1NF。要符合 1NF 我们只需把列（电话）拆分，即：【联系人】（姓名，性别，家庭电话，公司电话）。</p>
 <h2 id="第二范式（2NF）"><a href="#第二范式（2NF）" class="headerlink" title="第二范式（2NF）"></a>第二范式（2NF）</h2><p>首先，符合1NF，并且，非主属性完全依赖于码，即没有包含在主键中的列必须完全依赖于主键，而不能只依赖于主键的一部分。强调的是完全依赖而非部分依赖。<br>考虑一个订单明细表：【OrderDetail】（OrderID，ProductID，UnitPrice，Discount，Quantity，ProductName）。 <a id="more"></a><br>因为我们知道在一个订单中可以订购多种产品，所以单单一个 OrderID 是不足以成为主键的，主键应该是（OrderID，ProductID）。显而易见 Discount（折扣），Quantity（数量）完全依赖（取决）于主键（OderID，ProductID），而 UnitPrice，ProductName 只依赖于 ProductID。所以 OrderDetail 表不符合 2NF。不符合 2NF 的设计容易产生冗余数据。<br>可以把【OrderDetail】表拆分为【OrderDetail】（OrderID，ProductID，Discount，Quantity）和【Product】（ProductID，UnitPrice，ProductName）来消除原订单表中UnitPrice，ProductName多次重复的情况。</p>
 <h2 id="第三范式（3NF）"><a href="#第三范式（3NF）" class="headerlink" title="第三范式（3NF）"></a>第三范式（3NF）</h2><p>首先，符合 2NF，另外非主键列必须直接依赖于主键，不能存在传递依赖。即不能存在：非主键列 A 依赖于非主键列 B，非主键列 B 依赖于主键的情况。 强调的是消除传递依赖。<br>考虑一个订单表【Order】（OrderID，OrderDate，CustomerID，CustomerName，CustomerAddr，CustomerCity）主键是（OrderID）。<br>其中 OrderDate，CustomerID，CustomerName，CustomerAddr，CustomerCity 等非主键列都完全依赖于主键（OrderID），所以符合 2NF。不过问题是 CustomerName，CustomerAddr，CustomerCity 直接依赖的是 CustomerID（非主键列），而不是直接依赖于主键，它是通过传递才依赖于主键，所以不符合 3NF。<br>通过拆分【Order】为【Order】（OrderID，OrderDate，CustomerID）和【Customer】（CustomerID，CustomerName，CustomerAddr，CustomerCity）从而达到 3NF。 </p>
 <h2 id="BC范式（BCNF）"><a href="#BC范式（BCNF）" class="headerlink" title="BC范式（BCNF）"></a>BC范式（BCNF）</h2><p>任何字段都不能传递依赖任一侯选关键字。第三范式为非主键列不能传递依赖，而BC范式为所有键列都不能传递依赖。在第三范式的基础上，进一步消除了主属性的传递依赖。BC范式既检查非主属性，又检查主属性。</p>
@@ -370,6 +369,7 @@
 <h2 id="第五范式（5CF）"><a href="#第五范式（5CF）" class="headerlink" title="第五范式（5CF）"></a>第五范式（5CF）</h2><p>从最终结构重新建立原始结构。</p>
 <h2 id="正确认识数据冗余"><a href="#正确认识数据冗余" class="headerlink" title="正确认识数据冗余"></a>正确认识数据冗余</h2><p>主键与外键在多表中的重复出现, 不属于数据冗余，这个概念必须清楚。非键字段的重复出现, 才是数据冗余！而且是一种低级冗余，即重复性的冗余。高级冗余不是字段的重复出现，而是字段的派生出现。<br>例：商品中的“单价、数量、金额”三个字段，“金额”就是由“单价”乘以“数量”派生出来的，它就是冗余，而且是一种高级冗余。冗余的目的是为了提高处理速度。只有低级冗余才会增加数据的不一致性，因为同一数据，可能从不同时间、地点、角色上多次录入。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>绝大多数实际开发最多用到BC范式。第四和第五范式感兴趣多看看资料，了解即可。范式不是越高越好，过于范式化会对数据库的逻辑可读性和使用效率起到阻碍。<br>数据库连接有性能消耗，实际开发过程中，会有数据冗余，以空间换时间，所以提倡高级冗余(派生性冗余)，反对低级冗余(重复性冗余)。</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>Mysql语句执行顺序如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">(1)from</div><div class="line">(3)join</div><div class="line">(2)on</div><div class="line">(4)where</div><div class="line">(5)group by</div><div class="line">(6)avg,sum....</div><div class="line">(7)having</div><div class="line">(8)select</div><div class="line">(9)distinct</div><div class="line">(10)order by</div><div class="line">(11)limit</div></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -515,7 +515,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-count">53</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -605,7 +605,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#第一范式（1NF）"><span class="nav-number">1.</span> <span class="nav-text">第一范式（1NF）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二范式（2NF）"><span class="nav-number">2.</span> <span class="nav-text">第二范式（2NF）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三范式（3NF）"><span class="nav-number">3.</span> <span class="nav-text">第三范式（3NF）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BC范式（BCNF）"><span class="nav-number">4.</span> <span class="nav-text">BC范式（BCNF）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第四范式（4CF）"><span class="nav-number">5.</span> <span class="nav-text">第四范式（4CF）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第五范式（5CF）"><span class="nav-number">6.</span> <span class="nav-text">第五范式（5CF）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正确认识数据冗余"><span class="nav-number">7.</span> <span class="nav-text">正确认识数据冗余</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">8.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#第一范式（1NF）"><span class="nav-number">1.</span> <span class="nav-text">第一范式（1NF）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二范式（2NF）"><span class="nav-number">2.</span> <span class="nav-text">第二范式（2NF）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三范式（3NF）"><span class="nav-number">3.</span> <span class="nav-text">第三范式（3NF）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BC范式（BCNF）"><span class="nav-number">4.</span> <span class="nav-text">BC范式（BCNF）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第四范式（4CF）"><span class="nav-number">5.</span> <span class="nav-text">第四范式（4CF）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第五范式（5CF）"><span class="nav-number">6.</span> <span class="nav-text">第五范式（5CF）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正确认识数据冗余"><span class="nav-number">7.</span> <span class="nav-text">正确认识数据冗余</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">8.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-number">9.</span> <span class="nav-text">其他</span></a></li></ol></div>
             
 
           </div>
