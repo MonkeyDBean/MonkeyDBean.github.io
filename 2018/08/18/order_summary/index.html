@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="技术,JAVA,Linux," />
+  <meta name="keywords" content="JAVA,技术,Linux," />
 
 
 
@@ -91,13 +91,13 @@
 
 
 <meta name="description" content="Linuxcentos7以systemctl管理守护进程，如查看nginx状态12345centos6:service nginx statuscentos7:systemctl status nginx.service 以下以centos6为例 1.tar打包打包, 将/usr/share/nginx/tempweb目录下的文件与子目录打包成一个文件库/usr/share/temp.tar1ta">
-<meta name="keywords" content="技术,JAVA,Linux">
+<meta name="keywords" content="JAVA,技术,Linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="服务常用命令汇总">
 <meta property="og:url" content="http://yoursite.com/2018/08/18/order_summary/index.html">
 <meta property="og:site_name" content="帅斌的冒险船">
 <meta property="og:description" content="Linuxcentos7以systemctl管理守护进程，如查看nginx状态12345centos6:service nginx statuscentos7:systemctl status nginx.service 以下以centos6为例 1.tar打包打包, 将/usr/share/nginx/tempweb目录下的文件与子目录打包成一个文件库/usr/share/temp.tar1ta">
-<meta property="og:updated_time" content="2019-03-29T11:59:24.665Z">
+<meta property="og:updated_time" content="2019-04-11T14:43:57.774Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="服务常用命令汇总">
 <meta name="twitter:description" content="Linuxcentos7以systemctl管理守护进程，如查看nginx状态12345centos6:service nginx statuscentos7:systemctl status nginx.service 以下以centos6为例 1.tar打包打包, 将/usr/share/nginx/tempweb目录下的文件与子目录打包成一个文件库/usr/share/temp.tar1ta">
@@ -444,7 +444,7 @@
 <h2 id="Infludb"><a href="#Infludb" class="headerlink" title="Infludb"></a>Infludb</h2><p>示例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">查看序列</div><div class="line">SHOW series from cpu_load_short</div></pre></td></tr></table></figure></p>
 <p><a href="https://blog.csdn.net/u010185262/article/details/53158786" target="_blank" rel="external">常用命令</a></p>
 <h2 id="其他-1"><a href="#其他-1" class="headerlink" title="其他"></a>其他</h2><h3 id="1-Excel"><a href="#1-Excel" class="headerlink" title="1.Excel"></a>1.Excel</h3><p>excel函数使用，以单元格内容有9/6/2017转2017/6/9为例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">=CONCAT(RIGHT(A1,4),&quot;/&quot;,MID(A1,FIND(&quot;/&quot;,A1,1)+1,FIND(&quot;/&quot;,A1,4)-FIND(&quot;/&quot;,A1,1)-1),&quot;/&quot;,LEFT(A1,FIND(&quot;/&quot;,A1,1)-1))</div></pre></td></tr></table></figure></p>
-<h3 id="2-Git"><a href="#2-Git" class="headerlink" title="2.Git"></a>2.Git</h3><p>命令示例<br>1.删除分支<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># 查看分支</div><div class="line">git branch -a</div><div class="line"></div><div class="line"># 删除本地分支</div><div class="line">git branch -d $branch_name</div><div class="line"></div><div class="line"># 删除远程分支</div><div class="line">git push origin --delete $branch_name</div><div class="line"></div><div class="line"># 精简分支，本地的远程分支与远程保持一致</div><div class="line">git remote prune origin</div></pre></td></tr></table></figure></p>
+<h3 id="2-Git"><a href="#2-Git" class="headerlink" title="2.Git"></a>2.Git</h3><p>命令示例<br>1.删除分支<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"># 查看分支</div><div class="line">git branch -a</div><div class="line"></div><div class="line"># 删除本地分支</div><div class="line">git branch -d $branch_name</div><div class="line"></div><div class="line"># 删除远程分支</div><div class="line">git push origin --delete $branch_name</div><div class="line">或</div><div class="line">git push origin :$branch_name</div><div class="line"></div><div class="line"># 精简分支，本地的远程分支与远程保持一致</div><div class="line">git remote prune origin</div></pre></td></tr></table></figure></p>
 <p>2.撤销修改<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 撤销工作区修改</div><div class="line">git checkout .</div><div class="line"></div><div class="line"># 撤销暂存区</div><div class="line">git reset .</div><div class="line"></div><div class="line"># 版本回退</div><div class="line">git reset --hard $commit_id</div></pre></td></tr></table></figure></p>
 <p><a href="https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/" target="_blank" rel="external">命令参考链接1</a><br><a href="https://www.cnblogs.com/ludashi/p/8213550.html" target="_blank" rel="external">命令参考链接2</a><br><a href="http://blog.jobbole.com/109466/" target="_blank" rel="external">git工作流实践1</a><br><a href="https://www.jianshu.com/p/202de00f267f" target="_blank" rel="external">git工作流实践2</a></p>
 <h3 id="3-maven"><a href="#3-maven" class="headerlink" title="3.maven"></a>3.maven</h3><p>内置属性：<a href="https://blog.csdn.net/wangjunjun2008/article/details/17761355" target="_blank" rel="external">参考链接</a>； 参考书籍：《Maven实战》<br>如Maven的优化依赖：<br>Maven会自动解析所有项目的直接依赖和传递依赖，同一依赖的版本号不一致会导致依赖冲突(依赖的不确定性)，maven对冲突进行调节，保证任一构件只有唯一的版本号，最后得到的依赖被称为已解析依赖。<br>maven解决冲突的原则：选择就近于根路径的依赖; 路径在同一层级，则选择声明在前的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">路径最短者优先。如：</div><div class="line">第一种依赖路径：A -&gt; B -&gt; C -&gt; D(1.0)</div><div class="line">第二种依赖路径：A -&gt; B -&gt; D(1.1)</div><div class="line">此时以第二种依赖路径(D1.1)为准</div><div class="line"></div><div class="line">声明最先者优先，即谁先声明就依赖谁。如：</div><div class="line">第一种依赖路径：A -&gt; B -&gt; C(1.0)</div><div class="line">第二种依赖路径：A -&gt; B -&gt; C(1.1)</div><div class="line">此时以第一种依赖路径(C1.0)为准</div></pre></td></tr></table></figure></p>
@@ -507,9 +507,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/技术/" rel="tag"># 技术</a>
-          
             <a href="/tags/JAVA/" rel="tag"># JAVA</a>
+          
+            <a href="/tags/技术/" rel="tag"># 技术</a>
           
             <a href="/tags/Linux/" rel="tag"># Linux</a>
           
