@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Gif转Ascii]]></title>
+    <url>%2F2019%2F03%2F24%2Fascii_picture%2F</url>
+    <content type="text"><![CDATA[抖音最近比较火的字符动画，谣传是代码写出的，实际通过软件生成，制作过程参考如下：若已有gif，直接跳到第三步 首先使用gif录制编辑工具如GifCam录制，删除无用frame，生成初始gif图 使用动画制作软件如UleadGif Animator进一步处理，也可忽略此步骤或者忽略步骤一，直接使用UleadGif,用多张静态图合成gif图 使用Ascii动画转换工具如Ascii Animator将gif图转为Ascii动画，导出可选.html格式或.gif格式 添加音频，如使用绘声绘影，合成最终视频]]></content>
+      <tags>
+        <tag>生活</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Spring概念简介]]></title>
     <url>%2F2019%2F03%2F08%2Fspring_concept%2F</url>
     <content type="text"><![CDATA[Spring是一个引擎，SpringMvc基于Spring的mvc web框架，SpringBoot是基础Spring的一套快速开发整合包。 Spring分布式微服务开发体系分为三部分: SpringBoot: 构建所有，针对应用层面 SpringCloud: 各应用协作，提供分布式成体系的解决方案 SpringDataFlow: 针对数据处理，简化开发及部署 SpringBoot为SpringCloud的应用基础，与Spring一脉相承，是未来发展的趋势。项目在线创建：传送 Spring简介Spring为Pivotal公司产品，其他产品如Redis、RabbitMQ。 Spring为开源、轻量级的Java开发框架，包含并管理应用对象配置和生命周期，在这个意义上它是一种容器，开发者可以配置每个bean如何被创建。 Spring特性 组件分层，各层耦合度低 通过配置完成对事务的支持 提供AOP技术，利用它可无耦合实现例如权限拦截，运行监控、统一日志，事务管理等 提供了对主流框架的支持，如集成Mybatis、Hibernate、JPA等 非侵入式设计，从框架的角度可以理解为，无需集成框架提供的任何类，这样如果更换框架，之前写过的代码可以继续使用 如上图，数据层包含有JDBC（java database connection）、ORM（object related model）、OXM（object xml mapper）、JMS（java message service）和Transaction模块。 Web层包含了Web、Web-Servlet、WebSocket、Web-Porlet（web组件，由porlet容器管理，为合成页面内容聚集在一起而设计）模块。 AOP模块提供了一个符合AOP联盟标准的面向切面编程的实现。 Core Container(核心容器)：包含有Beans、Core、Context和SpEL(spring expression language, 通过bean的id对bean进行引用；调用方式以及引用对象中的属性；计算表达式的值；正则表达式的匹配)模块。 Test模块支持使用JUnit和TestNG(test next generation, 自动化测试框架，灵感来源于junit及nunit)对Spring组件进行测试。 两大核心设计思想AOP字面意思为面向切面(aspect oriented programming), 是相对于OOP(object), POP(process, 不可重用，忽略了整体性和边界性), SOP(service, 无状态，单一实例，明确接口)。 基本术语： 切入点(Pointcut：在哪些类和哪些方法上切入(where) 通知(Advice)：在方法执行的前后(when)做什么(what) 切面(Aspect)：等于Pointcut + Advice， 在什么时机，什么地方，做什么 织入(Weaving)：把切面加入到对象，创建对象的过程(由Spring完成) Spring AOP构建在动态代理基础之上，运行期间把切面织入到Spring管理的Bean中。 AOP是OOP的延续，是函数式编程的衍生。在面向切面的编程思想里，把功能分为核心业务功能(例如登录、增删数据)和周边功能(例如性能统计，日志，事务管理)，周边功能在Spring的AOP思想里，即被定义为切面。 AOP可以将与业务无关，却为业务模块所共同调用的逻辑或责任(例如事务处理、日志管理、权限控制等)封装起来进行隔离，降低耦合度，提高程序可用性，继而提升开发效率。 AOP切入方式全部使用，执行顺序如上图 @Before: 前置通知, 在方法执行之前执行 @After: 后置通知, 在方法执行之后执行 。 @AfterRunning: 返回通知, 在方法返回结果之后执行 @AfterThrowing: 异常通知, 在方法抛出异常之后。@AfterThrowing用来处理当切入内容部分抛出异常之后的处理逻辑 @Around: 环绕通知, 围绕着方法执行 IOC字面意思为控制反转(inverse of control), 应用设计模式中的工厂模式, 将原本在程序中手动创建对象的控制权，交由Spring框架来管理，即反控。 正控：若要使用某个对象，需要开发人员去负责对象的创建。 反控：若要使用某个对象，只需要从Spring容器中获取需要使用的对象，不关心对象的创建过程，也就是把创建对象的控制权反转给了Spring容器，类似好莱坞法则(Don’t call me, I’ll call you), 开发人员有着更高的控制权。类似于喝橙汁，正控是买果汁机，买橙子，准备水，这些都是主动创造的过程，也就是一杯橙汁需要你自己创造，而反控是找到饮品店的联系方式，下个订单，过一会就有橙汁送来了，这里你并没有主动去创造橙汁。 DI(dependency injection), 依赖注入。通过注解或配置文件，拿到类名，使用反射机制，基于类型实例化对应的对象实例，通过构造函数或者setter传值。 IOC和DI其实是同一概念的不同角度描述，DI相对IOC而言，明确描述了被注入对象依赖IOC容器配置依赖对象。 DI有三种注入方式：构造器注入、setter方法注入、接口注入。 Bean的注入，两种注解：@Autowired(by type), @Resource(by name)。 三个核心组件 Bean: 组件在Spring的org.springframework.beans包下，这个包下的所有类主要解决了三件事，Bean的定义、Bean的创建以及对Bean的解析。对Spring的使用者来说唯一需要关心的就是Bean的创建，其他两个由Spring在内部帮你完成了，对开发者来说透明的。SpringBean的创建是典型的工厂模式，顶级接口是BeanFactory。 Context: Bean包装的是Object，而Object必然有数据，如何给这些数据提供生存环境就是Context所解决的问题，对Context来说，它就是要发现每个Bean之间的关系，为它们建立这种关系并且要维护好这种关系，所以Context就是一个Bean关系的集合，这个关系集合又称IOC容器，一旦建立起这个IOC容器，Spring就可以为你工作。ApplicationContext是Context的顶级父类， Application继承了BeanFactory，这说明了Spring容器中运行的主体对象是Bean，另外ApplicationContext继承了ResourceLoader。使得ApplicationContext可以访问任何外部资源。Context作为Spring的IOC容器，基本上整合了Spring的大部分功能或者说是大部分功能的基础。 Core: 发现、建立和维护每个Bean之间关系所需要的一系列工具，如定义了资源的访问方式。 每一个类必须实现Bean的规范才可以由Spring接管，Bean的规范如下： 必须是公有类(public) 有无参构造函数 用公共方法暴露内部成员属性(getter, setter) 实现这样规范的类，被称为Java Bean，即是一种可重用的组件。 SpringBootSpringMvc配置繁琐，每次开发要搞很多依赖，写许多样板代码，导致代码臃肿，于是SpringBoot应运而生。SpringBoot设计目的是用来简化Spring初始搭建及开发过程，设计原则是约定优于配置，SpringBoot主要为解决如下问题： 如何精简配置 如何让代码、部署、监控变简单 如何方便的让Spring生态圈和其他工具链整合 问题解决： 简化配置文件，简化maven配置(提供一系列的starter来简化maven依赖)，自动配置Spring 内嵌tomcat，无需部署war文件，创建独立的Spring应用程序 对第三方插件分装和整合 直接上手SpringBoot：优点：对于新手来说，门槛低，只需懂maven、会看文档就能亦步亦趋的开始一个新项目; 对于高手来说，从SpringMvc迁移改配置也是很快的事情。jar包方式让部署方式更优雅。缺点：简单的背后蕴藏了巨大的学习路线。入门容易，需要完整学习Spring体系。 SpringBoot2.x2.0版本在18年3月1号发布，与1.x版本相比, 改动非常大，当前官方1.x和2.x版本同步更新维护。2.0新特性如下。 支持java11，同时兼容java8 支持Spring WebFlux, 一种异步非阻塞的web框架 支持Kotlin(jetbrains开发的多平台的静态变成语言，可以编译成Java字节码，也可以编译成JavaScript，方便在没有JVM的设备上运行) 对Junit5完全支持 支持http2 第三方库的全面升级(thymeleaf 3 *、Jetty 9.4、Tomcat 8.5、Hibernate 5.2等) 对Quartz调度器提供了支持(可以加入spring-boot-starter-quartz starter来启用。而且支持基于内存和基于jdbc两种存储。) OAuth 2.0 支持(Spring Security OAuth 项目中的功能将会迁移到Spring Security) 配置文件支持yaml格式 小彩蛋，banner支持gif图 Spring WebFlux为响应式编程(响应流由发布者，订阅者，处理器组成)，基于事件驱动。与mvc区别如下图所示。优点是请求按顺序处理，组件之间异步传递，非阻塞，提高服务器负载 SpringCloudSpringCloud为快速构建分布式系统的通用模式工具集，使用SpringCloud开发的应用程序非常适合在Docker或者PaaS上部署，所以又叫云原生应用。云原生可以简单理解为面向云环境的软件架构。工具集包括： 服务注与发现：Eureka、Consul, 功能同Zookeeper 负载均衡: Ribbon API网关: Zuul、Gateway, 功能类似Nginx REST调用: Feign 容错处理: Hystrix 统一配置管理: Config，功能同Ctrip-Apollo 服务追踪: Sleuth，功能同jeager]]></content>
@@ -280,18 +288,18 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Centos网络时间同步]]></title>
-    <url>%2F2017%2F07%2F30%2Fcentos_ntpd%2F</url>
-    <content type="text"><![CDATA[场景系统为Centos6或7, 多个服务器之间存在时间合法性验证，由于各服务器时间不统一，验证不通过。 解决方法执行如下命令矫正本地时间，网络同步12345678# 安装网络时间协议yum install ntp# 开启ntp daemon，开机自启动chkconfig ntpd on# 同步系统时间，可选任意可靠的时间服务器，这里用的是pool.ntp.orgntpdate pool.ntp.org# 启动时间同步协议service ntpd start]]></content>
+    <title><![CDATA[Https简介及配置]]></title>
+    <url>%2F2017%2F07%2F30%2Fhttps_introduce_config%2F</url>
+    <content type="text"><![CDATA[简介Https(Secure Hypertext Transfer Protocol)相比Http(Hypertext Transfer Protocol Vertion)，字面意思，更安全。Https是在Http协议基础上增加了SSL加密传送信息的协议, 传输加密，保证通信过程数据不会被泄露或窜改，防信息泄露如钓鱼网站。Https连接过程: 客户端发送请求到服务器端 服务端返回证书和公钥(公钥作为证书的一部分) 客户端验证证书和公钥的有效性，若有效，则生成共享密钥并使用公钥加密发送到服务器端 服务端使用私钥解密数据，并使用收到的共享密钥加密数据，发送给客户端 客户端使用共享密钥解密数据 SSL连接建立 Https需配置第三方签发的证书，配置过程如下. SSL证书申请及配置申请个人使用，免费SSL证书即可，签发速度快，可保护完整域名，不支持通配符。这里使用的是阿里云域名服务，进入域名基本信息，选择免费开启SSL证书，按照引导操作配置，最终如下 配置]]></content>
       <tags>
         <tag>技术</tag>
         <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Https简介及配置]]></title>
-    <url>%2F2017%2F07%2F30%2Fhttps_introduce_config%2F</url>
-    <content type="text"><![CDATA[简介Https(Secure Hypertext Transfer Protocol)相比Http(Hypertext Transfer Protocol Vertion)，字面意思，更安全。Https是在Http协议基础上增加了SSL加密传送信息的协议, 传输加密，保证通信过程数据不会被泄露或窜改，防信息泄露如钓鱼网站。Https连接过程: 客户端发送请求到服务器端 服务端返回证书和公钥(公钥作为证书的一部分) 客户端验证证书和公钥的有效性，若有效，则生成共享密钥并使用公钥加密发送到服务器端 服务端使用私钥解密数据，并使用收到的共享密钥加密数据，发送给客户端 客户端使用共享密钥解密数据 SSL连接建立 Https需配置第三方签发的证书，配置过程如下. SSL证书申请及配置申请个人使用，免费SSL证书即可，签发速度快，可保护完整域名，不支持通配符。这里使用的是阿里云域名服务，进入域名基本信息，选择免费开启SSL证书，按照引导操作配置，最终如下 配置]]></content>
+    <title><![CDATA[Centos网络时间同步]]></title>
+    <url>%2F2017%2F07%2F30%2Fcentos_ntpd%2F</url>
+    <content type="text"><![CDATA[场景系统为Centos6或7, 多个服务器之间存在时间合法性验证，由于各服务器时间不统一，验证不通过。 解决方法执行如下命令矫正本地时间，网络同步12345678# 安装网络时间协议yum install ntp# 开启ntp daemon，开机自启动chkconfig ntpd on# 同步系统时间，可选任意可靠的时间服务器，这里用的是pool.ntp.orgntpdate pool.ntp.org# 启动时间同步协议service ntpd start]]></content>
       <tags>
         <tag>技术</tag>
         <tag>Linux</tag>
