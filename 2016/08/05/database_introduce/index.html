@@ -97,7 +97,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/08/05/database_introduce/index.html">
 <meta property="og:site_name" content="帅斌的冒险船">
 <meta property="og:description" content="第一范式（1NF）属性不可再分，强调的是原子性。如表：【联系人】（姓名，性别，电话），在实际场景中，联系人有家庭电话和公司电话，那么这种表结构设计就没有达到 1NF。要符合 1NF 我们只需把列（电话）拆分，即：【联系人】（姓名，性别，家庭电话，公司电话）。 第二范式（2NF）首先，符合1NF，并且，非主属性完全依赖于码，即没有包含在主键中的列必须完全依赖于主键，而不能只依赖于主键的一部分。强调的">
-<meta property="og:updated_time" content="2019-03-28T15:15:57.947Z">
+<meta property="og:updated_time" content="2019-05-07T15:51:03.865Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据库范式重温总结">
 <meta name="twitter:description" content="第一范式（1NF）属性不可再分，强调的是原子性。如表：【联系人】（姓名，性别，电话），在实际场景中，联系人有家庭电话和公司电话，那么这种表结构设计就没有达到 1NF。要符合 1NF 我们只需把列（电话）拆分，即：【联系人】（姓名，性别，家庭电话，公司电话）。 第二范式（2NF）首先，符合1NF，并且，非主属性完全依赖于码，即没有包含在主键中的列必须完全依赖于主键，而不能只依赖于主键的一部分。强调的">
@@ -369,7 +369,7 @@
 <h2 id="第五范式（5CF）"><a href="#第五范式（5CF）" class="headerlink" title="第五范式（5CF）"></a>第五范式（5CF）</h2><p>从最终结构重新建立原始结构。</p>
 <h2 id="正确认识数据冗余"><a href="#正确认识数据冗余" class="headerlink" title="正确认识数据冗余"></a>正确认识数据冗余</h2><p>主键与外键在多表中的重复出现, 不属于数据冗余，这个概念必须清楚。非键字段的重复出现, 才是数据冗余！而且是一种低级冗余，即重复性的冗余。高级冗余不是字段的重复出现，而是字段的派生出现。<br>例：商品中的“单价、数量、金额”三个字段，“金额”就是由“单价”乘以“数量”派生出来的，它就是冗余，而且是一种高级冗余。冗余的目的是为了提高处理速度。只有低级冗余才会增加数据的不一致性，因为同一数据，可能从不同时间、地点、角色上多次录入。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>绝大多数实际开发最多用到BC范式。第四和第五范式感兴趣多看看资料，了解即可。范式不是越高越好，过于范式化会对数据库的逻辑可读性和使用效率起到阻碍。<br>数据库连接有性能消耗，实际开发过程中，会有数据冗余，以空间换时间，所以提倡高级冗余(派生性冗余)，反对低级冗余(重复性冗余)。</p>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>Mysql语句执行顺序如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">(1)from</div><div class="line">(3)join</div><div class="line">(2)on</div><div class="line">(4)where</div><div class="line">(5)group by</div><div class="line">(6)avg,sum....</div><div class="line">(7)having</div><div class="line">(8)select</div><div class="line">(9)distinct</div><div class="line">(10)order by</div><div class="line">(11)limit</div></pre></td></tr></table></figure></p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>执行sql语句前，首先将数据从硬盘加载到数据缓冲区。<br>mysql语句执行顺序如下，from最先执行，limit最后执行，每一个操作都会产生一张虚拟表，产生的虚拟表作为下一个处理的输入，除最后一张虚拟表作为结果返回，其他中间虚拟表对用户是透明的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">(1)from</div><div class="line">(3)join</div><div class="line">(2)on</div><div class="line">(4)where</div><div class="line">(5)group by</div><div class="line">(6)avg,sum....</div><div class="line">(7)having</div><div class="line">(8)select</div><div class="line">(9)distinct</div><div class="line">(10)order by</div><div class="line">(11)limit</div></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -559,6 +559,10 @@
               
                 <li class="links-of-blogroll-item">
                   <a href="http://syf.ac.cn/" title="7nocturnal的博客" target="_blank">7nocturnal的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://xiaofeng333.github.io" title="xiaofeng的博客" target="_blank">xiaofeng的博客</a>
                 </li>
               
             </ul>
