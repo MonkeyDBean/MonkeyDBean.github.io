@@ -1,0 +1,1492 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,JAVA," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/uploads/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="QCon是由InfoQ主办的综合性技术盛会, 19年5月6-8日为北京站，会议包含众多领域的前沿技术及实践，如云安全，机器学习，人工智能，大数据，前端，服务架构，数据存储，容器等。其中着重介绍了前端前沿技术，包括重提了RTC(用于Browser的Audio, Video), AR, VR, 3D，WebGL, GPU, PipeLine, 机器学习及深度学习在前端的应用,流媒体解决方案，W3C标准">
+<meta name="keywords" content="技术,JAVA">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java生态系统总结(QCon2019)">
+<meta property="og:url" content="http://yoursite.com/2019/05/12/qcon2019/index.html">
+<meta property="og:site_name" content="帅斌的冒险船">
+<meta property="og:description" content="QCon是由InfoQ主办的综合性技术盛会, 19年5月6-8日为北京站，会议包含众多领域的前沿技术及实践，如云安全，机器学习，人工智能，大数据，前端，服务架构，数据存储，容器等。其中着重介绍了前端前沿技术，包括重提了RTC(用于Browser的Audio, Video), AR, VR, 3D，WebGL, GPU, PipeLine, 机器学习及深度学习在前端的应用,流媒体解决方案，W3C标准">
+<meta property="og:image" content="http://yoursite.com/assets/images/qcon/qc_architecture1_cs.png">
+<meta property="og:image" content="http://yoursite.com/assets/images/qcon/qc_architecture2_j2ee.png">
+<meta property="og:image" content="http://yoursite.com/assets/images/qcon/qc_architecture3_j2ee_spring.png">
+<meta property="og:image" content="http://yoursite.com/assets/images/qcon/qc_architecture4_js_rest.png">
+<meta property="og:image" content="http://yoursite.com/assets/images/qcon/qc_architecture5_microservice.png">
+<meta property="og:image" content="http://yoursite.com/assets/images/qcon/seata_use.png">
+<meta property="og:image" content="http://yoursite.com/assets/images/qcon/seata_principle1.png">
+<meta property="og:image" content="http://yoursite.com/assets/images/qcon/seata_principle2.png">
+<meta property="og:image" content="http://yoursite.com/assets/images/qcon/seata_principle3.png">
+<meta property="og:image" content="http://yoursite.com/assets/images/qcon/seata_principle4.png">
+<meta property="og:image" content="http://yoursite.com/assets/images/qcon/seata_principle5.png">
+<meta property="og:updated_time" content="2019-05-13T14:33:41.624Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java生态系统总结(QCon2019)">
+<meta name="twitter:description" content="QCon是由InfoQ主办的综合性技术盛会, 19年5月6-8日为北京站，会议包含众多领域的前沿技术及实践，如云安全，机器学习，人工智能，大数据，前端，服务架构，数据存储，容器等。其中着重介绍了前端前沿技术，包括重提了RTC(用于Browser的Audio, Video), AR, VR, 3D，WebGL, GPU, PipeLine, 机器学习及深度学习在前端的应用,流媒体解决方案，W3C标准">
+<meta name="twitter:image" content="http://yoursite.com/assets/images/qcon/qc_architecture1_cs.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/05/12/qcon2019/"/>
+
+
+
+
+
+  <title>Java生态系统总结(QCon2019) | 帅斌的冒险船</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">帅斌的冒险船</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/12/qcon2019/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MonkeyBean">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="帅斌的冒险船">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java生态系统总结(QCon2019)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-12T17:50:20+08:00">
+                2019-05-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>QCon是由InfoQ主办的综合性技术盛会, 19年5月6-8日为北京站，会议包含众多领域的前沿技术及实践，如云安全，机器学习，人工智能，大数据，前端，服务架构，数据存储，容器等。<br>其中着重介绍了前端前沿技术，包括重提了RTC(用于Browser的Audio, Video), AR, VR, 3D，WebGL, GPU, PipeLine, 机器学习及深度学习在前端的应用,流媒体解决方案，W3C标准趋势等，前端开发人员可着重了解下。<br>本文针对Java生态系统(会议内容分四部分: Jakarta EE和MicroProfile的明天会怎样、Java容器化部署-从应用服务器到云原生、Seata在微服务一致性中的探索、Shenandoah:Your Next Garbage Collector)前三部分进行总结，包含会议内容及个人理解。</p>
+<h2 id="Jakarta-EE和MicroProfile的明天会怎样"><a href="#Jakarta-EE和MicroProfile的明天会怎样" class="headerlink" title="Jakarta EE和MicroProfile的明天会怎样"></a>Jakarta EE和MicroProfile的明天会怎样</h2><p>本章主要介绍MicroProfile，如何使用MicroProfile构建MicroService, 简单提了下Jakarta EE，一笔带过ServiceMesh, Istio, Agile, DevOps, Cloud等。</p>
+<h3 id="云原生微服务-cloud-native-microservice-特性-基本要求"><a href="#云原生微服务-cloud-native-microservice-特性-基本要求" class="headerlink" title="云原生微服务(cloud-native microservice)特性(基本要求)"></a>云原生微服务(cloud-native microservice)特性(基本要求)</h3><a id="more"></a>
+<p>①无状态(如RestFul),可动态伸缩服务节点。<br>②可配置，动态更新配置可提供不同服务，即服务做成开关的形式。<br>③容错性，出现不可预料的问题后，也可提供服务。<br>④安全，只要部署到外网提供服务，安全问题是一定要考虑的，配置服务对哪些外部(哪些服务、ip或用户)提供服务。<br>⑤监控，服务运行状态可实时查看，服务间调用可追踪。<br>⑥服务与云基础设施通信，即服务主动或被动通知运行状况到所在机器，可类比为Zookeeper监控每个服务运行状态，也可类比为kubernetes probe。</p>
+<h3 id="MicroProfile版本简介"><a href="#MicroProfile版本简介" class="headerlink" title="MicroProfile版本简介"></a>MicroProfile版本简介</h3><p>①MicroProfile 1.0<br>基础构件包含CDI 1.2、JAX-RS 2.0、JSON-P 1.0<br>②MicroProfile 2.2(19年2月)<br>相比1.0, 有21 Component Releases，除了CDI等组件升级，新增Metrics、JWT等组件。</p>
+<h3 id="MicroProfile组件"><a href="#MicroProfile组件" class="headerlink" title="MicroProfile组件"></a>MicroProfile组件</h3><p>MicroService可实现如下MicroProfile规范的组件</p>
+<ul>
+<li>JAX-RS：Java API for RESTful Web Services，是JAVA EE6引入的新技术</li>
+<li>CDI(content and dependency injection): 思想类似Spring DI, 如CDI的@Inject同Spring的@Autowired</li>
+<li>JSON-P(JSON with Padding):核心原理就是目标页面回调本地页面的方法, 并带入参数。利用script标签不受浏览器同源安全限制((不可跨域访问服务器及cookie, js脚本不受跨域限制)</li>
+<li>JSON-B: 提供序列化和反序列化Java类到Json，类似Gson</li>
+<li>JWT Propagation(json web token): token安全通信的规范</li>
+<li>OpenAPI: 类似swagger</li>
+<li>Fault Tolerance：容错处理, 如@Retry注解，异常出现再次请求</li>
+<li>Config: 配置可放到程序之外，功能类似Ctrip Apollo或SpringClud Config</li>
+<li>Health：定义服务健康状态</li>
+<li>Metrics：运行监控</li>
+<li>Open Tracing：服务调用链路追踪，功能类似istio中的jeager</li>
+<li>Rest Client</li>
+<li>…</li>
+</ul>
+<h3 id="Start-MicroProfile"><a href="#Start-MicroProfile" class="headerlink" title="Start MicroProfile"></a>Start MicroProfile</h3><p><a href="https://start.microprofile.io" target="_blank" rel="external">MicroProfile在线创建</a>, 类似springboot在线创建方式。<br><a href="https://openliberty.io/guides" target="_blank" rel="external">官网</a>搜索MicroProfile，可找到相关学习资源。</p>
+<h3 id="Java-EE-gt-Jakarta-EE"><a href="#Java-EE-gt-Jakarta-EE" class="headerlink" title="Java EE -&gt; Jakarta EE"></a>Java EE -&gt; Jakarta EE</h3><p>Oracle开源了Java EE, 并将项目移交给Eclipse基金会，重命名为Jakarta EE。</p>
+<h2 id="Java容器化部署-从应用服务器到云原生"><a href="#Java容器化部署-从应用服务器到云原生" class="headerlink" title="Java容器化部署-从应用服务器到云原生"></a>Java容器化部署-从应用服务器到云原生</h2><h3 id="应用服务器"><a href="#应用服务器" class="headerlink" title="应用服务器"></a>应用服务器</h3><h4 id="微服务架构比对"><a href="#微服务架构比对" class="headerlink" title="微服务架构比对"></a>微服务架构比对</h4><p>仅比对如下三种：过时的Corba, 业界准标准的gRPC, 国内热门的Dubbo</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">Corba</th>
+<th style="text-align:center">gRPC</th>
+<th style="text-align:center">Dubbo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">多种语言</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">Java</td>
+</tr>
+<tr>
+<td style="text-align:center">接口定义</td>
+<td style="text-align:center">IDL</td>
+<td style="text-align:center">IDL</td>
+<td style="text-align:center">Java Interface</td>
+</tr>
+<tr>
+<td style="text-align:center">协议</td>
+<td style="text-align:center">IIOP</td>
+<td style="text-align:center">Protobuf/Http2</td>
+<td style="text-align:center">dubbo等多种</td>
+</tr>
+<tr>
+<td style="text-align:center">异步响应式</td>
+<td style="text-align:center">callBack</td>
+<td style="text-align:center">stream</td>
+<td style="text-align:center">callBack</td>
+</tr>
+<tr>
+<td style="text-align:center">服务治理</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">√</td>
+</tr>
+</tbody>
+</table>
+<h4 id="前后端交互演变"><a href="#前后端交互演变" class="headerlink" title="前后端交互演变"></a>前后端交互演变</h4><p>浏览器和前端技术的发展, 推动架构演变，大致分为如下5个阶段。<br>1.传统Client-Server<br><img src="/assets/images/qcon/qc_architecture1_cs.png" alt="qc_architecture1_cs"><br>2.J2EE<br><img src="/assets/images/qcon/qc_architecture2_j2ee.png" alt="qc_architecture2_j2ee"><br>3.JavaEE with Spring<br><img src="/assets/images/qcon/qc_architecture3_j2ee_spring.png" alt="qc_architecture3_j2ee_spring"><br>4.JS框架和REST<br><img src="/assets/images/qcon/qc_architecture4_js_rest.png" alt="qc_architecture4_js_rest"><br>5.Micoservice架构<br><img src="/assets/images/qcon/qc_architecture5_microservice.png" alt="qc_architecture5_microservice"></p>
+<p>上述5个阶段Java部署架构比对如下</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">部署包</th>
+<th style="text-align:center">是否可执行</th>
+<th style="text-align:center">应用服务器容器</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">CS</td>
+<td style="text-align:center">独立服务器jar</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">客户端维持状态</td>
+</tr>
+<tr>
+<td style="text-align:center">J2EE</td>
+<td style="text-align:center">ear,war,jar</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">Servlet/EJB</td>
+<td style="text-align:center">分布对象的争议</td>
+</tr>
+<tr>
+<td style="text-align:center">SpringWeb</td>
+<td style="text-align:center">war</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">Servlet</td>
+<td style="text-align:center">MVC模式</td>
+</tr>
+<tr>
+<td style="text-align:center">JS/Rest</td>
+<td style="text-align:center">war</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">Servlet</td>
+<td style="text-align:center">异步响应式</td>
+</tr>
+<tr>
+<td style="text-align:center">Java微服务</td>
+<td style="text-align:center">war or jar</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">可选</td>
+<td style="text-align:center">三个维度划分</td>
+</tr>
+</tbody>
+</table>
+<h4 id="Spring-Framework与J2EE区别"><a href="#Spring-Framework与J2EE区别" class="headerlink" title="Spring Framework与J2EE区别"></a>Spring Framework与J2EE区别</h4><p>SpringFramework基于Java EE, 依赖注入框架，集成各种技术库。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">Java EE</th>
+<th style="text-align:center">Spring Framework</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">依赖注入</td>
+<td style="text-align:center">CDI</td>
+<td style="text-align:center">IOC Container</td>
+</tr>
+<tr>
+<td style="text-align:center">AOP</td>
+<td style="text-align:center">Intercepter</td>
+<td style="text-align:center">Spring AOP</td>
+</tr>
+<tr>
+<td style="text-align:center">Persistence</td>
+<td style="text-align:center">JPA</td>
+<td style="text-align:center">JPA, JDBC, SpringData</td>
+</tr>
+<tr>
+<td style="text-align:center">Transaction</td>
+<td style="text-align:center">JTA, EJB</td>
+<td style="text-align:center">JTA, JDBC, JPA</td>
+</tr>
+<tr>
+<td style="text-align:center">Rest</td>
+<td style="text-align:center">JAxRs</td>
+<td style="text-align:center">SpringMvc</td>
+</tr>
+<tr>
+<td style="text-align:center">Messaging</td>
+<td style="text-align:center">JMS, EJB</td>
+<td style="text-align:center">Spring Messaging, JMS</td>
+</tr>
+<tr>
+<td style="text-align:center">Security</td>
+<td style="text-align:center">JavaEE Security, EJB, Servlet</td>
+<td style="text-align:center">Spring Security</td>
+</tr>
+</tbody>
+</table>
+<h4 id="应用服务器状态信息处理"><a href="#应用服务器状态信息处理" class="headerlink" title="应用服务器状态信息处理"></a>应用服务器状态信息处理</h4><p>Java复制状态信息，适用于节点较少的集群服务，节点太多时，限制在了复制状态数据后的网络传输，状态数据包含Servlet的session、有状态的Session Bean、Hibernate 缓存、Wildfly利用Infinispan、JVM的状态缓存。<br>较多节点的集群服务，互联网产品采用引入Redis等来解决各节点状态共享问题。</p>
+<h4 id="微服务要考虑的因素"><a href="#微服务要考虑的因素" class="headerlink" title="微服务要考虑的因素"></a>微服务要考虑的因素</h4><p>提到应用最广的SpringBoot框架，自然想到SpringCloud，SpringCloud与MicroProflie部分组件比对如下。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">微服务要素</th>
+<th style="text-align:center">Spring Cloud</th>
+<th style="text-align:center">MicroProfile</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">配置管理</td>
+<td style="text-align:center">Confg server</td>
+<td style="text-align:center">Config</td>
+</tr>
+<tr>
+<td style="text-align:center">服务发现</td>
+<td style="text-align:center">Eureka</td>
+<td style="text-align:center">(JavaEE naming)</td>
+</tr>
+<tr>
+<td style="text-align:center">负载均衡</td>
+<td style="text-align:center">Ribbon</td>
+<td style="text-align:center">(By Application Server)</td>
+</tr>
+<tr>
+<td style="text-align:center">性能指标</td>
+<td style="text-align:center">SpringBoot Actuator</td>
+<td style="text-align:center">Metrics, health</td>
+</tr>
+<tr>
+<td style="text-align:center">分布式追踪</td>
+<td style="text-align:center">Spring Cloud Sleuth</td>
+<td style="text-align:center">Opentracing</td>
+</tr>
+<tr>
+<td style="text-align:center">故障容错</td>
+<td style="text-align:center">Hystrix</td>
+<td style="text-align:center">Fault-tolerance</td>
+</tr>
+<tr>
+<td style="text-align:center">路由和拦截器</td>
+<td style="text-align:center">Zuul</td>
+<td style="text-align:center">(JavaEE Sevlet, Interceptor)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="Java微服务"><a href="#Java微服务" class="headerlink" title="Java微服务"></a>Java微服务</h4><p>以Spring微服务举例</p>
+<ul>
+<li>JDK + SpringBoot + SpringCloud + 各种三方库</li>
+<li>Jar包非常大</li>
+<li>启动时，需要相关服务就绪</li>
+</ul>
+<p>SpringCloud虽然集成了许多框架，产品线齐全，但是相比JavaEE或单个SpringBoot应用，SpringCloud每个服务的java包很大，并且内存占用很大，启动时间也较长。</p>
+<h3 id="云原生"><a href="#云原生" class="headerlink" title="云原生"></a>云原生</h3><h4 id="应用容器化部署"><a href="#应用容器化部署" class="headerlink" title="应用容器化部署"></a>应用容器化部署</h4><p>应用开发及部署需遵守如下规范</p>
+<ul>
+<li>受容器管控</li>
+<li>向容器设施申请资源</li>
+<li>提供全局管理功能</li>
+<li>平台提供接口，方便应用开发</li>
+</ul>
+<p>应用服务器可看成单个域，实际最多管理两位数应用，而云原生(如Kubernetes容器编排)可管理大规模集群。</p>
+<h4 id="容器化组件"><a href="#容器化组件" class="headerlink" title="容器化组件"></a>容器化组件</h4><p>概念比对</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">容器</th>
+<th style="text-align:center">JavaEE应用服务器</th>
+<th style="text-align:center">Docker and Kubernetes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">无状态组件</td>
+<td style="text-align:center">Managed Bean, Stateless EJB</td>
+<td style="text-align:center">Pods</td>
+</tr>
+<tr>
+<td style="text-align:center">有状态组件</td>
+<td style="text-align:center">Servlet Session, Stateful EJB</td>
+<td style="text-align:center">Stateful Set</td>
+</tr>
+<tr>
+<td style="text-align:center">任务</td>
+<td style="text-align:center">Scheduled Bean</td>
+<td style="text-align:center">Job, CronJob</td>
+</tr>
+<tr>
+<td style="text-align:center">主控和任务节点</td>
+<td style="text-align:center">DomainController, Node</td>
+<td style="text-align:center">Master, Worker Node</td>
+</tr>
+<tr>
+<td style="text-align:center">控制器</td>
+<td style="text-align:center">Controller</td>
+<td style="text-align:center">Controller Manage</td>
+</tr>
+<tr>
+<td style="text-align:center">服务群组</td>
+<td style="text-align:center">Server groups</td>
+<td style="text-align:center">Label selector</td>
+</tr>
+<tr>
+<td style="text-align:center">扩展性</td>
+<td style="text-align:center">Extension</td>
+<td style="text-align:center">CustomResourceDefinitions</td>
+</tr>
+</tbody>
+</table>
+<h4 id="Java是否适合云原生"><a href="#Java是否适合云原生" class="headerlink" title="Java是否适合云原生"></a>Java是否适合云原生</h4><p>1.函数化：jdk8之后提供了Function，Spring也有Function框架<br>2.启动速度：jdk AppCDS(Application Class-Data Sharing), 使加载的类可被dump出，即写在硬盘之上，启动时无需动态加载<br>3.容器镜像大小: java9之后支持模块化，也可以通过Jlink工具，只提取必须的Pod，部署jdk占用空间及Modules文件大幅度减小。使用更小的镜像源，如OpenJDK Slim(FROM debian:sketch-slim)替换为Alpine(FROM alpine:3.9)<br>4.占用内存大小: 优化java应用类加载; java程序静态化，函数化</p>
+<h4 id="性能比较"><a href="#性能比较" class="headerlink" title="性能比较"></a>性能比较</h4><p>Rest数据服务</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">方式</th>
+<th style="text-align:center">SpringBoot jar包</th>
+<th style="text-align:center">Quickus JVM</th>
+<th style="text-align:center">Quarkus native</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">大小</td>
+<td style="text-align:center">16.7M</td>
+<td style="text-align:center">49.5k</td>
+<td style="text-align:center">20M</td>
+</tr>
+<tr>
+<td style="text-align:center">含libs总体积</td>
+<td style="text-align:center">16.7M</td>
+<td style="text-align:center">9.8M</td>
+<td style="text-align:center">20M</td>
+</tr>
+<tr>
+<td style="text-align:center">启动时长</td>
+<td style="text-align:center">1850ms</td>
+<td style="text-align:center">530ms</td>
+<td style="text-align:center">10ms</td>
+</tr>
+<tr>
+<td style="text-align:center">占用内存(RSS)</td>
+<td style="text-align:center">264M</td>
+<td style="text-align:center">117M</td>
+<td style="text-align:center">13.7M</td>
+</tr>
+<tr>
+<td style="text-align:center">说明</td>
+<td style="text-align:center">SpringBoot2.1.4 Tomcat9</td>
+<td style="text-align:center">Quarkus0.14 JDK8</td>
+<td style="text-align:center">Quarkus0.14</td>
+</tr>
+</tbody>
+</table>
+<p>启动时长与占用内存比对</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">Wildfly Full</th>
+<th style="text-align:center">Spring War</th>
+<th style="text-align:center">SpringBoot</th>
+<th style="text-align:center">Quarkus JVM</th>
+<th style="text-align:center">Quarkus Native</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">启动时长(ms)</td>
+<td style="text-align:center">4500</td>
+<td style="text-align:center">1800</td>
+<td style="text-align:center">1850</td>
+<td style="text-align:center">530</td>
+<td style="text-align:center">10</td>
+</tr>
+<tr>
+<td style="text-align:center">占用内存(MB)</td>
+<td style="text-align:center">461</td>
+<td style="text-align:center">287</td>
+<td style="text-align:center">264</td>
+<td style="text-align:center">117</td>
+<td style="text-align:center">14</td>
+</tr>
+</tbody>
+</table>
+<h4 id="容器化部署技术选择"><a href="#容器化部署技术选择" class="headerlink" title="容器化部署技术选择"></a>容器化部署技术选择</h4><p>根据如下情况选择合适架构</p>
+<ul>
+<li>用户规模，访问频次</li>
+<li>组件状态和事务要求</li>
+<li>运维团队和技能</li>
+<li>云计算设施情况</li>
+<li>Java和其他语言以及相关技术栈的熟悉程度</li>
+</ul>
+<h4 id="其他简介"><a href="#其他简介" class="headerlink" title="其他简介"></a>其他简介</h4><p>①ServiceMesh提供服务治理功能，业务组件专注逻辑实现。<br>②Knative(<a href="https://www.jianshu.com/p/cca919712a04" target="_blank" rel="external">简介参考</a>)是谷歌开源的serverless架构方案，基于Kubernetes平台，旨在提供一套简单易用的serverless方案，把serverless标准化。<br>Knative将开发云原生应用在三个领域(如下组成)的最佳实践结合起来。</p>
+<ul>
+<li>Build(构建容器函数)</li>
+<li>Serving(为工作负载提供服务和动态扩展)</li>
+<li>Event(事件)</li>
+</ul>
+<p>③Quarkus的核心技术及组件，使用方式，构建过程。</p>
+<h4 id="拓展：发布方式比对"><a href="#拓展：发布方式比对" class="headerlink" title="拓展：发布方式比对"></a>拓展：<a href="https://www.cnblogs.com/apanly/p/8784096.html" target="_blank" rel="external">发布方式比对</a></h4><p>蛮力发布-&gt;金丝雀(灰度)发布-&gt;滚动更新-&gt;双服务器组(蓝绿发布)，实际使用，基于k8s LB策略的滚动更新就ok的。<br>A/B测试(基于LB的灰度发布测试, <a href="http://baijiahao.baidu.com/s?id=1603336396513574172&amp;wfr=spider&amp;for=pc" target="_blank" rel="external">问题备注</a>)，实际测试可考虑这种方式。<br>影子测试适用于代码大的重构或者数据库迁移，分别重放生产环境请求到两组测试服务器群，成本太高。</p>
+<h2 id="JSeata在微服务一致性中的探索"><a href="#JSeata在微服务一致性中的探索" class="headerlink" title="JSeata在微服务一致性中的探索"></a>JSeata在微服务一致性中的探索</h2><h3 id="分布式事务使用现状"><a href="#分布式事务使用现状" class="headerlink" title="分布式事务使用现状"></a>分布式事务使用现状</h3><p>抽样数据反映使用状态</p>
+<ul>
+<li>Message Queue: 48%</li>
+<li>TCC: 23%</li>
+<li>XA: 18%</li>
+<li>Sega: 4%</li>
+<li>OtherL 7%</li>
+</ul>
+<h3 id="常见分布式事务比对"><a href="#常见分布式事务比对" class="headerlink" title="常见分布式事务比对"></a>常见分布式事务比对</h3><p>刚性事务</p>
+<ul>
+<li>标注分布式事务(<a href="https://blog.csdn.net/w372426096/article/details/80449695" target="_blank" rel="external">2PC/3PC</a>): 缺点为性能差、资源占用时间长、需要实现XA接口</li>
+</ul>
+<p>柔性事务</p>
+<ul>
+<li>异步确保型：方式包含本地事件表，外部事件表，缺点为侵入性高、依赖可靠事件服务、实时性差、消费失败状态不可逆</li>
+<li>纯补偿性：缺点为侵入性高、开发成本高、一致性差</li>
+<li>TCC：将事务提交分为 Try-Confirm-Cancel 3个操作，缺点为引入性高、开发成本高</li>
+<li>最大努力通知：即补单流程，超时未收到Ack或失败则再次通知，缺点为侵入性高、开发成本高、实时性差</li>
+</ul>
+<h3 id="Seata-Simple-Extensible-Autonomous-Transaction-Architecture"><a href="#Seata-Simple-Extensible-Autonomous-Transaction-Architecture" class="headerlink" title="Seata(Simple Extensible Autonomous Transaction Architecture)"></a>Seata(Simple Extensible Autonomous Transaction Architecture)</h3><p>以上常见分布式事务方式有各种问题，此时Seata应运而生。</p>
+<h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>Seata是微服务架构下，易用、高效的分布式事务解决方案。<br>前期技术积累：TXC、GTS、XTS。<br>愿景：像使用本地事务一样使用分布式事务。<br><img src="/assets/images/qcon/seata_use.png" alt="qc_architecture1_cs"><br>单体应用转换为微服务应用，使用seata后，事务注解由 @Transactional 替换为 @GlobalTransactional</p>
+<h4 id="Seata支持的RPC及资源"><a href="#Seata支持的RPC及资源" class="headerlink" title="Seata支持的RPC及资源"></a>Seata支持的RPC及资源</h4><p>RPC：Dubbo、Spring Cloud、Motan和自定义的RPC框架。<br>资源：Mysql、Oracle、PostgreSql、H2、RDS系列等数据库、MQ、NoSql、XA、用户自定义类型资源。</p>
+<h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p>一个分布式事务是由若干本地事务分支组成<br><img src="/assets/images/qcon/seata_principle1.png" alt="qc_architecture1_cs"></p>
+<p><img src="/assets/images/qcon/seata_principle2.png" alt="qc_architecture1_cs"></p>
+<p><img src="/assets/images/qcon/seata_principle3.png" alt="qc_architecture1_cs"></p>
+<p><img src="/assets/images/qcon/seata_principle4.png" alt="qc_architecture1_cs"></p>
+<p><img src="/assets/images/qcon/seata_principle5.png" alt="qc_architecture1_cs"></p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>近三年qcon演讲ppt下载<br><a href="https://ppt.geekbang.org/list/qconsh2017" target="_blank" rel="external">qconsh2017</a><br><a href="https://ppt.geekbang.org/list/qconsh2018" target="_blank" rel="external">qconsh2018</a><br><a href="https://ppt.geekbang.org/list/qconsh2019" target="_blank" rel="external">qconsh2019</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/技术/" rel="tag"># 技术</a>
+          
+            <a href="/tags/JAVA/" rel="tag"># JAVA</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/24/ascii_picture/" rel="next" title="Gif转Ascii">
+                <i class="fa fa-chevron-left"></i> Gif转Ascii
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="MonkeyBean" />
+          <p class="site-author-name" itemprop="name">MonkeyBean</p>
+           
+              <p class="site-description motion-element" itemprop="description">行云流水 天马行空</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">55</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/MonkeyDBean" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/monkeybeanZ" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://yaoyaoblog.xyz/" title="耀耀的博客" target="_blank">耀耀的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://syf.ac.cn/" title="7nocturnal的博客" target="_blank">7nocturnal的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://xiaofeng333.github.io" title="xiaofeng的博客" target="_blank">xiaofeng的博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Jakarta-EE和MicroProfile的明天会怎样"><span class="nav-number">1.</span> <span class="nav-text">Jakarta EE和MicroProfile的明天会怎样</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#云原生微服务-cloud-native-microservice-特性-基本要求"><span class="nav-number">1.1.</span> <span class="nav-text">云原生微服务(cloud-native microservice)特性(基本要求)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MicroProfile版本简介"><span class="nav-number">1.2.</span> <span class="nav-text">MicroProfile版本简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MicroProfile组件"><span class="nav-number">1.3.</span> <span class="nav-text">MicroProfile组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Start-MicroProfile"><span class="nav-number">1.4.</span> <span class="nav-text">Start MicroProfile</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java-EE-gt-Jakarta-EE"><span class="nav-number">1.5.</span> <span class="nav-text">Java EE -> Jakarta EE</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java容器化部署-从应用服务器到云原生"><span class="nav-number">2.</span> <span class="nav-text">Java容器化部署-从应用服务器到云原生</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#应用服务器"><span class="nav-number">2.1.</span> <span class="nav-text">应用服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#微服务架构比对"><span class="nav-number">2.1.1.</span> <span class="nav-text">微服务架构比对</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#前后端交互演变"><span class="nav-number">2.1.2.</span> <span class="nav-text">前后端交互演变</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring-Framework与J2EE区别"><span class="nav-number">2.1.3.</span> <span class="nav-text">Spring Framework与J2EE区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#应用服务器状态信息处理"><span class="nav-number">2.1.4.</span> <span class="nav-text">应用服务器状态信息处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#微服务要考虑的因素"><span class="nav-number">2.1.5.</span> <span class="nav-text">微服务要考虑的因素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java微服务"><span class="nav-number">2.1.6.</span> <span class="nav-text">Java微服务</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#云原生"><span class="nav-number">2.2.</span> <span class="nav-text">云原生</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#应用容器化部署"><span class="nav-number">2.2.1.</span> <span class="nav-text">应用容器化部署</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#容器化组件"><span class="nav-number">2.2.2.</span> <span class="nav-text">容器化组件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java是否适合云原生"><span class="nav-number">2.2.3.</span> <span class="nav-text">Java是否适合云原生</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#性能比较"><span class="nav-number">2.2.4.</span> <span class="nav-text">性能比较</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#容器化部署技术选择"><span class="nav-number">2.2.5.</span> <span class="nav-text">容器化部署技术选择</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其他简介"><span class="nav-number">2.2.6.</span> <span class="nav-text">其他简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#拓展：发布方式比对"><span class="nav-number">2.2.7.</span> <span class="nav-text">拓展：发布方式比对</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JSeata在微服务一致性中的探索"><span class="nav-number">3.</span> <span class="nav-text">JSeata在微服务一致性中的探索</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分布式事务使用现状"><span class="nav-number">3.1.</span> <span class="nav-text">分布式事务使用现状</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常见分布式事务比对"><span class="nav-number">3.2.</span> <span class="nav-text">常见分布式事务比对</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Seata-Simple-Extensible-Autonomous-Transaction-Architecture"><span class="nav-number">3.3.</span> <span class="nav-text">Seata(Simple Extensible Autonomous Transaction Architecture)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简介"><span class="nav-number">3.3.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Seata支持的RPC及资源"><span class="nav-number">3.3.2.</span> <span class="nav-text">Seata支持的RPC及资源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#原理"><span class="nav-number">3.3.3.</span> <span class="nav-text">原理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-number">4.</span> <span class="nav-text">其他</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MonkeyBean</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (search_path.endsWith("json")) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>
