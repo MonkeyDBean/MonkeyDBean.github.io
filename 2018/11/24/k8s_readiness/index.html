@@ -97,7 +97,7 @@
 <meta property="og:url" content="http://yoursite.com/2018/11/24/k8s_readiness/index.html">
 <meta property="og:site_name" content="帅斌的冒险船">
 <meta property="og:description" content="背景近期CI/CD进程中遇到这样一个问题，线上应用滚动更新过程中，大概两分钟的时间，应用不能对外提供服务。k8s管理容器应用，容器组的pods逐个销毁重建(新增新pod, 销毁旧pod，完成替换)。单个pod的资源分配较低(如cpu分配0.1-0.2核，内存分配256-512M)。 原因pod可对外提供服务的过程：新pod启动时，系统分配应用进程Id，应用建立各项连接池：连接数据库(mysql),">
-<meta property="og:updated_time" content="2018-12-05T14:06:20.146Z">
+<meta property="og:updated_time" content="2019-06-12T14:44:48.594Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kubernetes Pod 之 Readiness 探针引入">
 <meta name="twitter:description" content="背景近期CI/CD进程中遇到这样一个问题，线上应用滚动更新过程中，大概两分钟的时间，应用不能对外提供服务。k8s管理容器应用，容器组的pods逐个销毁重建(新增新pod, 销毁旧pod，完成替换)。单个pod的资源分配较低(如cpu分配0.1-0.2核，内存分配256-512M)。 原因pod可对外提供服务的过程：新pod启动时，系统分配应用进程Id，应用建立各项连接池：连接数据库(mysql),">
@@ -367,6 +367,7 @@
 <h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><a id="more"></a>
 <p>针对这种情况，引入readiness探针后，可真正实现不停服滚动更新。<br>通过应用提供接口的方式，readiness探针不仅检测应用端口是否建立，还可以判断应用是否真正提供服务。如SpringBoot-actuator的health接口或者单独提供检测的接口。<br>另外，cpu的资源上限可适当增加，应用启动过程的长短与硬件资源多少尤其是cpu核数相关。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">readinessProbe:</div><div class="line">  httpGet:</div><div class="line">    path: /health</div><div class="line">    port: 8060</div><div class="line">    initialDelaySeconds: 10</div><div class="line">    periodSeconds: 1</div></pre></td></tr></table></figure></p>
 <p>参考文档：<a href="https://jimmysong.io/kubernetes-handbook/guide/configure-liveness-readiness-probes.html" target="_blank" rel="external">链接</a></p>
+<h2 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h2><p>1.除了Readiness探针用于pod就绪检查外，相应有Liveness探针用于运行状态检查，两者共同的作用均为检查服务运行状态，若通过则将pod加入容器组负载，失败则移除。<br>2.每个pod启动，原则需10s以内，合理分配内存及cpu等资源(尽可能多一些)即可减少pod启动时间。</p>
 
       
     </div>
@@ -585,7 +586,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原因"><span class="nav-number">2.</span> <span class="nav-text">原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决"><span class="nav-number">3.</span> <span class="nav-text">解决</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原因"><span class="nav-number">2.</span> <span class="nav-text">原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决"><span class="nav-number">3.</span> <span class="nav-text">解决</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#扩展"><span class="nav-number">4.</span> <span class="nav-text">扩展</span></a></li></ol></div>
             
 
           </div>

@@ -105,7 +105,7 @@
 <meta property="og:image" content="http://yoursite.com/assets/images/secret_k8s/configmap_create_file.png">
 <meta property="og:image" content="http://yoursite.com/assets/images/secret_k8s/secret_create_stringdata.png">
 <meta property="og:image" content="http://yoursite.com/assets/images/secret_k8s/secret_dev_param.png">
-<meta property="og:updated_time" content="2018-12-05T14:04:59.588Z">
+<meta property="og:updated_time" content="2019-06-12T14:53:09.718Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kubernetes Secret &amp; ConfigMap">
 <meta name="twitter:description" content="一、Secret &amp;amp; ConfigMap 作用Kubernetes上部署应用时，经常需要传配置信息给应用，如数据库配置，实现方案有多种，如：  将配置信息放在应用的配置文件中。这种方式的坏处显而易见，每次配置更改均要重新打包镜像。 在 Dockerfile 中指定环境变量，配置信息通过环境变量传入。这种方式的局限性在于每次修改配置都要修改yaml文件后重启容器，而且若大量的配置放到环境变量">
@@ -404,7 +404,11 @@
 <p>注：|- 是用于声明文件内容为多行<br>生成secret如下图：<br><img src="/assets/images/secret_k8s/secret_create_stringdata.png" alt="secret_create_stringdata"></p>
 <p>应用参数读取，以SpringBoot为例，读取文件内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">final String secretDirectory = &quot;SECRET_DIRECTORY&quot;;</div><div class="line">String secretFileDirStr = System.getenv(secretDirectory);</div><div class="line">SpringApplicationBuilder builder = new SpringApplicationBuilder(MainApplication.class);</div><div class="line">Properties p = new Properties();</div><div class="line">try &#123;</div><div class="line">    File secretFileDir = new File(secretFileDirStr);</div><div class="line">    for (File file : secretFileDir.listFiles()) &#123;</div><div class="line">        if(!file.isDirectory())&#123;</div><div class="line">            InputStream in = new BufferedInputStream(new FileInputStream(file));</div><div class="line">            p.load(in);</div><div class="line">            in.close();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125; catch (IOException e) &#123;</div><div class="line">    logger.error(&quot;get secretFile, IOException: &#123;&#125;&quot;, e);</div><div class="line">    return;</div><div class="line">&#125;</div><div class="line"></div><div class="line">builder.properties(p).build();</div><div class="line">builder.run(args);</div></pre></td></tr></table></figure></p>
 <p>调试如下：<br><img src="/assets/images/secret_k8s/secret_dev_param.png" alt="secret_dev_param"></p>
-<h2 id="六、扩展"><a href="#六、扩展" class="headerlink" title="六、扩展"></a>六、扩展</h2><p>在实际应用中, Kubernetes 提供的Secret和ConfigMap操作麻烦，维护成本较高，并不推荐。<br>应用配置信息可通过专门的<code>统一配置中心</code>来维护，敏感信息如数据库配置可通过权限管理解决。<br>统一配置中心方案有多种，如Zookeeper(服务注册中心，也可兼作配置中心)、Spring-Cloud-Config(Spring提供的分布式统一配置解决方案)、Disconf(百度开源，基于Zookeeper的分布式配置管理软件)、 Apollo(携程开源，分环境、支持热更、灰度、权限、发布版本管理）等。<br>Spring-Cloud-Config和Disconf方案未使用过，据说不错。<br>比对使用过的Zookeeper和Apollo, 推荐Apollo。</p>
+<h2 id="六、扩展"><a href="#六、扩展" class="headerlink" title="六、扩展"></a>六、扩展</h2><p>1.在实际应用中, 维护K8s提供的Secret和ConfigMap时要合理分组，斟酌使用，可考虑如下方案替代。</p>
+<p>应用配置信息可通过专门的<code>统一配置中心</code>来维护，敏感信息如数据库配置可通过权限管理解决。</p>
+<p>统一配置中心方案有多种，如Zookeeper(服务注册中心，也可兼作配置中心)、Spring-Cloud-Config(Spring提供的分布式统一配置解决方案)、Disconf(百度开源，基于Zookeeper的分布式配置管理软件)、 Apollo(携程开源，分环境、支持热更、灰度、权限、发布版本管理）等。<br>Spring-Cloud-Config和Disconf方案未使用过，据说不错。比对使用过的Zookeeper和Apollo, 推荐Apollo。</p>
+<p>2.企业尝试k8s(或其他dev/ops、ci/cd相关)时，开发阶段可引入rancher(企业容器管理平台，封装简化k8s操作)，harbor(镜像仓库)等。</p>
+<p>3.CI/CD流程中，代码审核通过后(merge finish)，构建工具(如Jenkins pipeline)触发打出新镜像，推送至测试环境，测试通过后，标记成功并将镜像推送至线上发布(滚动更新)。</p>
 
       
     </div>
