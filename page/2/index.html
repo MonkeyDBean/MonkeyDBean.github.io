@@ -297,6 +297,130 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/27/kubernetesSecret/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MonkeyBean">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="帅斌的冒险船">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/27/kubernetesSecret/" itemprop="url">Kubernetes Secret & ConfigMap</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-27T22:40:23+08:00">
+                2018-10-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="一、Secret-amp-ConfigMap-作用"><a href="#一、Secret-amp-ConfigMap-作用" class="headerlink" title="一、Secret &amp; ConfigMap 作用"></a>一、Secret &amp; ConfigMap 作用</h2><p>Kubernetes上部署应用时，经常需要传配置信息给应用，如数据库配置，实现方案有多种，如：</p>
+<ul>
+<li>将配置信息放在应用的配置文件中。这种方式的坏处显而易见，每次配置更改均要重新打包镜像。</li>
+<li>在 Dockerfile 中指定环境变量，配置信息通过环境变量传入。这种方式的局限性在于每次修改配置都要修改yaml文件后重启容器，而且若大量的配置放到环境变量中，可读性低。另外，如果我们需要在不同的容器中引用相同的数据，如果应用程序是运行在集群上的时候，使用环境变量配置的方式是难以管理的。</li>
+</ul>
+<p>Kubernetes中提供了Secret（用于比较私密的数据）和ConfigMap（用于非私密的数据）两种资源可以很好的解决上述问题。</p>
+<h2 id="二、Secret-amp-ConfigMap-区别"><a href="#二、Secret-amp-ConfigMap-区别" class="headerlink" title="二、Secret &amp; ConfigMap 区别"></a>二、Secret &amp; ConfigMap 区别</h2><p>Secret 和 ConfigMap 本质区别就是 Secret 的数据是用Base64编码混淆过的，对于比较机密的数据（如API密钥）使用 Secret 是一个很好的做法，但是对于一些非私密的数据（比如数据目录）用 ConfigMap 来保存即可。<br>安全性实际是扯淡的，Secret的实现，仅仅是ConfigMap把value用Base64 Encode一下。只要Decode就能还原数据，相当于明文存储。Base64不是加密算法，仅是编码。</p>
+<h2 id="三、Secret-amp-ConfigMap-生成"><a href="#三、Secret-amp-ConfigMap-生成" class="headerlink" title="三、Secret &amp; ConfigMap 生成"></a>三、Secret &amp; ConfigMap 生成</h2><h3 id="Secret"><a href="#Secret" class="headerlink" title="Secret"></a>Secret</h3><h4 id="创建："><a href="#创建：" class="headerlink" title="创建："></a>创建：</h4><p><img src="/assets/images/secret_k8s/echo_pwd_base64.png" alt="echo_pwd_base64"></p>
+<h5 id="①命令行创建"><a href="#①命令行创建" class="headerlink" title="①命令行创建"></a>①命令行创建</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">kubectl create secret generic mysecret --from-literal=test-db-username=YWRtaW4= --from-literal=test-db-password=MTIzNDU2</div></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/10/27/kubernetesSecret/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/10/25/gateway_service/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1352,137 +1476,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/17/redis_sentinel/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MonkeyBean">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="帅斌的冒险船">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/17/redis_sentinel/" itemprop="url">SpringBoot Session + Redis Sentinel</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-17T23:05:32+08:00">
-                2018-04-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>Redis HA官方提供两种方案，Cluster（分片）及Sentinel（哨兵模式），这里仅介绍Sentinel配置及使用。两者不冲突，实际可同时使用。<br>Sentinel优势如下：</p>
-<ul>
-<li>监控（Monitoring）: 不断检查主从服务器是否运行正常</li>
-<li>通知（Notification) : 被监控的某个redis服务器出现问题时，可通过api通知管理员或其他应用程序</li>
-<li>自动故障迁移（Automatic Failover）: 当主服务器不能正常工作时，失效主服务器的其中一台从服务器升级为新的主服务器，失效主服务器的其他从服务器从属于新主服务器；客户端尝试连接失效主服务器时，集群返回客户端新的主服务器地址，保证可用性</li>
-</ul>
-<h2 id="Redis集群搭建"><a href="#Redis集群搭建" class="headerlink" title="Redis集群搭建"></a>Redis集群搭建</h2><p>Redis Sentinel方案至少需一个Master节点，两个Slave节点，三个Sentinel，本例Redis版本号为3.2.10，使用六个节点，拓扑结构如下：<br><img src="/assets/images/sentinel_arch.png" alt="sentinel_arch"></p>
-<h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><p><img src="/assets/images/redis_conf_file.png" alt="redis_config_file"></p>
-<h4 id="redis-6379-conf"><a href="#redis-6379-conf" class="headerlink" title="redis-6379.conf"></a>redis-6379.conf</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"># 端口</div><div class="line">port 6379</div><div class="line"># 默认为127.0.0.1。0.0.0.0不是真正意义的ip，指本机所有的ipv4地址</div><div class="line">bind 0.0.0.0</div><div class="line"># 守护进程方式，redis在后台运行</div><div class="line">daemonize yes</div><div class="line"># 日志文件名，日志记录启动过程以及故障转移过程</div><div class="line">logfile &quot;6379.log&quot;</div><div class="line"># 指定本地数据库文件名（默认为dump.rdb），redis重启时，将此文件内容执行一遍，获取数据。若开启appendonly，则优先使用appendonly.aof文件初始化数据集，不再使用此rdb文件</div><div class="line">dbfilename &quot;dump-6379.rdb&quot;</div><div class="line"># 工作目录，数据文件及日志文件存储路径</div><div class="line">dir &quot;/data/home/qa/redis_config/data&quot;</div><div class="line"># 安全策略，保护模式，开启则禁止公网访问redis, 开启的条件包括没有绑定ip以及没有设置访问密码，即不设置bind及requirepass参数</div><div class="line">protected-mode no</div><div class="line"># 访问主节点密码</div><div class="line">masterauth root</div><div class="line"># redis-server密码</div><div class="line">requirepass root</div><div class="line"># aof日志开启，每次写操作就会记录一条日志</div><div class="line">appendonly yes</div><div class="line"># 指定日志文件名（默认为appendonly.aof），redis重启时，将此文件内容执行一遍，获取数据</div><div class="line">appendfilename appendonly.aof</div></pre></td></tr></table></figure>
-<p>注：Redis有两种持久化方式，Snapshot(rdb)和Append-only file(aof)。可使用其中一种方式，也可以两种都使用。</p>
-<ul>
-<li><p>rdb方式的持久化通过快照完成，即符合一定条件时redis会自动将内存中的所有数据存储到rdb文件中。相对aof方式，rdb文件更小，数据恢复快，但是会丢失最后一次snapshot后更改的所有数据，如果容忍数据丢失，可采用这种方式。<br>本例对应配置参数为<br>dbfilename “dump-6379.rdb”</p>
-</li>
-<li><p>aof方式，redis默认不开启，aof方式是以追加的方式将所有写操作命令写入到磁盘文件.aof中，所以文件会越来越大，redis重启的恢复时间较长，为了缓解这种问题，redis使用了BGREWRITEAOF，用于删除重复多余的写命令，是一个占用一定系统资源的background进程（redis自行触发），因为rewrite的时候会删除旧的AOF文件，如果AOF文件比较大的话，会消耗更多的系统资源，好处就是数据一般不会丢失。<br>本例对应配置参数为<br>appendonly yes<br>appendfilename appendonly.aof</p>
-</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/04/17/redis_sentinel/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1532,7 +1525,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">55</span>
+                <span class="site-state-item-count">56</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
