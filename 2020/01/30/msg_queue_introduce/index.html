@@ -1,0 +1,1152 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="技术,JAVA," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/uploads/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="概述应用程序或组件之间可以使用消息中间件进行可靠的异步通讯来降低系统之间的耦合度，提高整个系统的可扩展性和可用性。 优缺点使用消息队列的优点如下: 异步，减少请求响应时间，提升系统性能及用户体验。削锋，应对高峰期消息过载，在低峰期消化堆积消息。解耦，降低系统耦合性，提高系统可扩展性和可维护性。 消息队列的引入同样伴随着隐患：系统可用性降低，引入的外部依赖越多，系统的鲁棒性越差，各系统强依赖消息队列">
+<meta name="keywords" content="技术,JAVA">
+<meta property="og:type" content="article">
+<meta property="og:title" content="消息队列概述">
+<meta property="og:url" content="http://yoursite.com/2020/01/30/msg_queue_introduce/index.html">
+<meta property="og:site_name" content="帅斌的冒险船">
+<meta property="og:description" content="概述应用程序或组件之间可以使用消息中间件进行可靠的异步通讯来降低系统之间的耦合度，提高整个系统的可扩展性和可用性。 优缺点使用消息队列的优点如下: 异步，减少请求响应时间，提升系统性能及用户体验。削锋，应对高峰期消息过载，在低峰期消化堆积消息。解耦，降低系统耦合性，提高系统可扩展性和可维护性。 消息队列的引入同样伴随着隐患：系统可用性降低，引入的外部依赖越多，系统的鲁棒性越差，各系统强依赖消息队列">
+<meta property="og:updated_time" content="2020-03-10T16:05:15.513Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="消息队列概述">
+<meta name="twitter:description" content="概述应用程序或组件之间可以使用消息中间件进行可靠的异步通讯来降低系统之间的耦合度，提高整个系统的可扩展性和可用性。 优缺点使用消息队列的优点如下: 异步，减少请求响应时间，提升系统性能及用户体验。削锋，应对高峰期消息过载，在低峰期消化堆积消息。解耦，降低系统耦合性，提高系统可扩展性和可维护性。 消息队列的引入同样伴随着隐患：系统可用性降低，引入的外部依赖越多，系统的鲁棒性越差，各系统强依赖消息队列">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/01/30/msg_queue_introduce/"/>
+
+
+
+
+
+  <title>消息队列概述 | 帅斌的冒险船</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">帅斌的冒险船</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/30/msg_queue_introduce/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MonkeyBean">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="帅斌的冒险船">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">消息队列概述</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-30T16:00:18+08:00">
+                2020-01-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>应用程序或组件之间可以使用消息中间件进行可靠的异步通讯来降低系统之间的耦合度，提高整个系统的可扩展性和可用性。</p>
+<h2 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h2><p>使用消息队列的优点如下:</p>
+<p><strong>异步</strong>，减少请求响应时间，提升系统性能及用户体验。<br><strong>削锋</strong>，应对高峰期消息过载，在低峰期消化堆积消息。<br><strong>解耦</strong>，降低系统耦合性，提高系统可扩展性和可维护性。</p>
+<p>消息队列的引入同样伴随着隐患：<br>系统<strong>可用性</strong>降低，引入的外部依赖越多，系统的鲁棒性越差，各系统强依赖消息队列本身的可用性。<br>系统的<strong>复杂度</strong>加大，如何保证消息的幂等性及有序性等问题均需考虑。</p>
+<h1 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h1><a id="more"></a>
+<p>保证消息队列的<strong>高可用</strong>：消息队列绝对不能是单点，可镜像集群或者主从集群。</p>
+<p>保证消息的<strong>顺序性</strong>：消息队列本身可通过内部队列保证全局或局部有序性。保证有顺序则有单点问题(性能及可用性)，若消息队列不保证消息的有序性，则由接收方保证，如在交易系统中，接收方采用正向状态机保证(1-&gt;2&gt;3, 3的状态变更只能由2变过来，非法的变更暂时忽略掉)，可以保证消息状态始终是最新的，保证幂等性。</p>
+<p>保证消息的<strong>可靠传输</strong>，如何应对消息可能丢失的问题：生产时加入重试机制，写入时可通过数据持久化及事务确认机制保证，消费时可通过ack确认机制保证，消息队列本身可通过主从高可用保证。</p>
+<p>保证消息的<strong>幂等性</strong>，不重复消费：结合具体业务，若是写数据库，每次写入前校验，逻辑去重，可通过去重表记录消息是否已处理、值变更采用比对赋值而不是直接增减；若是写缓存(Redis或Tair), set本身就保证天然幂等性；其他场景可进行消息全局Id校验。顺序和重复问题在分布式场景下，采用业务规避的方式效率是最高的，去重表还是有一定代价的。</p>
+<p>消息队列的<strong>延时及过期失效</strong>：若因消费端问题导致消息积压，可将消费端紧急扩容临时解决；若消息队列消息超时，可低峰期批量重导。</p>
+<p>目前有很多主流消息中间件，如ActiveMQ、RabbitMQ、Kafka、RocketMQ、Notify、MetaQ等，此处不比对各消息中间件应用场景及原理区分，仅概述集团内普遍使用的Notify和MetaQ。</p>
+<h1 id="Notify"><a href="#Notify" class="headerlink" title="Notify"></a>Notify</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>发送方：负责发送消息到Notify Server的应用。控制台申请了发送权限后，应用可以发送消息到Notify Server。</p>
+<p>订阅方：订阅发送方消息的应用。控制台申请订阅权限后，订阅方引用启动成功后，Notify Server就会把消息投递到订阅方。发送方和订阅方是解耦的，发送方不需要关注订阅方的任何信息，订阅方的变更(增加/减少订阅)不会影响发送方。</p>
+<p>Notify Server：负责接收发送方的消息，并且投递到订阅方。使发送方和订阅方实现异步通信、解耦。还可以起到削峰填谷的作用。</p>
+<p>消息：Notify的消息主要包括四个部分：Topic、MessageType、用户自定义属性、消息体。其中，Topic、MessageType都是用来区分不同业务发送方发送的消息。</p>
+<p>消息Id：消息的唯一标识，Notify自动生成。发送/订阅方不能调用Message.setMessageId自己设置消息Id，否则会导致消费异常。</p>
+<h2 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h2><p>实时消息服务：推送和无序模型保障了高实时性，ms级别。无序模型，消息投递的并发度最高，而且不会因为一个消息消费失败，导致后面的消息消费不了；推送模型使得消息一旦到达服务器会立马推送给客户端，无间歇。</p>
+<p>分布式事务：把应用的业务操作和消息发送组成一个分布式事务，保证业务操作和消息发送是个原子操作，保证交易状态最终一致性。通过message checker方式实现。</p>
+<p>数据库双写，消息存储高度可靠。header订阅：有些业务场景比较复杂，纯粹的主题+消息类型二元组订阅已经无法满足需求。header订阅支持消息属性表达式过滤，提供更加动态灵活的订阅机制。</p>
+<p>单元化支持：Notify具备单元化的特性，可以支持在不同单元之间的路由，把消息投递到准确的单元订阅者。</p>
+<h1 id="MetaQ"><a href="#MetaQ" class="headerlink" title="MetaQ"></a>MetaQ</h1><p>分布式、队列模型的消息中间件。基于发布订阅模式，分Push和Pull两种消费方式，支持严格的消费顺序，亿级别的堆积能力，支持消息回溯和多个维度的消息查询。</p>
+<p>MetaQ采用长轮询方式从Broker拉消息，实时性同Push一致，消息的延迟时间大概几毫秒。MetaQ客户端和服务端Broker是维持长链接的，会定期30s向服务器发送自己的心跳数据，以防止服务端清理过期连接。</p>
+<h2 id="概念-1"><a href="#概念-1" class="headerlink" title="概念"></a>概念</h2><p>Producer：消息生产者，负责消息的生产及发送。与NameServer集群的一个节点建立长连接，定期从NameServer获取其订阅Topic的路由信息，然后向Topic所在的broker发送消息。</p>
+<p>Consumer：消息消费者，负责消息的拉取和消费。Consumer与NameServer集群的某个节点建立长连接，然后从NameServer上获取可以消费的Topic中某个MessageQueue所在Broker的路由信息，然后与其建立长连接，从而不断的拉取消息进行消费。</p>
+<p>NameServer：整个消息队列的状态服务器，集群的各个组件通过它来了解全局信息，各个角色的机器会定期向NameServer上报自己的状态。如果超时不上报，NameServer 会认为某个机器出故障不可用，其他组件会把这个机器从可用列表中移除。NamerServer可以部署多个，相互之间独立，其他角色同时向多个机器上报状态信息，从而达到热备份的目的。</p>
+<p>Broker：MetaQ的核心，分Master和容灾的Slaver。每个Broker需要与所有的NameServer建立长连接，从而获取Topic信息；Broker负责接收来自Producer发过来的消息、处理Consumer消费消息的请求、消息的持久化存储以及消息在服务端的过滤。</p>
+<p>Group：组名，一类Producer/Consumer的集合名称，通常称为Producer/Consumer集群。</p>
+<p>Topic：软分区，消息的主题，由用户定义并在服务端配置。</p>
+<p>Tag：消息在Topic基础上的二级分类，每个Topic可以对应多个Tag。</p>
+<p>Message：在生产者，消费者，服务器间传递的消息。</p>
+<p>Message Queue：硬分区，物理上区分Topic，一个Topic可以对应多个Message Queue。</p>
+<p>Offset：消息在服务器上的每个分区都是组织成一个文件列表,消费者拉取数据需要知道数据在文件中的偏移量,这个偏移量即是Offset。</p>
+<p>广播消费：Producer向一些队列轮流发送消息，队列集合称为Topic，每一个Consumer实例消费这个Topic对应的所有队列，即一条消息会被同一个Group的每一个消费端消费。MetaQ广播消息不支持失败重试。</p>
+<p>集群消费：多个Consumer实例平均消费这个Topic对应的队列集合，即一条消息只会被同一个Group里一个消费端消费。不同Group之间互不影响。</p>
+<h2 id="功能-1"><a href="#功能-1" class="headerlink" title="功能"></a>功能</h2><p>消息管理控制台：用户可在此平台轻易创建发送消息的Topic，发送者，订阅者，以及自动化生成发送或消费示例代码。</p>
+<p>消息回溯消费：通过控制台操作，可重新消费最新一段时间的消息。</p>
+<p>完善的监控体系：展示各Topic消息堆积情况，提供报警机制。</p>
+<p>消息轨迹追踪：消息投递成功或失败，提供消息追踪日志，方便应用查找问题。</p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><h3 id="发布消息"><a href="#发布消息" class="headerlink" title="发布消息"></a>发布消息</h3><p>1.对于非常重要的消息如订单消息，业务方需要有重复补偿机制，例如MetaQ服务短暂不可用，此时发往MetaQ的消息将失败，等MetaQ服务恢复后，业务方可以将之前发送失败的消息重新补偿发送。</p>
+<p>2.对于Message Size特别的消息，推荐对消息进行拆分，原因如下：</p>
+<ul>
+<li>MetaQ通信层没有对大的请求做优化，采用的是典型的RPC方式，不适合大的请求传递，可能导致网络层Buffer异常。</li>
+<li>MetaQ服务器存储是典型的LRU系统，过大的消息会占用较多的Cache，对于其他应用Cache命中率产生影响。</li>
+<li>MetaQ的磁盘通常比较紧张。</li>
+<li>MetaQ暂不解决大消息存储问题。</li>
+</ul>
+<h3 id="订阅消息"><a href="#订阅消息" class="headerlink" title="订阅消息"></a>订阅消息</h3><p>1.MetaQ支持服务器消息过滤，订阅某个Topic，若只关心一部分数据，可以使用表达式方式过滤，可以避免无用的消息传输到客户端，降低了应用与MetaQ服务器的负载。</p>
+<p>2.非顺序消息消费，耗时时间不做限制，但是应用应该尽可能保证耗时短，这样才能达到高性能，另外消费消息Hang住，会导致消息所在队列的消费动作暂停，直到Hang住的消息消费完。对其他队列不受影响。</p>
+<h1 id="Notify-Vs-MetaQ"><a href="#Notify-Vs-MetaQ" class="headerlink" title="Notify Vs MetaQ"></a>Notify Vs MetaQ</h1><ul>
+<li>消息推送方式：Notify主要为Push方式，解决事务消息，消息消费的发起者是Notify服务器，消费者是被动等待消息到来。MetaQ支持Push&amp;Pull，主要为Pull方式，解决顺序消息和海量消息堆积问题。</li>
+<li>实现方式：Notify是基于JMS模式实现，MetaQ是基于内部消息队列实现。</li>
+<li>消息消费是否有序: 保证顺序性，即保证消息投递和消费均满足Happen Before原则，必然会导致吞吐量受限。为保证更高的吞吐量，Notify不考虑消息的顺序性，消息乱序消费。MetaQ基于内部消息队列，可以保证有序，但读取是随机读取。</li>
+<li>数据持久化：Notify可以选择持久化或非持久化，MetaQ所有消息队列都是持久化且数据结构长度是无限制的。消费方式：Notify不支持集群广播，MetaQ支持集群内每台机器广播。</li>
+<li>分布式事务：Notify支持分布式事务，MetaQ不支持分布式事务。</li>
+<li>应用场景：Notify更适合需要保证高吞吐率的应用，如实时数据监控业务，集群日志的收集转存。MetaQ更适合消息峰值高或者需要保证消息顺序或者需要广播消息的应用，如电商的大促，抢红包，数据库binlog同步，商品库存缓存信息同步。</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/技术/" rel="tag"># 技术</a>
+          
+            <a href="/tags/JAVA/" rel="tag"># JAVA</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/11/20/maven_mac/" rel="next" title="Mac环境下Maven的安装与配置">
+                <i class="fa fa-chevron-left"></i> Mac环境下Maven的安装与配置
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/02/02/ascp_rcm_introduce/" rel="prev" title="供应链及风控初探">
+                供应链及风控初探 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="MonkeyBean" />
+          <p class="site-author-name" itemprop="name">MonkeyBean</p>
+           
+              <p class="site-description motion-element" itemprop="description">行云流水 天马行空</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">60</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/MonkeyDBean" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/monkeybeanZ" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://yaoyaoblog.xyz/" title="耀耀的博客" target="_blank">耀耀的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://syf.ac.cn/" title="7nocturnal的博客" target="_blank">7nocturnal的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://xiaofeng333.github.io" title="xiaofeng的博客" target="_blank">xiaofeng的博客</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://xingwenzhang.github.io/" title="Angus的博客" target="_blank">Angus的博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#优缺点"><span class="nav-number">1.1.</span> <span class="nav-text">优缺点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常见问题"><span class="nav-number">2.</span> <span class="nav-text">常见问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Notify"><span class="nav-number">3.</span> <span class="nav-text">Notify</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念"><span class="nav-number">3.1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#功能"><span class="nav-number">3.2.</span> <span class="nav-text">功能</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MetaQ"><span class="nav-number">4.</span> <span class="nav-text">MetaQ</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念-1"><span class="nav-number">4.1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#功能-1"><span class="nav-number">4.2.</span> <span class="nav-text">功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意事项"><span class="nav-number">4.3.</span> <span class="nav-text">注意事项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#发布消息"><span class="nav-number">4.3.1.</span> <span class="nav-text">发布消息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#订阅消息"><span class="nav-number">4.3.2.</span> <span class="nav-text">订阅消息</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Notify-Vs-MetaQ"><span class="nav-number">5.</span> <span class="nav-text">Notify Vs MetaQ</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MonkeyBean</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (search_path.endsWith("json")) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>

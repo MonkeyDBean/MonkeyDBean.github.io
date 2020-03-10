@@ -297,6 +297,369 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/16/nginx_introduce/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MonkeyBean">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="帅斌的冒险船">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/16/nginx_introduce/" itemprop="url">Nginx介绍</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-16T17:25:20+08:00">
+                2017-09-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="优劣势"><a href="#优劣势" class="headerlink" title="优劣势"></a>优劣势</h2><p>Nginx是一款高性能的HTTP和反向代理服务器(<a href="https://www.runoob.com/linux/nginx-install-setup.html" target="_blank" rel="external">安装</a>)，有如下优势：</p>
+<ul>
+<li>高并发量：官方给出的数据，可以支持高达50000个并发连接数的响应。</li>
+<li>轻量级，内存消耗小：起Web服务处理静态资源，相比Tomcat占用更少的内存和资源。</li>
+<li>简单稳定：配置简单，基本在一个conf文件中配置，性能稳定，可7*24不间断运行。</li>
+<li>模块化程度高、低成本、跨系统。</li>
+</ul>
+<p>相比而言，劣势如下：</p>
+<ul>
+<li>动态处理差：Nginx处理静态文件消耗内存小，但是处理动态页面较弱，一般使用Nginx作为反向代理抗压力，Tomcat作为后端处理动态请求。</li>
+<li>rewrite弱：虽然可以根据域名等不同可以将Http请求分发到不同的后端服务器组，但是相比Tomcat, Nginx的rewrite功能较弱。</li>
+</ul>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h3 id="配置整体结构"><a href="#配置整体结构" class="headerlink" title="配置整体结构"></a>配置整体结构</h3>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/09/16/nginx_introduce/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/25/blockqueue/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MonkeyBean">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="帅斌的冒险船">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/25/blockqueue/" itemprop="url">Java 阻塞队列实现超时机制</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-25T21:50:12+08:00">
+                2017-08-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h4 id="阻塞队列概念"><a href="#阻塞队列概念" class="headerlink" title="阻塞队列概念"></a>阻塞队列概念</h4><p>定义：阻塞队列 (BlockingQueue)是Java util.concurrent包下重要的数据结构，BlockingQueue提供了线程安全的队列访问方式：当阻塞队列进行插入数据时，如果队列已满，线程将会阻塞等待直到队列非满；从阻塞队列取数据时，如果队列已空，线程将会阻塞等待直到队列非空。并发包下很多高级同步类的实现都是基于BlockingQueue实现的。<br>BlockingQueue是个接口，实现有ArrayBlockingQueue、DelayQueue、LinkedBlockingQueue、PriorityBlockingQueue、SynchronousQueue。<br>本文使用ArrayBlockingQueue：有界的阻塞队列，内部实现是将对象放到一个数组中。jdk源码为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">public ArrayBlockingQueue(int capacity, boolean fair) &#123;</div><div class="line">    if (capacity &lt;= 0)</div><div class="line">        throw new IllegalArgumentException();</div><div class="line">    this.items = new Object[capacity];</div><div class="line">    lock = new ReentrantLock(fair);</div><div class="line">    notEmpty = lock.newCondition();</div><div class="line">    notFull =  lock.newCondition();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>参数capacity为数组容量；fair为true，插入或删除对象时，按FIFO顺序处理。</p>
+<h4 id="阻塞队列工具实现"><a href="#阻塞队列工具实现" class="headerlink" title="阻塞队列工具实现"></a>阻塞队列工具实现</h4>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/08/25/blockqueue/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/25/filter_emoji/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MonkeyBean">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="帅斌的冒险船">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/25/filter_emoji/" itemprop="url">Java过滤Emoji字符</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-25T00:43:22+08:00">
+                2017-08-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>微信昵称支持Emoji表情，存储微信昵称时，若线上mysql编码未采用utfmb4，依然使用utf-8，向数据库写数据时就要过滤掉昵称中的Emoji表情。<br>过滤emoji可选用以下方法：</p>
+<h4 id="方法一："><a href="#方法一：" class="headerlink" title="方法一："></a>方法一：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div></pre></td><td class="code"><pre><div class="line">public class EmojiFilter &#123;</div><div class="line">    /**</div><div class="line">     * 检测是否有emoji字符</div><div class="line">     * @param source</div><div class="line">     * @return 一旦含有就抛出</div><div class="line">     */</div><div class="line">    public static boolean containsEmoji(String source)</div><div class="line">    &#123;</div><div class="line">        if (source == null || &quot;&quot;.equals(source))</div><div class="line">        &#123;</div><div class="line">            return false;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        int len = source.length();</div><div class="line"></div><div class="line">        for (int i = 0; i &lt; len; i++ )</div><div class="line">        &#123;</div><div class="line">            char codePoint = source.charAt(i);</div><div class="line"></div><div class="line">            if (isEmojiCharacter(codePoint))</div><div class="line">            &#123;</div><div class="line">                // do nothing，判断到了这里表明，确认有表情字符</div><div class="line">                return true;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return false;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private static boolean isEmojiCharacter(char codePoint)</div><div class="line">    &#123;</div><div class="line">        return (codePoint == 0x0) || (codePoint == 0x9) || (codePoint == 0xA)</div><div class="line">                || (codePoint == 0xD) || ((codePoint &gt;= 0x20) &amp;&amp; (codePoint &lt;= 0xD7FF))</div><div class="line">                || ((codePoint &gt;= 0xE000) &amp;&amp; (codePoint &lt;= 0xFFFD))</div><div class="line">                || ((codePoint &gt;= 0x10000) &amp;&amp; (codePoint &lt;= 0x10FFFF));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 过滤emoji 或者 其他非文字类型的字符</div><div class="line">     * @param source</div><div class="line">     * @return</div><div class="line">     */</div><div class="line">    public static String filterEmoji(String source)</div><div class="line">    &#123;</div><div class="line"></div><div class="line">        if (!containsEmoji(source))</div><div class="line">        &#123;</div><div class="line">            return source;// 如果不包含，直接返回</div><div class="line">        &#125;</div><div class="line">        // 到这里铁定包含</div><div class="line">        StringBuilder buf = null;</div><div class="line"></div><div class="line">        int len = source.length();</div><div class="line"></div><div class="line">        for (int i = 0; i &lt; len; i++ )</div><div class="line">        &#123;</div><div class="line">            char codePoint = source.charAt(i);</div><div class="line"></div><div class="line">            if (isEmojiCharacter(codePoint))</div><div class="line">            &#123;</div><div class="line">                if (buf == null)</div><div class="line">                &#123;</div><div class="line">                    buf = new StringBuilder(source.length());</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                buf.append(codePoint);</div><div class="line">            &#125;</div><div class="line">            else</div><div class="line">            &#123;&#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        if (buf == null)</div><div class="line">        &#123;</div><div class="line">            return source;// 如果没有找到 emoji表情，则返回源字符串</div><div class="line">        &#125;</div><div class="line">        else</div><div class="line">        &#123;</div><div class="line">            if (buf.length() == len)</div><div class="line">            &#123;// 这里的意义在于尽可能少的toString，因为会重新生成字符串</div><div class="line">                buf = null;</div><div class="line">                return source;</div><div class="line">            &#125;</div><div class="line">            else</div><div class="line">            &#123;</div><div class="line">                return buf.toString();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/08/25/filter_emoji/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/24/reqModel_bean/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1114,358 +1477,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/08/java_xml/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MonkeyBean">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="帅斌的冒险船">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/08/java_xml/" itemprop="url">java解析xml</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-08T15:40:20+08:00">
-                2017-07-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>如下xml为例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</div><div class="line">&lt;datasoruce&gt;</div><div class="line">    &lt;property name=&quot;driver&quot;&gt;com.mysql.jdbc.Driver&lt;/property&gt;</div><div class="line">    &lt;property name=&quot;url&quot;&gt;</div><div class="line">        jdbc:mysql://127.0.0.1:3306/poker?useUnicode=true&amp;amp;characterEncoding=utf8&amp;amp;useSSL=true</div><div class="line">    &lt;/property&gt;</div><div class="line">    &lt;property name=&quot;username&quot;&gt;root&lt;/property&gt;</div><div class="line">    &lt;property name=&quot;password&quot;&gt;root&lt;/property&gt;</div><div class="line">&lt;/datasoruce&gt;</div></pre></td></tr></table></figure></p>
-<p>解析引入dom4j,这里使用的为2.0.0版本，具体文档到社区查看，github已有最新2.0.1版本，dom4j更新很慢，也可以说比较稳定。<br>import org.dom4j.Document;<br>import org.dom4j.DocumentException;<br>import org.dom4j.Element;<br>import org.dom4j.io.SAXReader;<br>日志输出使用：<br>import org.slf4j.Logger;<br>import org.slf4j.LoggerFactory;<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/08/java_xml/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/06/js_xml/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MonkeyBean">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="帅斌的冒险船">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/06/js_xml/" itemprop="url">js解析xml</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-06T22:55:23+08:00">
-                2017-07-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="js解析xml字符串"><a href="#js解析xml字符串" class="headerlink" title="js解析xml字符串"></a>js解析xml字符串</h2><p>示例为DOMParser.parseFromString()的简单使用。<br>以下用到ES6的多行字符串，注意包含str值的两个点是Tab键上面、数字键1左边的按键，而不是单引号。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">function testXmlStr()&#123;</div><div class="line">	var str = `&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;&lt;root&gt;</div><div class="line">	&lt;province name=&quot;北京直辖市&quot;&gt;</div><div class="line">	&lt;city&gt;昌平区&lt;/city&gt;</div><div class="line">	&lt;city&gt;朝阳区&lt;/city&gt;</div><div class="line">	&lt;city&gt;崇文区&lt;/city&gt;</div><div class="line">	&lt;city&gt;大兴区&lt;/city&gt;</div><div class="line">	&lt;city&gt;东城区&lt;/city&gt;</div><div class="line">	&lt;city&gt;房山区&lt;/city&gt;</div><div class="line">	&lt;city&gt;丰台区&lt;/city&gt;</div><div class="line">	&lt;city&gt;海淀区&lt;/city&gt;</div><div class="line">	&lt;city&gt;怀柔区&lt;/city&gt;</div><div class="line">    &lt;city&gt;门头沟区&lt;/city&gt;</div><div class="line">    &lt;city&gt;密云区&lt;/city&gt;</div><div class="line">    &lt;city&gt;平谷区&lt;/city&gt;</div><div class="line">    &lt;city&gt;石景山区&lt;/city&gt;</div><div class="line">    &lt;city&gt;顺义区&lt;/city&gt;</div><div class="line">    &lt;city&gt;通州区&lt;/city&gt;</div><div class="line">    &lt;city&gt;西城区&lt;/city&gt;</div><div class="line">    &lt;city&gt;宣武区&lt;/city&gt;</div><div class="line">    &lt;city&gt;延庆区&lt;/city&gt;</div><div class="line">  &lt;/province&gt;&lt;/root&gt;`;  </div><div class="line">  </div><div class="line">	//创建文档对象  </div><div class="line">	var parser=new DOMParser();  </div><div class="line">	var xmlDoc=parser.parseFromString(str,&quot;text/xml&quot;);</div><div class="line">	//提取数据  </div><div class="line">	var countrys = xmlDoc.getElementsByTagName(&apos;city&apos;);  </div><div class="line">	var arr = [];</div><div class="line">	//输出数据</div><div class="line">	for (var i = 0; i &lt; countrys.length; i++) &#123;  </div><div class="line">		arr.push(countrys[i].textContent);  </div><div class="line">	&#125;;  </div><div class="line">	console.log(arr);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h2 id="js解析本地xml文件"><a href="#js解析本地xml文件" class="headerlink" title="js解析本地xml文件"></a>js解析本地xml文件</h2><p>要解析的xml文件部分数据如下：<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/06/js_xml/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/05/swagger2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MonkeyBean">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="帅斌的冒险船">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/05/swagger2/" itemprop="url">Spring-boot集成Swagger2</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-05T22:37:16+08:00">
-                2017-07-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>Swagger用于定义API文档，实现前后端开发分离，测试时不再需要浏览器输入URL访问Controller。对于post请求，无需使用postman模拟，在接口文档中填参数，可直接模拟发请求。本文介绍Swagger2的引入及常用注解。</p>
-<h2 id="pom-xml中添加依赖"><a href="#pom-xml中添加依赖" class="headerlink" title="pom.xml中添加依赖"></a>pom.xml中添加依赖</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;io.springfox&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;springfox-swagger2&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;2.6.1&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;io.springfox&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;springfox-swagger-ui&lt;/artifactId&gt;</div><div class="line">    &lt;version&gt;2.6.1&lt;/version&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure>
-<h2 id="引入Swagger2"><a href="#引入Swagger2" class="headerlink" title="引入Swagger2"></a>引入Swagger2</h2><p>新建类，注解方式引入Swagger2
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/07/05/swagger2/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1515,7 +1526,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-count">60</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1616,7 +1627,7 @@
         <div class="copyright" >
   
   &copy;  2016 - 
-  <span itemprop="copyrightYear">2019</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

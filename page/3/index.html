@@ -297,6 +297,362 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/23/billing_callback/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MonkeyBean">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="帅斌的冒险船">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/23/billing_callback/" itemprop="url">支付服务器补单机制</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-23T18:22:15+08:00">
+                2018-06-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>支付业务通常分订单服务器(OrderServer)和支付服务器(BillingServer)。OrderServer用于生成订单，BillingServer用于<br>接收第三方(微信、支付宝等)用户支付完成的回调，并通知其他业务服务器。本文仅介绍BillingServer的补单机制，补单演进分如下几个阶段。</p>
+<h2 id="阶段一-先天"><a href="#阶段一-先天" class="headerlink" title="阶段一 先天"></a>阶段一 先天</h2><p>无补单机制。BillingServer接收第三方回调后，记录入库并打印日志，通知业务服务器，根据响应的成功或失败状态，更新订单记录。<br>若因网络等问题通知业务服务器失败，只能通过查库和日志的方式手动补单。</p>
+<h2 id="阶段二-紫府"><a href="#阶段二-紫府" class="headerlink" title="阶段二 紫府"></a>阶段二 紫府</h2><p>三次重试。接收第三方回调后，通知业务服务器，若返回失败，则重试通知。</p>
+<h2 id="阶段三-万象"><a href="#阶段三-万象" class="headerlink" title="阶段三 万象"></a>阶段三 万象</h2><p>自动补单机制应运而生。通过延时队列，九次补单，实现自动补单机制。简单实现如下：<br>延时队列因子<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/06/23/billing_callback/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/03/dingding_notify/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MonkeyBean">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="帅斌的冒险船">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/03/dingding_notify/" itemprop="url">钉钉自定义机器人webHook</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-03T19:10:02+08:00">
+                2018-06-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>钉钉机器人，限制为消息仅可发送到群组。自定义机器人：<a href="https://open-doc.dingtalk.com/docs/doc.htm?spm=a219a.7629140.0.0.556f4a97of3s2A&amp;treeId=257&amp;articleId=105735&amp;docType=1#s0" target="_blank" rel="external">官方文档</a></p>
+<p>通过钉钉机器人发消息，官方提供了天气、github等机器人类别；grafana、elk等封装了自定义机器人webHook的请求发送；而像Jenkins等未封装请求发送的可通过脚本发送请求(如构建镜像完成后发送通知)，如python脚本：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"># encoding: utf-8</div><div class="line">import json</div><div class="line">import urllib2</div><div class="line">import datetime</div><div class="line"></div><div class="line">nowTime = datetime.datetime.now()</div><div class="line">contentText = &quot;构建成功, 当前时间为: &quot; + nowTime.strftime(&quot;%Y-%m-%d %H:%M:%S&quot;)</div><div class="line">print(contentText)</div><div class="line"></div><div class="line">data = &#123;</div><div class="line">	&quot;msgtype&quot;: &quot;text&quot;,</div><div class="line">	&quot;text&quot;: &#123;</div><div class="line">		&quot;content&quot;: contentText</div><div class="line">	&#125;,</div><div class="line">	&quot;at&quot;: &#123;</div><div class="line">		&quot;atMobiles&quot;: [</div><div class="line">			&quot;$someone_phone_number&quot;</div><div class="line">		],</div><div class="line">		&quot;isAtAll&quot;: &quot;false&quot;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line">req = urllib2.Request(&apos;$webhook_address&apos;)</div><div class="line">req.add_header(&apos;Content-Type&apos;, &apos;application/json&apos;)</div><div class="line"></div><div class="line">response = urllib2.urlopen(req, json.dumps(data))</div><div class="line">print(&quot;send message to dingding&quot;)</div></pre></td></tr></table></figure></p>
+<p>注：$someone_phone_number为要@成员的手机号、$someone_phone_number为创建自定义机器人时生成的webHook链接</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/27/frp-map/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MonkeyBean">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="帅斌的冒险船">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/27/frp-map/" itemprop="url">frp搭建，实现内网穿透（端口映射）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-27T22:30:25+08:00">
+                2018-04-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="内网穿透基本知识"><a href="#内网穿透基本知识" class="headerlink" title="内网穿透基本知识"></a>内网穿透基本知识</h2><p>参照<a href="https://blog.csdn.net/zhangguo5/article/details/77848658" target="_blank" rel="external">ngrok搭建</a></p>
+<h2 id="搭建"><a href="#搭建" class="headerlink" title="搭建"></a>搭建</h2><h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><p>外网服务器系统为centos7, 内网客户端系统为win7；一个指向外网服务器的公网域名</p>
+<h3 id="工具下载"><a href="#工具下载" class="headerlink" title="工具下载"></a>工具下载</h3><p>git开源项目，<a href="https://github.com/fatedier/frp/releases" target="_blank" rel="external">release包地址</a>, 下载最新的，这里使用的版本为v0.17.0<br>外网服务下执行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">wget https://github.com/fatedier/frp/releases/download/v0.17.0/frp_0.17.0_linux_amd64.tar.gz</div><div class="line"></div><div class="line">tar -zxvf</div><div class="line"></div><div class="line">cd frp_0.17.0_linux_amd64/</div></pre></td></tr></table></figure></p>
+<p>客户端直接下载，被墙的话，就开代理全局模式下载。</p>
+<h3 id="配置-连接"><a href="#配置-连接" class="headerlink" title="配置,连接"></a>配置,连接</h3><h4 id="外网服务器"><a href="#外网服务器" class="headerlink" title="外网服务器"></a>外网服务器</h4><p>编辑frps.ini文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[common]</div><div class="line"># 与客户端绑定，进行通信的端口号</div><div class="line">bind_port = 7000</div><div class="line"># 访问客户端web服务器的自定义端口号</div><div class="line">vhost_http_port = 7001</div></pre></td></tr></table></figure></p>
+<p>执行命令开启服务,格式为程序 -c 配置文件，&amp;符号指定服务后台运行。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./frps -c ./frps.ini &amp;</div></pre></td></tr></table></figure></p>
+<h4 id="内网客户端"><a href="#内网客户端" class="headerlink" title="内网客户端"></a>内网客户端</h4><p>编辑frpc.ini文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">[common]</div><div class="line"># 外网服务器ip</div><div class="line">server_addr = **.**.**.**</div><div class="line">#与服务端bind_port一致</div><div class="line">server_port = 7000</div><div class="line"></div><div class="line">[web]</div><div class="line"># 声明协议类型</div><div class="line">type = http</div><div class="line">#内网机器web服务端口</div><div class="line">local_port = 8060</div><div class="line"># 指向外网服务的公网域名</div><div class="line">custom_domains = yourdomain</div></pre></td></tr></table></figure></p>
+<p>执行./frpc.exe，连接服务<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/04/27/frp-map/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/17/redis_sentinel/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1140,369 +1496,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/16/nginx_introduce/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MonkeyBean">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="帅斌的冒险船">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/16/nginx_introduce/" itemprop="url">Nginx介绍</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-16T17:25:20+08:00">
-                2017-09-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="优劣势"><a href="#优劣势" class="headerlink" title="优劣势"></a>优劣势</h2><p>Nginx是一款高性能的HTTP和反向代理服务器(<a href="https://www.runoob.com/linux/nginx-install-setup.html" target="_blank" rel="external">安装</a>)，有如下优势：</p>
-<ul>
-<li>高并发量：官方给出的数据，可以支持高达50000个并发连接数的响应。</li>
-<li>轻量级，内存消耗小：起Web服务处理静态资源，相比Tomcat占用更少的内存和资源。</li>
-<li>简单稳定：配置简单，基本在一个conf文件中配置，性能稳定，可7*24不间断运行。</li>
-<li>模块化程度高、低成本、跨系统。</li>
-</ul>
-<p>相比而言，劣势如下：</p>
-<ul>
-<li>动态处理差：Nginx处理静态文件消耗内存小，但是处理动态页面较弱，一般使用Nginx作为反向代理抗压力，Tomcat作为后端处理动态请求。</li>
-<li>rewrite弱：虽然可以根据域名等不同可以将Http请求分发到不同的后端服务器组，但是相比Tomcat, Nginx的rewrite功能较弱。</li>
-</ul>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h3 id="配置整体结构"><a href="#配置整体结构" class="headerlink" title="配置整体结构"></a>配置整体结构</h3>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/09/16/nginx_introduce/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/25/blockqueue/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MonkeyBean">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="帅斌的冒险船">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/08/25/blockqueue/" itemprop="url">Java 阻塞队列实现超时机制</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-25T21:50:12+08:00">
-                2017-08-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h4 id="阻塞队列概念"><a href="#阻塞队列概念" class="headerlink" title="阻塞队列概念"></a>阻塞队列概念</h4><p>定义：阻塞队列 (BlockingQueue)是Java util.concurrent包下重要的数据结构，BlockingQueue提供了线程安全的队列访问方式：当阻塞队列进行插入数据时，如果队列已满，线程将会阻塞等待直到队列非满；从阻塞队列取数据时，如果队列已空，线程将会阻塞等待直到队列非空。并发包下很多高级同步类的实现都是基于BlockingQueue实现的。<br>BlockingQueue是个接口，实现有ArrayBlockingQueue、DelayQueue、LinkedBlockingQueue、PriorityBlockingQueue、SynchronousQueue。<br>本文使用ArrayBlockingQueue：有界的阻塞队列，内部实现是将对象放到一个数组中。jdk源码为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">public ArrayBlockingQueue(int capacity, boolean fair) &#123;</div><div class="line">    if (capacity &lt;= 0)</div><div class="line">        throw new IllegalArgumentException();</div><div class="line">    this.items = new Object[capacity];</div><div class="line">    lock = new ReentrantLock(fair);</div><div class="line">    notEmpty = lock.newCondition();</div><div class="line">    notFull =  lock.newCondition();</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>参数capacity为数组容量；fair为true，插入或删除对象时，按FIFO顺序处理。</p>
-<h4 id="阻塞队列工具实现"><a href="#阻塞队列工具实现" class="headerlink" title="阻塞队列工具实现"></a>阻塞队列工具实现</h4>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/08/25/blockqueue/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/25/filter_emoji/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MonkeyBean">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="帅斌的冒险船">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/08/25/filter_emoji/" itemprop="url">Java过滤Emoji字符</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-25T00:43:22+08:00">
-                2017-08-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>微信昵称支持Emoji表情，存储微信昵称时，若线上mysql编码未采用utfmb4，依然使用utf-8，向数据库写数据时就要过滤掉昵称中的Emoji表情。<br>过滤emoji可选用以下方法：</p>
-<h4 id="方法一："><a href="#方法一：" class="headerlink" title="方法一："></a>方法一：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div></pre></td><td class="code"><pre><div class="line">public class EmojiFilter &#123;</div><div class="line">    /**</div><div class="line">     * 检测是否有emoji字符</div><div class="line">     * @param source</div><div class="line">     * @return 一旦含有就抛出</div><div class="line">     */</div><div class="line">    public static boolean containsEmoji(String source)</div><div class="line">    &#123;</div><div class="line">        if (source == null || &quot;&quot;.equals(source))</div><div class="line">        &#123;</div><div class="line">            return false;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        int len = source.length();</div><div class="line"></div><div class="line">        for (int i = 0; i &lt; len; i++ )</div><div class="line">        &#123;</div><div class="line">            char codePoint = source.charAt(i);</div><div class="line"></div><div class="line">            if (isEmojiCharacter(codePoint))</div><div class="line">            &#123;</div><div class="line">                // do nothing，判断到了这里表明，确认有表情字符</div><div class="line">                return true;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        return false;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private static boolean isEmojiCharacter(char codePoint)</div><div class="line">    &#123;</div><div class="line">        return (codePoint == 0x0) || (codePoint == 0x9) || (codePoint == 0xA)</div><div class="line">                || (codePoint == 0xD) || ((codePoint &gt;= 0x20) &amp;&amp; (codePoint &lt;= 0xD7FF))</div><div class="line">                || ((codePoint &gt;= 0xE000) &amp;&amp; (codePoint &lt;= 0xFFFD))</div><div class="line">                || ((codePoint &gt;= 0x10000) &amp;&amp; (codePoint &lt;= 0x10FFFF));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 过滤emoji 或者 其他非文字类型的字符</div><div class="line">     * @param source</div><div class="line">     * @return</div><div class="line">     */</div><div class="line">    public static String filterEmoji(String source)</div><div class="line">    &#123;</div><div class="line"></div><div class="line">        if (!containsEmoji(source))</div><div class="line">        &#123;</div><div class="line">            return source;// 如果不包含，直接返回</div><div class="line">        &#125;</div><div class="line">        // 到这里铁定包含</div><div class="line">        StringBuilder buf = null;</div><div class="line"></div><div class="line">        int len = source.length();</div><div class="line"></div><div class="line">        for (int i = 0; i &lt; len; i++ )</div><div class="line">        &#123;</div><div class="line">            char codePoint = source.charAt(i);</div><div class="line"></div><div class="line">            if (isEmojiCharacter(codePoint))</div><div class="line">            &#123;</div><div class="line">                if (buf == null)</div><div class="line">                &#123;</div><div class="line">                    buf = new StringBuilder(source.length());</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                buf.append(codePoint);</div><div class="line">            &#125;</div><div class="line">            else</div><div class="line">            &#123;&#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        if (buf == null)</div><div class="line">        &#123;</div><div class="line">            return source;// 如果没有找到 emoji表情，则返回源字符串</div><div class="line">        &#125;</div><div class="line">        else</div><div class="line">        &#123;</div><div class="line">            if (buf.length() == len)</div><div class="line">            &#123;// 这里的意义在于尽可能少的toString，因为会重新生成字符串</div><div class="line">                buf = null;</div><div class="line">                return source;</div><div class="line">            &#125;</div><div class="line">            else</div><div class="line">            &#123;</div><div class="line">                return buf.toString();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/08/25/filter_emoji/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1552,7 +1545,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-count">60</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1653,7 +1646,7 @@
         <div class="copyright" >
   
   &copy;  2016 - 
-  <span itemprop="copyrightYear">2019</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
