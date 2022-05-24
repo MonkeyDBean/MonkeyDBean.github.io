@@ -95,14 +95,15 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Windows下使用Hexo+Github搭建个人博客">
 <meta property="og:url" content="http://yoursite.com/2017/01/01/hexo_gitpages/index.html">
-<meta property="og:site_name" content="帅斌的冒险船">
+<meta property="og:site_name" content="Bean的冒险船">
 <meta property="og:description" content="Hexo介绍静态博客生成器，根据给定的主题，负责把写好的 Markdown 文章转换成一堆 HTML + CSS + Javascript 页面。另外，Hexo 还有把生成好的站点上传到 Github Pages 的功能。 背景记录个人学习和生活，作为程序猿，搭建个人博客是个不错的选择。但只是个博客，购买云服务器有些不值当，服务器稍微好些的配置就得上千。之前好友买过国外的服务器，hosts不加域名">
 <meta property="og:image" content="http://yoursite.com/assets/scaryDog.png">
 <meta property="og:image" content="http://yoursite.com/assets/despair.png">
 <meta property="og:image" content="http://yoursite.com/assets/cname.png">
 <meta property="og:image" content="http://yoursite.com/assets/cname_config.png">
 <meta property="og:image" content="http://yoursite.com/assets/finish.png">
-<meta property="og:updated_time" content="2018-11-08T13:58:54.320Z">
+<meta property="og:image" content="http://yoursite.com/assets/gitpages_domain.png">
+<meta property="og:updated_time" content="2022-05-24T10:35:16.816Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Windows下使用Hexo+Github搭建个人博客">
 <meta name="twitter:description" content="Hexo介绍静态博客生成器，根据给定的主题，负责把写好的 Markdown 文章转换成一堆 HTML + CSS + Javascript 页面。另外，Hexo 还有把生成好的站点上传到 Github Pages 的功能。 背景记录个人学习和生活，作为程序猿，搭建个人博客是个不错的选择。但只是个博客，购买云服务器有些不值当，服务器稍微好些的配置就得上千。之前好友买过国外的服务器，hosts不加域名">
@@ -140,7 +141,7 @@
 
 
 
-  <title>Windows下使用Hexo+Github搭建个人博客 | 帅斌的冒险船</title>
+  <title>Windows下使用Hexo+Github搭建个人博客 | Bean的冒险船</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -176,7 +177,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">帅斌的冒险船</span>
+        <span class="site-title">Bean的冒险船</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -312,7 +313,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="帅斌的冒险船">
+      <meta itemprop="name" content="Bean的冒险船">
     </span>
 
     
@@ -385,6 +386,8 @@ npm config set cache &quot;C:\Program Files\nodejs\node_cache&quot;
 <pre><code>npm install hexo-deployer-git --save
 </code></pre><p>7.创建放置博客文件的文件夹</p>
 <pre><code>hexo init blog
+</code></pre><p>若执行报错: 无法将“hexo”项识别为 cmdlet、函数、脚本文件或可运行程序的名称，则执行如下命令授权后继续：</p>
+<pre><code>Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 </code></pre><p>8.进入到新创建的博客项目中</p>
 <pre><code>cd blog
 </code></pre><p>9.安装依赖包</p>
@@ -398,6 +401,11 @@ npm config set cache &quot;C:\Program Files\nodejs\node_cache&quot;
 <p>13.在本地博客目录下，打开git bash,以我的为例，执行</p>
 <pre><code>git init
 git remote add origin https://github.com/MonkeyDBean/MonkeyDBean.github.io.git
+</code></pre><p>若提示如fatal: unsafe repository (‘F:/MonkeyBean/myblog/blog’ is owned by someone else)，则执行如下命令授权后继续：</p>
+<pre><code>git config --global --add safe.directory F:/MonkeyBean/myblog/blog
+</code></pre><p>若为重装系统或换电脑后的仓库二次关联, 则执行关联后继续:</p>
+<pre><code>git remote rm origin
+git remote add origin https://github.com/MonkeyDBean/MonkeyDBean.github.io.git
 </code></pre><p>14.配置文件_config.yml更改如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line"> type: git</div><div class="line"> repo: https://github.com/MonkeyDBean/MonkeyDBean.github.io.git</div><div class="line"> branch: master</div></pre></td></tr></table></figure></p>
 <p> 注：YAML语法，字典是由简单的键: 值的形式组成(冒号后面必须是一个空格),如type:+&amp;nbsp+git</p>
 <p>15.部署到github，执行</p>
@@ -405,13 +413,16 @@ git remote add origin https://github.com/MonkeyDBean/MonkeyDBean.github.io.git
 </code></pre><p>若提交不上去，检查语法；没问题的话重新执行</p>
 <pre><code>npm install hexo-deployer-git --save
 hexo deploy
-</code></pre><p>执行到这一步，以上步骤没问题的话，浏览器输入 <a href="https://monkeydbean.github.io" target="_blank" rel="external">https://monkeydbean.github.io</a> 可访问个人博客，此时只有HelloWorld单页面。</p>
+</code></pre><p>若提示TypeError[ERR_INVALID_ARG_TYPE]: The “mode” argument must be integer. Received an instance of Object, 表示npm高版本与hexo版本不兼容, 则重新安装node版本如<a href="https://nodejs.org/en/download/releases/" target="_blank" rel="external">13.14.0</a>后继续。</p>
+<p>执行到这一步，以上步骤没问题的话，浏览器输入 <a href="https://monkeydbean.github.io" target="_blank" rel="external">https://monkeydbean.github.io</a> 可访问个人博客，此时只有HelloWorld单页面。</p>
 <p>16.每次部署，可按以下步骤进行：</p>
 <pre><code>hexo clean
 hexo generate
 hexo deploy
 </code></pre><p>17.让博客炫起来，最简单的，得有个主题，搜索输入<a href="https://www.zhihu.com/question/24422335" target="_blank" rel="external">hexo 知乎</a>，选一个主题开始使用吧，主题的使用方法在相应主题的github上有详细介绍。<br>包括头像、站点图标等基础设置及第三方接入等高级设置。</p>
-<p>18.绑定域名：<br>首先得有一个域名，域名服务商有很多，我这里用的万网，阿里云域名服务用的就是万网。注册完成后，搜索心仪域名是否被使用，未被使用即可购买，.cn域名比较便宜，第一年29元，无需购买扩展服务。<br>域名购买完成后，添加cname解析如下：<img src="/assets/cname.png" alt="添加解析"><br>同时，在博客public目录下新建CNAME文件：<img src="/assets/cname_config.png" alt="添加解析"><br>执行步骤16，浏览器输入monkeyben.cn即可访问个人博客。<img src="/assets/finish.png" alt="finish"></p>
+<p>18.绑定域名：<br>首先得有一个域名，域名服务商有很多，我这里使用的是阿里云域名服务下的万网。进入阿里云域名服务，搜索心仪域名是否被使用，未被使用即可购买(已使用的可联系竞价，不建议)，选个比较便宜但寓意好的域名如.cn或.top，第一年约29元，无其他特殊诉求则无需购买任何扩展服务。<br>域名购买完成后，dns添加cname解析如下：<img src="/assets/cname.png" alt="添加解析"><br>同时，在博客public目录下新建CNAME文件：<img src="/assets/cname_config.png" alt="域名配置"></p>
+<p>19.执行步骤16，浏览器输入monkeyben.cn即可访问个人博客。<img src="/assets/finish.png" alt="finish"><br>注意在gitPage配置下查看是否是关联域名，若未关联则添加。<img src="/assets/gitpages_domain.png" alt="gitpages域名"></p>
+<p>20.关于域名续费，域名解析可用后，政策规定需备案，进行实名认证，否则会造成解析不生效，实名认证审核通过后的1-2个工作日解析可恢复使用，具体流程见阿里云详细。<br>域名审核通过后，建议续费3-5年，续费价跟首年价基本相同，若使用一段时间后被其他机构看上，则会竞价购买，到期再续费则比较昂贵。<br>亲身经历为购买了三年的域名到期后被其他机构看上或服务主体已不在阿里云，回购价格太贵。此域名除了博客使用外，还配置了二级域名供个人网站使用，不过只能放弃啦，只是博客的话其实没太必要加专属域名。</p>
 
       
     </div>
@@ -540,7 +551,7 @@ hexo deploy
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">61</span>
+                <span class="site-state-item-count">62</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -553,7 +564,7 @@ hexo deploy
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">16</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -657,7 +668,7 @@ hexo deploy
         <div class="copyright" >
   
   &copy;  2016 - 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

@@ -92,12 +92,12 @@
 
 <meta name="description" content="行云流水 天马行空">
 <meta property="og:type" content="website">
-<meta property="og:title" content="帅斌的冒险船">
+<meta property="og:title" content="Bean的冒险船">
 <meta property="og:url" content="http://yoursite.com/page/5/index.html">
-<meta property="og:site_name" content="帅斌的冒险船">
+<meta property="og:site_name" content="Bean的冒险船">
 <meta property="og:description" content="行云流水 天马行空">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="帅斌的冒险船">
+<meta name="twitter:title" content="Bean的冒险船">
 <meta name="twitter:description" content="行云流水 天马行空">
 
 
@@ -132,7 +132,7 @@
 
 
 
-  <title>帅斌的冒险船</title>
+  <title>Bean的冒险船</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -170,7 +170,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">帅斌的冒险船</span>
+        <span class="site-title">Bean的冒险船</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -306,7 +306,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="帅斌的冒险船">
+      <meta itemprop="name" content="Bean的冒险船">
     </span>
 
     
@@ -410,6 +410,131 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/30/https_introduce_config/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MonkeyBean">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bean的冒险船">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/30/https_introduce_config/" itemprop="url">Https简介及配置</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-30T07:50:45+08:00">
+                2017-07-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Https(Secure Hypertext Transfer Protocol)相比Http(Hypertext Transfer Protocol Vertion)，字面意思，更安全。Https是在Http协议基础上增加了SSL加密传送信息的协议, 传输加密，保证通信过程数据不会被泄露或窜改，防信息泄露如钓鱼网站。</p>
+<p>为保障传输安全, 后端接口可优先考虑使用post方法, 传输时，https将请求头及body参数等加密, url参数不会被加密(url如果被加密, 就找不到资源了, 显而易见, url不做加密处理)。</p>
+<p>Https连接过程:</p>
+<ul>
+<li>客户端发送请求到服务器端</li>
+<li>服务端返回证书和公钥(公钥作为证书的一部分)</li>
+<li>客户端验证证书和公钥的有效性，若有效，则生成共享密钥并使用公钥加密发送到服务器端</li>
+<li>服务端使用私钥解密数据，并使用收到的共享密钥加密数据，发送给客户端</li>
+<li>客户端使用共享密钥解密数据</li>
+<li>SSL连接建立</li>
+</ul>
+<p>Https需配置第三方签发的证书，配置过程如下.</p>
+<h2 id="SSL证书申请及配置"><a href="#SSL证书申请及配置" class="headerlink" title="SSL证书申请及配置"></a>SSL证书申请及配置</h2><h3 id="申请"><a href="#申请" class="headerlink" title="申请"></a>申请</h3><p>个人使用，免费SSL证书即可，签发速度快，可保护完整域名，不支持通配符。这里使用的是阿里云域名服务，进入域名基本信息，选择免费开启SSL证书，按照引导操作配置，最终如下<br><img src="/assets/https_analyze.png" alt="https_analyze"></p>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p><img src="/assets/https_nginx_config.png" alt="https_nginx_config"></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/08/java_xml/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -419,7 +544,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="帅斌的冒险船">
+      <meta itemprop="name" content="Bean的冒险船">
     </span>
 
     
@@ -536,7 +661,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="帅斌的冒险船">
+      <meta itemprop="name" content="Bean的冒险船">
     </span>
 
     
@@ -653,7 +778,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="帅斌的冒险船">
+      <meta itemprop="name" content="Bean的冒险船">
     </span>
 
     
@@ -771,7 +896,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="帅斌的冒险船">
+      <meta itemprop="name" content="Bean的冒险船">
     </span>
 
     
@@ -889,7 +1014,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="帅斌的冒险船">
+      <meta itemprop="name" content="Bean的冒险船">
     </span>
 
     
@@ -1006,7 +1131,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="帅斌的冒险船">
+      <meta itemprop="name" content="Bean的冒险船">
     </span>
 
     
@@ -1123,7 +1248,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="帅斌的冒险船">
+      <meta itemprop="name" content="Bean的冒险船">
     </span>
 
     
@@ -1247,7 +1372,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="帅斌的冒险船">
+      <meta itemprop="name" content="Bean的冒险船">
     </span>
 
     
@@ -1367,122 +1492,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/22/limax_zdb/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="MonkeyBean">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="帅斌的冒险船">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/05/22/limax_zdb/" itemprop="url">Limax ZDB简单介绍及死锁分析</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-22T22:50:55+08:00">
-                2017-05-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p><a href="http://www.limax-project.org/" target="_blank" rel="external">limax</a>是比较小众的应用服务器框架，zdb是limax采用的数据存储方式。zdb采用k-v存储，没有事务的概念，自带锁（加锁和解锁同操作封装在一起，对外隐藏），编程较为简单。<br>项目前期使用zdb进行数据存储，随着项目规模的扩大，暴露出一些问题。每个服务器都有一个zdb.xml文件，基于该文件，ant构建生成的table和xbean也只有当前服务器可以读取。为保证数据一致性，zdb使用方式若未严格注意，导致数据分散在不同职能的服务器上，当某个功能需要的数据需要从不同的服务器上读取时，这就很尴尬了，数据读取繁琐，服务器之间通信协议的繁琐导致编程的繁琐。现在正在逐步废弃zdb，采用主流的mysql+redis存储。<br><img src="/assets/embarrassed.png" alt="embarrassed"><br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/05/22/limax_zdb/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1532,7 +1541,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">61</span>
+                <span class="site-state-item-count">62</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1545,7 +1554,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">16</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -1633,7 +1642,7 @@
         <div class="copyright" >
   
   &copy;  2016 - 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
